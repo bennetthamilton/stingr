@@ -34,6 +34,8 @@ graph TD;
     N -->|Decline| M
 
     %% Styles
-    style A fill:#f9f,stroke:#333,stroke-width:2px;
-    style B fill:#ff9,stroke:#333,stroke-width:2px;
-    style C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R fill:#bbf,stroke:#333,stroke-width:2px;
+    style A fill:#FFD54F,stroke:#212121,stroke-width:2px;  %% Light Honey
+    style B fill:#FFC107,stroke:#212121,stroke-width:2px;  %% Honey Gold
+    style C,D,F,G,H,I,J,K,L,M,O,P,Q,R fill:#F5F5F5,stroke:#212121,stroke-width:2px; %% Off-White UI Elements
+    style E,N fill:#00796B,stroke:#F5F5F5,stroke-width:2px;  %% Teal (Decision Nodes)
+    style N fill:#26A69A,stroke:#212121,stroke-width:2px;  %% Alternative Teal Shade

@@ -37,5 +37,5 @@ graph TD;
     style A fill:#FFD54F,stroke:#212121,stroke-width:2px;  %% Light Honey
     style B fill:#FFC107,stroke:#212121,stroke-width:2px;  %% Honey Gold
     style C,D,F,G,H,I,J,K,L,M,O,P,Q,R fill:#F5F5F5,stroke:#212121,stroke-width:2px; %% Off-White UI Elements
-    style E,N fill:#00796B,stroke:#F5F5F5,stroke-width:2px;  %% Teal (Decision Nodes)
+    style E,N fill:#00796B,stroke:#F5F5F5,stroke-width:2px;  %% Teal - Decision Nodes
     style N fill:#26A69A,stroke:#212121,stroke-width:2px;  %% Alternative Teal Shade

@@ -10,26 +10,30 @@ graph TD;
     A[User Opens Stingr] --> B{Are they a Client or an Artist?};
     
     %% Client Flow
-    B -->|Client| C[Sign Up/Login];
-    C --> D[Browse Artists (Swipe Interface)];
-    D --> E{Match Found?};
-    E -->|Yes| F[View Artist Profile];
-    F --> G[Send Booking Request];
-    G --> H[Consultation Chat];
-    H --> I[Finalize Booking & Payment];
-    I --> J[Receive Tattoo & Leave Review];
+    B -->|Client| C[Sign Up/Login]
+    C --> D[Swipe Through Artists]
+    D --> E{Found an Artist?}
+    E -->|Yes| F[View Artist Profile]
+    F --> G[Send Booking Request]
+    G --> H[Chat for Consultation]
+    H --> I[Confirm Booking & Pay]
+    I --> J[Get Tattoo & Leave Review]
 
     %% Artist Flow
-    B -->|Artist| K[Sign Up/Login];
-    K --> L[Set Up Profile (Portfolio, Pricing)];
-    L --> M[Receive Booking Requests];
-    M --> N[Accept or Decline Consultation];
-    N --> O[Chat with Client];
-    O --> P[Confirm Appointment & Payment];
-    P --> Q[Tattoo Session Completed];
-    Q --> R[Receive Review & Payment];
-
+    B -->|Artist| K[Sign Up/Login]
+    K --> L[Create Profile & Upload Portfolio]
+    L --> M[Receive Booking Requests]
+    M --> N{Accept or Decline?}
+    N -->|Accept| O[Chat with Client]
+    O --> P[Confirm Appointment & Payment]
+    P --> Q[Complete Tattoo Session]
+    Q --> R[Receive Payment & Review]
+    
     %% Decision Nodes
-    E -->|No| D;
-    N -->|Decline| M;
-    N -->|Accept| O;
+    E -->|No| D
+    N -->|Decline| M
+
+    %% Styles
+    style A fill:#f9f,stroke:#333,stroke-width:2px;
+    style B fill:#ff9,stroke:#333,stroke-width:2px;
+    style C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R fill:#bbf,stroke:#333,stroke-width:2px;

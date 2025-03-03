@@ -34,8 +34,21 @@ graph TD;
     N -->|Decline| M
 
     %% Styles
-    style A fill:#FFD54F,stroke:#212121,stroke-width:2px;  %% Light Honey
-    style B fill:#FFC107,stroke:#212121,stroke-width:2px;  %% Honey Gold
-    style C,D,F,G,H,I,J,K,L,M,O,P,Q,R fill:#F5F5F5,stroke:#212121,stroke-width:2px; %% Off-White UI Elements
-    style E,N fill:#00796B,stroke:#F5F5F5,stroke-width:2px;  %% Teal - Decision Nodes
-    style N fill:#26A69A,stroke:#212121,stroke-width:2px;  %% Alternative Teal Shade
+    style A fill:#FFD54F,stroke:#212121,stroke-width:2px;  %% Light Honey - Entry Point
+    style B fill:#FFC107,stroke:#212121,stroke-width:2px;  %% Honey Gold - Primary Decision
+    style C fill:#F5F5F5,stroke:#212121,stroke-width:2px;  %% Off-White - UI Section
+    style D fill:#F5F5F5,stroke:#212121,stroke-width:2px;  %% Off-White - UI Section
+    style E fill:#00796B,stroke:#F5F5F5,stroke-width:2px;  %% Teal - Decision Node
+    style F fill:#F5F5F5,stroke:#212121,stroke-width:2px;  %% Off-White - UI Section
+    style G fill:#F5F5F5,stroke:#212121,stroke-width:2px;  %% Off-White - UI Section
+    style H fill:#F5F5F5,stroke:#212121,stroke-width:2px;  %% Off-White - UI Section
+    style I fill:#F5F5F5,stroke:#212121,stroke-width:2px;  %% Off-White - UI Section
+    style J fill:#F5F5F5,stroke:#212121,stroke-width:2px;  %% Off-White - UI Section
+    style K fill:#F5F5F5,stroke:#212121,stroke-width:2px;  %% Off-White - UI Section
+    style L fill:#F5F5F5,stroke:#212121,stroke-width:2px;  %% Off-White - UI Section
+    style M fill:#F5F5F5,stroke:#212121,stroke-width:2px;  %% Off-White - UI Section
+    style N fill:#26A69A,stroke:#212121,stroke-width:2px;  %% Alternative Teal - Decision Node
+    style O fill:#F5F5F5,stroke:#212121,stroke-width:2px;  %% Off-White - UI Section
+    style P fill:#F5F5F5,stroke:#212121,stroke-width:2px;  %% Off-White - UI Section
+    style Q fill:#F5F5F5,stroke:#212121,stroke-width:2px;  %% Off-White - UI Section
+    style R fill:#F5F5F5,stroke:#212121,stroke-width:2px;  %% Off-White - UI Section

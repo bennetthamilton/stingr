@@ -34,21 +34,21 @@ graph TD;
     N -->|Decline| M
 
     %% Styles
-    style A fill:#FFD54F,stroke:#212121,stroke-width:2px;  %% Light Honey - Entry Point
-    style B fill:#FFC107,stroke:#212121,stroke-width:2px;  %% Honey Gold - Primary Decision
-    style C fill:#F5F5F5,stroke:#212121,stroke-width:2px;  %% Off-White - UI Section
-    style D fill:#F5F5F5,stroke:#212121,stroke-width:2px;  %% Off-White - UI Section
-    style E fill:#00796B,stroke:#F5F5F5,stroke-width:2px;  %% Teal - Decision Node
-    style F fill:#F5F5F5,stroke:#212121,stroke-width:2px;  %% Off-White - UI Section
-    style G fill:#F5F5F5,stroke:#212121,stroke-width:2px;  %% Off-White - UI Section
-    style H fill:#F5F5F5,stroke:#212121,stroke-width:2px;  %% Off-White - UI Section
-    style I fill:#F5F5F5,stroke:#212121,stroke-width:2px;  %% Off-White - UI Section
-    style J fill:#F5F5F5,stroke:#212121,stroke-width:2px;  %% Off-White - UI Section
-    style K fill:#F5F5F5,stroke:#212121,stroke-width:2px;  %% Off-White - UI Section
-    style L fill:#F5F5F5,stroke:#212121,stroke-width:2px;  %% Off-White - UI Section
-    style M fill:#F5F5F5,stroke:#212121,stroke-width:2px;  %% Off-White - UI Section
-    style N fill:#26A69A,stroke:#212121,stroke-width:2px;  %% Alternative Teal - Decision Node
-    style O fill:#F5F5F5,stroke:#212121,stroke-width:2px;  %% Off-White - UI Section
-    style P fill:#F5F5F5,stroke:#212121,stroke-width:2px;  %% Off-White - UI Section
-    style Q fill:#F5F5F5,stroke:#212121,stroke-width:2px;  %% Off-White - UI Section
-    style R fill:#F5F5F5,stroke:#212121,stroke-width:2px;  %% Off-White - UI Section
+    style A fill:#E0A800,stroke:#F5F5F5,stroke-width:2px;  %% Deep Honey - Entry Point
+    style B fill:#212121,stroke:#F5F5F5,stroke-width:2px;  %% Charcoal - Main Decision Node
+    style C fill:#00796B,stroke:#F5F5F5,stroke-width:2px;  %% Teal - Sign Up/Login
+    style D fill:#00796B,stroke:#F5F5F5,stroke-width:2px;  %% Teal - Swipe Artists
+    style E fill:#212121,stroke:#F5F5F5,stroke-width:2px;  %% Charcoal - Decision Node
+    style F fill:#00796B,stroke:#F5F5F5,stroke-width:2px;  %% Teal - View Profile
+    style G fill:#00796B,stroke:#F5F5F5,stroke-width:2px;  %% Teal - Booking Request
+    style H fill:#00796B,stroke:#F5F5F5,stroke-width:2px;  %% Teal - Chat for Consultation
+    style I fill:#E0A800,stroke:#F5F5F5,stroke-width:2px;  %% Deep Honey - Confirm Payment
+    style J fill:#E0A800,stroke:#F5F5F5,stroke-width:2px;  %% Deep Honey - Leave Review
+    style K fill:#00796B,stroke:#F5F5F5,stroke-width:2px;  %% Teal - Artist Sign Up
+    style L fill:#00796B,stroke:#F5F5F5,stroke-width:2px;  %% Teal - Profile Setup
+    style M fill:#00796B,stroke:#F5F5F5,stroke-width:2px;  %% Teal - Booking Requests
+    style N fill:#212121,stroke:#F5F5F5,stroke-width:2px;  %% Charcoal - Accept/Decline Decision
+    style O fill:#00796B,stroke:#F5F5F5,stroke-width:2px;  %% Teal - Chat with Client
+    style P fill:#E0A800,stroke:#F5F5F5,stroke-width:2px;  %% Deep Honey - Confirm Appointment
+    style Q fill:#E0A800,stroke:#F5F5F5,stroke-width:2px;  %% Deep Honey - Complete Tattoo
+    style R fill:#E0A800,stroke:#F5F5F5,stroke-width:2px;  %% Deep Honey - Receive Payment

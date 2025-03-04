@@ -42,53 +42,65 @@ The following block diagram illustrates the major components of the Stingr platf
 ```mermaid
 graph TD;
     subgraph Client Side
-        A1[User Device] -->|Request| B[Frontend - React/Next.js]
-        B -->|API Calls| C[Backend - Node.js/Express]
+        A1([User Device]) -->|Request| B[/Frontend - React/Next.js/]
+        B -->|API Calls| C[/Backend - Node.js/Express/]
     end
 
     subgraph Server Side
-        C -->|Auth Requests| D[Authentication - Firebase/Auth0]
-        C -->|Data Read/Write| E[Database - PostgreSQL]
-        C -->|File Uploads| F[Storage - Cloud Storage - AWS S3]
-        C -->|Hosting & API| G[Hosting - Vercel/DigitalOcean]
+        C -.->|Auth Requests| D{{Authentication - Firebase/Auth0}}
+        C -.->|Data Read/Write| E[(Database - PostgreSQL)]
+        C -->|File Uploads| F[(Storage - Cloud Storage - AWS S3)]
+        C -->|Hosting & API| G[/Hosting - Vercel/DigitalOcean/]
     end
 
     subgraph External Services
-        E -->|Data Sync| H[Analytics - Google Analytics]
-        E -->|Payment Processing| I[Stripe API]
-        D -->|User Auth Sync| J[OAuth - Google/Apple]
+        E -->|Data Sync| H{{Analytics - Google Analytics}}
+        E -->|Payment Processing| I{{Stripe API}}
+        D -->|User Auth Sync| J{{OAuth - Google/Apple}}
     end
 
     style A1 fill:#FFC107,stroke:#212121,stroke-width:2px;
     style B fill:#E0A800,stroke:#212121,stroke-width:2px;
     style C fill:#00796B,stroke:#212121,stroke-width:2px;
-    style D fill:#212121,stroke:#212121,stroke-width:2px;
-    style E fill:#00796B,stroke:#212121,stroke-width:2px;
-    style F fill:#00796B,stroke:#212121,stroke-width:2px;
+    style D fill:#212121,stroke:#212121,stroke-width:2px,stroke-dasharray:5 5;
+    style E fill:#00796B,stroke:#212121,stroke-width:3px;
+    style F fill:#00796B,stroke:#212121,stroke-width:3px;
     style G fill:#E0A800,stroke:#212121,stroke-width:2px;
-    style H fill:#212121,stroke:#212121,stroke-width:2px;
-    style I fill:#26A69A,stroke:#212121,stroke-width:2px;
-    style J fill:#26A69A,stroke:#212121,stroke-width:2px;
+    style H fill:#212121,stroke:#212121,stroke-width:2px,stroke-dasharray:5 5;
+    style I fill:#26A69A,stroke:#212121,stroke-width:2px,stroke-dasharray:5 5;
+    style J fill:#26A69A,stroke:#212121,stroke-width:2px,stroke-dasharray:5 5;
 ```
 
 ---
 
 ## 4. Legend
 - **Client Side**: Represents user interaction with the Stingr platform.
-  - **User Device**: The mobile or desktop device accessing the web app.
-  - **Frontend (React/Next.js)**: The client-side interface users interact with.
-  - **Backend (Node.js/Express)**: Handles API requests and business logic.
+  - **User Device**: The mobile or desktop device accessing the web app (**oval shape**).
+  - **Frontend (React/Next.js)**: The client-side interface users interact with (**parallelogram**).
+  - **Backend (Node.js/Express)**: Handles API requests and business logic (**parallelogram**).
 
 - **Server Side**: Core backend services responsible for authentication, data management, and hosting.
-  - **Authentication (Firebase/Auth0)**: Manages user sign-in and security.
-  - **Database (PostgreSQL)**: Stores user profiles, bookings, and artist data.
-  - **Storage (AWS S3)**: Stores images and portfolio data.
-  - **Hosting (Vercel/DigitalOcean)**: Hosts the application and backend APIs.
+  - **Authentication (Firebase/Auth0)**: Manages user sign-in and security (**dashed border** to indicate control signals).
+  - **Database (PostgreSQL)**: Stores user profiles, bookings, and artist data (**cylinder shape for storage**).
+  - **Storage (AWS S3)**: Stores images and portfolio data (**cylinder shape for storage**).
+  - **Hosting (Vercel/DigitalOcean)**: Hosts the application and backend APIs (**parallelogram for external hosting**).
 
 - **External Services**: Third-party integrations for analytics, payments, and authentication.
-  - **Analytics (Google Analytics)**: Tracks user behavior for optimization.
-  - **Payment Processing (Stripe API)**: Handles secure payments.
-  - **OAuth (Google/Apple)**: Allows social sign-in options.
+  - **Analytics (Google Analytics)**: Tracks user behavior for optimization (**dashed border for control signals**).
+  - **Payment Processing (Stripe API)**: Handles secure payments (**dashed border for control signals**).
+  - **OAuth (Google/Apple)**: Allows social sign-in options (**dashed border for control signals**).
 
-- **Control Plane**: Handles authentication requests and user interactions.
-- **Data Plane**: Manages image uploads, database transactions, and payments.
+- **Control Plane**: Handles authentication requests and user interactions (**dashed arrows**).
+- **Data Plane**: Manages image uploads, database transactions, and payments (**solid arrows**).
+
+---
+
+## 5. Submission Format
+To submit this document as a **PDF**, follow these steps:
+1. Copy this content into **Google Docs or Microsoft Word**.
+2. Adjust formatting for readability (headings, spacing, diagrams).
+3. Export as **PDF** (`File > Download > PDF`).
+4. Submit the PDF to the required platform.
+
+This document follows **professional technical writing best practices** by maintaining a structured format, clear descriptions, and well-labeled diagrams.
+

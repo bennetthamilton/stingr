@@ -20,11 +20,11 @@ graph TD;
 
     style A1 fill:#FFC107,stroke:#212121,stroke-width:2px;
     style B fill:#E0A800,stroke:#212121,stroke-width:2px;
-    style C fill:#00796B,stroke:#F5F5F5,stroke-width:2px;
-    style D fill:#212121,stroke:#F5F5F5,stroke-width:2px;
-    style E fill:#00796B,stroke:#F5F5F5,stroke-width:2px;
-    style F fill:#00796B,stroke:#F5F5F5,stroke-width:2px;
+    style C fill:#00796B,stroke:#212121,stroke-width:2px;
+    style D fill:#212121,stroke:#212121,stroke-width:2px;
+    style E fill:#00796B,stroke:#212121,stroke-width:2px;
+    style F fill:#00796B,stroke:#212121,stroke-width:2px;
     style G fill:#E0A800,stroke:#212121,stroke-width:2px;
-    style H fill:#212121,stroke:#F5F5F5,stroke-width:2px;
+    style H fill:#212121,stroke:#212121,stroke-width:2px;
     style I fill:#26A69A,stroke:#212121,stroke-width:2px;
     style J fill:#26A69A,stroke:#212121,stroke-width:2px;

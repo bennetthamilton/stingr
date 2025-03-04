@@ -1,3 +1,4 @@
+```mermaid
 graph TD;
     subgraph Client Side
         A1[User Device] -->|Request| B[Frontend - React/Next.js]

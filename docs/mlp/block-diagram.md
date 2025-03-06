@@ -18,6 +18,9 @@ graph TD;
         D -->|User Auth Sync| J{{OAuth - Google/Apple}}
     end
 
+    subgraph Legend
+        K([Control Plane]) -.->|Control Panel| K{{Control Panel}}
+
     style A1 fill:#FFC107,stroke:#212121,stroke-width:2px;
     style B fill:#E0A800,stroke:#212121,stroke-width:2px;
     style C fill:#a85e32,stroke:#212121,stroke-width:2px;

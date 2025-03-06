@@ -1,7 +1,8 @@
-```mermaid
+
+
 graph TD;
     subgraph Client Side
-        A1([User Device]) -->|Request| B[/Frontend - React/Next.js/]
+        A([User Device]) -->|Request| B[/Frontend - React/Next.js/]
         B -->|API Calls| C[/Backend - Node.js/Express/]
     end
 
@@ -19,16 +20,24 @@ graph TD;
     end
 
     subgraph Legend
-        K([Control Plane]) -.->|Control Panel| K{{Control Panel}}
+        K([Oval]) -.->|Control Plane| K([User Plane])
+        L[/Parallelogram/] -->|Data Plane| L[/Hosting/]
+        M[(Database/Storage)]
+        N{{Service/API}}
+    end
 
-    style A1 fill:#FFC107,stroke:#212121,stroke-width:2px;
-    style B fill:#E0A800,stroke:#212121,stroke-width:2px;
+    style A fill:#a85e32,stroke:#212121,stroke-width:2px;
+    style B fill:#a85e32,stroke:#212121,stroke-width:2px;
     style C fill:#a85e32,stroke:#212121,stroke-width:2px;
     style D fill:#a85e32,stroke:#212121,stroke-width:2px,stroke-dasharray:5 5;
-    style E fill:#00796B,stroke:#212121,stroke-width:3px;
-    style F fill:#00796B,stroke:#212121,stroke-width:3px;
-    style G fill:#E0A800,stroke:#212121,stroke-width:2px;
+    style E fill:#a85e32,stroke:#212121,stroke-width:2px;
+    style F fill:#a85e32,stroke:#212121,stroke-width:2px;
+    style G fill:#a85e32,stroke:#212121,stroke-width:2px;
     style H fill:#a85e32,stroke:#212121,stroke-width:2px,stroke-dasharray:5 5;
-    style I fill:#26A69A,stroke:#212121,stroke-width:2px,stroke-dasharray:5 5;
-    style J fill:#26A69A,stroke:#212121,stroke-width:2px,stroke-dasharray:5 5;
-```
+    style I fill:#a85e32,stroke:#212121,stroke-width:2px,stroke-dasharray:5 5;
+    style J fill:#a85e32,stroke:#212121,stroke-width:2px,stroke-dasharray:5 5;
+    style K fill:#a85e32,stroke:#212121,stroke-width:2px;
+    style L fill:#a85e32,stroke:#212121,stroke-width:2px;
+    style M fill:#a85e32,stroke:#212121,stroke-width:2px;
+    style N fill:#a85e32, stroke:#212121,stroke-width:2px,stroke-dasharray:5 5;
+

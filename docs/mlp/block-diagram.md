@@ -1,4 +1,4 @@
-
+```mermaid
 
 graph TD;
     subgraph Client Side
@@ -41,3 +41,4 @@ graph TD;
     style M fill:#a85e32,stroke:#212121,stroke-width:2px;
     style N fill:#a85e32, stroke:#212121,stroke-width:2px,stroke-dasharray:5 5;
 
+```

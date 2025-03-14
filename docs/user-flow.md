@@ -35,10 +35,10 @@ graph TD;
 
     %% Styles
     style A fill:#E0A800,stroke:#F5F5F5,stroke-width:2px;  %% Deep Honey - Entry Point
-    style B fill:#212121,stroke:#F5F5F5,stroke-width:2px;  %% Charcoal - Main Decision Node
+    style B fill:#805305,stroke:#F5F5F5,stroke-width:2px;  %% Brown - Main Decision Node
     style C fill:#00796B,stroke:#F5F5F5,stroke-width:2px;  %% Teal - Sign Up/Login
     style D fill:#00796B,stroke:#F5F5F5,stroke-width:2px;  %% Teal - Swipe Artists
-    style E fill:#212121,stroke:#F5F5F5,stroke-width:2px;  %% Charcoal - Decision Node
+    style E fill:#805305,stroke:#F5F5F5,stroke-width:2px;  %% Brown - Decision Node
     style F fill:#00796B,stroke:#F5F5F5,stroke-width:2px;  %% Teal - View Profile
     style G fill:#00796B,stroke:#F5F5F5,stroke-width:2px;  %% Teal - Booking Request
     style H fill:#00796B,stroke:#F5F5F5,stroke-width:2px;  %% Teal - Chat for Consultation
@@ -47,7 +47,7 @@ graph TD;
     style K fill:#00796B,stroke:#F5F5F5,stroke-width:2px;  %% Teal - Artist Sign Up
     style L fill:#00796B,stroke:#F5F5F5,stroke-width:2px;  %% Teal - Profile Setup
     style M fill:#00796B,stroke:#F5F5F5,stroke-width:2px;  %% Teal - Booking Requests
-    style N fill:#212121,stroke:#F5F5F5,stroke-width:2px;  %% Charcoal - Accept/Decline Decision
+    style N fill:#805305,stroke:#F5F5F5,stroke-width:2px;  %% Brown - Accept/Decline Decision
     style O fill:#00796B,stroke:#F5F5F5,stroke-width:2px;  %% Teal - Chat with Client
     style P fill:#E0A800,stroke:#F5F5F5,stroke-width:2px;  %% Deep Honey - Confirm Appointment
     style Q fill:#E0A800,stroke:#F5F5F5,stroke-width:2px;  %% Deep Honey - Complete Tattoo

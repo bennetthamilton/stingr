@@ -8,7 +8,7 @@ graph TD;
 
     subgraph Server Side
         C -.->|Auth Requests| D{{Authentication - Firebase/Auth0}}
-        C -.->|Data Read/Write| E[(Database - PostgreSQL)]
+        C -.->|Data Read/Write| E[(Database - NoSQL)]
         C -->|File Uploads| F[(Storage - Cloud Storage - AWS S3)]
         C -->|Hosting & API| G[/Hosting - Vercel/DigitalOcean/]
     end

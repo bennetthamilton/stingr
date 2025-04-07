@@ -6,6 +6,7 @@ export default function Home() {
     <>
       <Navbar2 />
       <Header6 />
+      
     </>
   );
 }

@@ -32,9 +32,9 @@ jobs:
         with:
           node-version: '20'
       - name: Install Dependencies
-        run: npm install
+        run: npm install --prefix ./src/stingr_frontend
       - name: Build React App
-        run: npm run build
+        run: npm run build --prefix ./src/stingr_frontend
 # Set up the environment with the AWS secrets that were configured in the environment settings
       - name: Deploy to S3 bucket
         env:

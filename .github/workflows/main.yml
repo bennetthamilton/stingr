@@ -37,6 +37,10 @@ jobs:
         working-directory: src/stingr-frontend
         run: npm ci
 
+      - name: Create out folder
+        working-directory: src/stingr-frontend
+        run: mkdir out
+
       - name: Build React App
         working-directory: src/stingr-frontend
         run: npm run build

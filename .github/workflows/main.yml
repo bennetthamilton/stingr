@@ -1,16 +1,21 @@
+# This file defines the triggers, environment and steps to take to deploy the code in this repository
+# More details about the syntax and capabilities can be found here: https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions
+#
+# This is the name of the action
 name: Deploy to S3
-
+# These are the action triggers.  
+# 'workflow_dispatch' allows you to run the job in the console without pushing any code. 
+# 'push' will run the job when changes are made to the 'main' branch
 on:
   workflow_dispatch:
   push:
     branches:
       - main
-
+# The following defines the job that runs on the triggers mentioned above.
 jobs:
   deploy:
     runs-on: ubuntu-latest
     environment: stingr-production
-
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
@@ -20,19 +25,19 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_DEFAULT_REGION: us-east-1
+        working-directory: src/stingr-frontend
         run: aws s3 ls
 
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '20'
-          cache: 'npm'
 
       - name: Install Dependencies
         working-directory: src/stingr-frontend
-        run: npm ci  # Use 'npm ci' for faster, reliable installs
+        run: npm ci
 
-      - name: Build Next.js App
+      - name: Build React App
         working-directory: src/stingr-frontend
         run: npm run build
 
@@ -41,4 +46,4 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_DEFAULT_REGION: us-east-1
-        run: aws s3 sync --acl public-read src/stingr-frontend/.next/ s3://${{ secrets.AWS_S3_BUCKET }} --delete
+        run: aws s3 sync --acl public-read src/stingr-frontend/out/ s3://${{ secrets.AWS_S3_BUCKET }} --delete

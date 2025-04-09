@@ -24,6 +24,7 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_DEFAULT_REGION: us-east-1
+        working-directory: src/stingr_frontend
         run: aws s3 ls
       - name: Checkout Code
         uses: actions/checkout@v3
@@ -32,9 +33,10 @@ jobs:
         with:
           node-version: '20'
       - name: Install Dependencies
-        run: npm install --prefix ./src/stingr_frontend
+        working-directory: src/stingr_frontend
+        run: npm install
       - name: Build React App
-        run: npm run build --prefix ./src/stingr_frontend
+        run: npm run build
 # Set up the environment with the AWS secrets that were configured in the environment settings
       - name: Deploy to S3 bucket
         env:

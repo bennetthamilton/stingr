@@ -60,11 +60,11 @@ export const Layout409 = (props: Layout409Props) => {
   return (
     <section id="relume" className="px-[5%] py-16 md:py-24 lg:py-28">
       <div className="container">
-        <div className="mx-auto mb-12 w-full max-w-lg text-center md:mb-18 lg:mb-20">
+        {/* <div className="mx-auto mb-12 w-full max-w-lg text-center md:mb-18 lg:mb-20">
           <p className="mb-3 font-semibold md:mb-4">{tagline}</p>
           <h1 className="mb-5 text-5xl font-bold md:mb-6 md:text-7xl lg:text-8xl">{heading}</h1>
           <p className="md:text-md">{description}</p>
-        </div>
+        </div> */}
         <div ref={containerRef} className="sticky top-0 grid grid-cols-1 gap-6 md:gap-0">
           {featureSections.map((featureSection, index) => (
             <FeatureSection key={index} {...featureSection} scale={scales[index]} index={index} />

@@ -140,84 +140,69 @@ const FeatureSectionContent = ({
 );
 
 export const Layout409Defaults: Props = {
-  tagline: "Tagline",
-  heading: "Short heading goes here",
-  description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+  tagline: "How It Works",
+  heading: "A Better Way to Get Tattooed",
+  description:
+    "We’re reimagining how people find tattoo artists — and how artists connect with new clients. Here’s how Stingr works:",
   featureSections: [
     {
-      tagline: "Tagline",
-      heading: "Medium length section heading goes here",
+      tagline: "Step 1",
+      heading: "Swipe to Find Your Style",
       description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat.",
+        "Easily browse portfolios by tattoo style, location, or vibe. Like what you see? Swipe right to save your favorites.",
       buttons: [
-        { title: "Button", variant: "secondary" },
-        {
-          title: "Button",
-          variant: "link",
-          size: "link",
-          iconRight: <RxChevronRight />,
-        },
+        { title: "Browse Artists", variant: "primary" },
       ],
       image: {
-        src: "https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg",
-        alt: "Relume placeholder image 1",
+        src: "/images/steps/swipe.png", // Replace with your actual asset
+        alt: "Swiping through artist profiles",
       },
     },
     {
-      tagline: "Tagline",
-      heading: "Medium length section heading goes here",
+      tagline: "Step 2",
+      heading: "Instantly Match & Chat",
       description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat.",
+        "When there’s a match, you’ll instantly be able to chat. No awkward emails, no waiting days for a reply.",
       buttons: [
-        { title: "Button", variant: "secondary" },
-        {
-          title: "Button",
-          variant: "link",
-          size: "link",
-          iconRight: <RxChevronRight />,
-        },
+        { title: "Sign Up", variant: "primary" },
       ],
       image: {
-        src: "https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg",
-        alt: "Relume placeholder image 2",
+        src: "/images/steps/match.png",
+        alt: "Client messaging tattoo artist",
       },
     },
     {
-      tagline: "Tagline",
-      heading: "Medium length section heading goes here",
+      tagline: "Step 3",
+      heading: "Book Your Consultation",
       description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat.",
+        "Schedule your consultation or tattoo session directly in the app. Everything happens in one place.",
       buttons: [
-        { title: "Button", variant: "secondary" },
         {
-          title: "Button",
-          variant: "link",
-          size: "link",
-          iconRight: <RxChevronRight />,
+          title: "Create an Account",
+          variant: "primary",
         },
       ],
       image: {
-        src: "https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg",
-        alt: "Relume placeholder image 3",
+        src: "/images/steps/book.png",
+        alt: "Booking screen example",
       },
     },
     {
-      tagline: "Tagline",
-      heading: "Medium length section heading goes here",
+      tagline: "Step 4",
+      heading: "Get Inked With Confidence",
       description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat.",
+        "From discovery to booking — Stingr makes the entire process effortless. All that’s left is to show up and get inked.",
       buttons: [
-        { title: "Button", variant: "secondary" },
         {
-          title: "Button",
+          title: "Explore Artists",
           variant: "link",
           size: "link",
           iconRight: <RxChevronRight />,
         },
       ],
       image: {
-        src: "https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg",
-        alt: "Relume placeholder image 4",
+        src: "/images/steps/tattoo.png",
+        alt: "Tattoo artist working on a client",
       },
     },
   ],

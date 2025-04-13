@@ -60,37 +60,38 @@ type ImageProps = {
   };
   
   export const Testimonial2Defaults: Props = {
-    heading: "Customer testimonials",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    heading: "What people are saying",
+    description: "From creators to clients, see how Stingr is changing the tattoo experience.",
     testimonials: [
       {
         image: {
           src: "https://d22po4pjz3o32e.cloudfront.net/webflow-logo.svg",
-          alt: "Webflow logo 1",
+          alt: "Stingr logo or placeholder",
         },
         quote:
-          '"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat."',
+          '"Nothing is worse for a client and for the artist than ending a session with a piece neither party is completely satisfied with. Stingr aims to prevent that from the very start of the process."',
         avatar: {
           src: "https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg",
-          alt: "Testimonial avatar 1",
+          alt: "Bennett Hamilton avatar",
         },
-        name: "Name Surname",
-        position: "Position, Company name",
+        name: "Bennett Hamilton",
+        position: "Founder, 2025",
       },
       {
         image: {
           src: "https://d22po4pjz3o32e.cloudfront.net/webflow-logo.svg",
-          alt: "Webflow logo 2",
+          alt: "Stingr logo or placeholder",
         },
         quote:
-          '"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat."',
+          '"It really made it easy to find artists that were in my price range and specialize in the style of art that I want."',
         avatar: {
           src: "https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg",
-          alt: "Testimonial avatar 2",
+          alt: "Jon Taylor avatar",
         },
-        name: "Name Surname",
-        position: "Position, Company name",
+        name: "Jon Taylor",
+        position: "User, 2025",
       },
     ],
   };
+  
   

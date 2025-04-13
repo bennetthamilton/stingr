@@ -8,16 +8,20 @@ module.exports = {
     theme: {
       extend: {
         colors: {
+          background: '#212121', // charcoal
+          foreground: '#fdf9e9', // offWhite
           charcoal: '#212121',
-          offwhite: '#FDF9E9',
-          lightHoney: '#FFD54F',
-          honeyGold: '#FD8500',
-          deepHoney: '#D77D00',
+          offWhite: '#fdf9e9',
+          lightHoney: '#ffd54f',
+          honeyGold: '#fd8500',
+          deepHoney: '#d77d00',
           brown: '#724800',
-          teal: '#26A69A',
+          teal: '#26a69a',
         },
         fontFamily: {
-          righteous: ['Righteous', 'cursive'],
+          righteous: ['Righteous', 'cursive'],       // Logo only
+          heading: ['Montserrat', 'sans-serif'],     // Headings
+          body: ['Raleway', 'sans-serif'],           // Body text
         },
       },
     },

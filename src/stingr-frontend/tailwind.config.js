@@ -19,9 +19,9 @@ module.exports = {
           teal: '#26a69a',
         },
         fontFamily: {
-          righteous: ['Righteous', 'cursive'],       // Logo only
-          heading: ['Montserrat', 'sans-serif'],     // Headings
-          body: ['Raleway', 'sans-serif'],           // Body text
+          righteous: ['var(--font-logo)', 'cursive'],
+          heading: ['var(--font-heading)', 'sans-serif'],
+          body: ['var(--font-body)', 'sans-serif'],
         },
       },
     },

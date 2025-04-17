@@ -25,7 +25,7 @@ export const Navbar2 = (props: Navbar2Props) => {
   };
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const isMobile = useMediaQuery("(max-width: 991px)");
+  // const isMobile = useMediaQuery("(max-width: 991px)");
 
   const buttonLinks = ["/login", "/signup"];
 

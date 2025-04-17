@@ -131,11 +131,11 @@ export const Footer1 = (props: Footer1Props) => {
 
 export const Footer1Defaults: Props = {
   logo: {
-    url: "#",
-    src: "https://d22po4pjz3o32e.cloudfront.net/logo-image.svg",
-    alt: "Logo image",
+    url: "/",
+    src: "/stingr-logo.svg", // Replace with your actual logo path or use text if component supports it
+    alt: "Stingr logo",
   },
-  newsletterDescription: "Join our newsletter to stay up to date on features and releases.",
+  newsletterDescription: "Get occasional updates from the Stingr team — no spam, just tattoos.",
   inputPlaceholder: "Enter your email",
   button: {
     title: "Subscribe",
@@ -143,48 +143,46 @@ export const Footer1Defaults: Props = {
     size: "sm",
   },
   termsAndConditions: `
-  <p class='text-xs'>
-    By subscribing you agree to with our
-    <a href='#' class='underline'>Privacy Policy</a>
-    and provide consent to receive updates from our company.
-  </p>
+    <p class='text-xs'>
+      By subscribing, you agree to our
+      <a href='/privacy' class='underline'>Privacy Policy</a>
+      and consent to receive updates from Stingr.
+    </p>
   `,
   columnLinks: [
     {
-      title: "Column One",
+      title: "Product",
       links: [
-        { title: "Link One", url: "#" },
-        { title: "Link Two", url: "#" },
-        { title: "Link Three", url: "#" },
-        { title: "Link Four", url: "#" },
-        { title: "Link Five", url: "#" },
+        { title: "Browse Artists", url: "/browse" },
+        { title: "For Artists", url: "/artists" },
+        { title: "FAQ", url: "/faq" },
+        { title: "Sign Up", url: "/signup" },
+        { title: "Log In", url: "/login" },
       ],
     },
     {
-      title: "Column Two",
+      title: "Company",
       links: [
-        { title: "Link Six", url: "#" },
-        { title: "Link Seven", url: "#" },
-        { title: "Link Eight", url: "#" },
-        { title: "Link Nine", url: "#" },
-        { title: "Link Ten", url: "#" },
+        { title: "About", url: "/about" },
+        { title: "Contact", url: "/contact" }, // future page
+        { title: "Press", url: "#" }, // optional
+        { title: "Careers", url: "#" }, // optional
       ],
     },
     {
       title: "Follow us",
       links: [
-        { title: "Facebook", url: "#", icon: <BiLogoFacebookCircle className="size-6" /> },
-        { title: "Instagram", url: "#", icon: <BiLogoInstagram className="size-6" /> },
-        { title: "X", url: "#", icon: <FaXTwitter className="size-6 p-0.5" /> },
-        { title: "LinkedIn", url: "#", icon: <BiLogoLinkedinSquare className="size-6" /> },
-        { title: "Youtube", url: "#", icon: <BiLogoYoutube className="size-6" /> },
+        { title: "Instagram", url: "https://instagram.com/stingr", icon: <BiLogoInstagram className="size-6" /> },
+        { title: "X", url: "https://x.com/stingr", icon: <FaXTwitter className="size-6 p-0.5" /> },
+        { title: "LinkedIn", url: "https://linkedin.com/company/stingr", icon: <BiLogoLinkedinSquare className="size-6" /> },
+        { title: "YouTube", url: "https://youtube.com/@stingr", icon: <BiLogoYoutube className="size-6" /> },
       ],
     },
   ],
-  footerText: "© 2024 Relume. All rights reserved.",
+  footerText: "© 2025 Stingr. All rights reserved.",
   footerLinks: [
-    { title: "Privacy Policy", url: "#" },
-    { title: "Terms of Service", url: "#" },
-    { title: "Cookies Settings", url: "#" },
+    { title: "Privacy Policy", url: "/privacy" },
+    { title: "Terms of Service", url: "/terms" },
+    { title: "Cookie Settings", url: "/cookies" },
   ],
 };

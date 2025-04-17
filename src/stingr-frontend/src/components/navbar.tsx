@@ -3,23 +3,15 @@
 import { useState } from "react";
 import { Button, useMediaQuery } from "@relume_io/relume-ui";
 import type { ButtonProps } from "@relume_io/relume-ui";
-import { AnimatePresence, motion } from "framer-motion";
-import { RxChevronDown } from "react-icons/rx";
-
-type ImageProps = {
-  url?: string;
-  src: string;
-  alt?: string;
-};
+import { motion } from "framer-motion";
+import Link from "next/link";
 
 type NavLink = {
   url: string;
   title: string;
-  subMenuLinks?: NavLink[];
 };
 
 type Props = {
-  logo: ImageProps;
   navLinks: NavLink[];
   buttons: ButtonProps[];
 };
@@ -27,7 +19,7 @@ type Props = {
 export type Navbar2Props = React.ComponentPropsWithoutRef<"section"> & Partial<Props>;
 
 export const Navbar2 = (props: Navbar2Props) => {
-  const { logo, navLinks, buttons } = {
+  const { navLinks, buttons } = {
     ...Navbar2Defaults,
     ...props,
   };
@@ -35,176 +27,124 @@ export const Navbar2 = (props: Navbar2Props) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const isMobile = useMediaQuery("(max-width: 991px)");
 
+  const buttonLinks = ["/login", "/signup"];
+
   return (
     <section
-      id="relume"
-      className="z-[999] flex w-full items-center border-b border-border-primary bg-background-primary lg:min-h-18 lg:px-[5%]"
+      id="navbar"
+      className="z-[999] flex w-full items-center border-b border-border-primary bg-background px-[5%] py-4"
     >
-      <div className="mx-auto size-full lg:grid lg:grid-cols-[0.375fr_1fr_0.375fr] lg:items-center lg:justify-between lg:gap-4">
-        <div className="flex min-h-16 items-center justify-between px-[5%] md:min-h-18 lg:min-h-full lg:px-0">
-          <a href={logo.url}>
-            <img src={logo.src} alt={logo.alt} />
-          </a>
-          <div className="flex items-center gap-4 lg:hidden">
-            <div>
-              {buttons.map((button, index) => (
-                <Button key={index} className="w-full px-4 py-1" {...button}>
-                  {button.title}
-                </Button>
-              ))}
-            </div>
-            <button
-              className="-mr-2 flex size-12 flex-col items-center justify-center"
-              onClick={() => setIsMobileMenuOpen((prev) => !prev)}
+      <div className="mx-auto w-full flex items-center justify-between">
+        {/* Logo as Text */}
+        <a href="/" className="text-2xl font-logo text-honeyGold tracking-wide">
+          stingr
+        </a>
+
+        {/* Desktop Nav */}
+        <div className="hidden md:flex items-center gap-6 ml-auto mr-6 font-heading">
+          {navLinks.map((navLink, index) => (
+            <a
+              key={index}
+              href={navLink.url}
+              className="text-base text-offWhite hover:text-honeyGold transition-colors"
             >
-              <motion.span
-                className="my-[3px] h-0.5 w-6 bg-black"
-                animate={isMobileMenuOpen ? ["open", "rotatePhase"] : "closed"}
-                variants={topLineVariants}
-              />
-              <motion.span
-                className="my-[3px] h-0.5 w-6 bg-black"
-                animate={isMobileMenuOpen ? "open" : "closed"}
-                variants={middleLineVariants}
-              />
-              <motion.span
-                className="my-[3px] h-0.5 w-6 bg-black"
-                animate={isMobileMenuOpen ? ["open", "rotatePhase"] : "closed"}
-                variants={bottomLineVariants}
-              />
-            </button>
-          </div>
+              {navLink.title}
+            </a>
+          ))}
         </div>
+
+        {/* Auth Buttons (Desktop) */}
+        <div className="hidden md:flex gap-4">
+          {buttons.map((button, index) => (
+            <Link key={index} href={buttonLinks[index]}>
+              <Button className="px-4 py-2" {...button}>
+                {button.title}
+              </Button>
+            </Link>
+          ))}
+        </div>
+
+        {/* Mobile Menu Button */}
+        <div className="md:hidden flex items-center gap-2">
+          <button
+            className="flex flex-col items-center justify-center"
+            onClick={() => setIsMobileMenuOpen((prev) => !prev)}
+          >
+            <motion.span
+              className="my-[3px] h-0.5 w-6 bg-white"
+              animate={isMobileMenuOpen ? ["open", "rotatePhase"] : "closed"}
+              variants={topLineVariants}
+            />
+            <motion.span
+              className="my-[3px] h-0.5 w-6 bg-white"
+              animate={isMobileMenuOpen ? "open" : "closed"}
+              variants={middleLineVariants}
+            />
+            <motion.span
+              className="my-[3px] h-0.5 w-6 bg-white"
+              animate={isMobileMenuOpen ? ["open", "rotatePhase"] : "closed"}
+              variants={bottomLineVariants}
+            />
+          </button>
+        </div>
+      </div>
+
+      {/* Mobile Menu */}
+      {isMobileMenuOpen && (
         <motion.div
-          variants={{
-            open: {
-              height: "var(--height-open, 100dvh)",
-            },
-            close: {
-              height: "var(--height-closed, 0)",
-            },
-          }}
-          animate={isMobileMenuOpen ? "open" : "close"}
-          initial="close"
-          exit="close"
-          transition={{ duration: 0.4 }}
-          className="overflow-hidden px-[5%] text-center lg:flex lg:items-center lg:justify-center lg:px-0 lg:[--height-closed:auto] lg:[--height-open:auto]"
+          className="absolute top-full left-0 w-full bg-background px-[5%] py-6 text-center md:hidden"
+          initial={{ height: 0, opacity: 0 }}
+          animate={{ height: "auto", opacity: 1 }}
+          exit={{ height: 0, opacity: 0 }}
+          transition={{ duration: 0.3 }}
         >
-          {navLinks.map((navLink, index) =>
-            navLink.subMenuLinks && navLink.subMenuLinks.length > 0 ? (
-              <SubMenu key={index} navLink={navLink} isMobile={isMobile} />
-            ) : (
+          <div className="flex flex-col gap-4">
+            {navLinks.map((navLink, index) => (
               <a
                 key={index}
                 href={navLink.url}
-                className="block py-3 text-md first:pt-7 lg:px-4 lg:py-2 lg:text-base first:lg:pt-2"
+                className="text-base font-heading text-offWhite hover:text-honeyGold"
               >
                 {navLink.title}
               </a>
-            ),
-          )}
-        </motion.div>
-        <div className="hidden justify-self-end lg:block">
-          {buttons.map((button, index) => (
-            <Button key={index} className="px-6 py-2" {...button}>
-              {button.title}
-            </Button>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-};
-
-const SubMenu = ({ navLink, isMobile }: { navLink: NavLink; isMobile: boolean }) => {
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-
-  return (
-    <section
-      onMouseEnter={() => !isMobile && setIsDropdownOpen(true)}
-      onMouseLeave={() => !isMobile && setIsDropdownOpen(false)}
-    >
-      <button
-        className="flex w-full items-center justify-center gap-4 py-3 text-center text-md lg:w-auto lg:flex-none lg:justify-start lg:gap-2 lg:px-4 lg:py-2 lg:text-base"
-        onClick={() => setIsDropdownOpen((prev) => !prev)}
-      >
-        <span>{navLink.title}</span>
-        <motion.span
-          animate={isDropdownOpen ? "rotated" : "initial"}
-          variants={{
-            rotated: { rotate: 180 },
-            initial: { rotate: 0 },
-          }}
-          transition={{ duration: 0.3 }}
-        >
-          <RxChevronDown />
-        </motion.span>
-      </button>
-      {isDropdownOpen && (
-        <AnimatePresence>
-          <motion.nav
-            animate={isDropdownOpen ? "open" : "close"}
-            initial="close"
-            exit="close"
-            variants={{
-              open: {
-                visibility: "visible",
-                opacity: "var(--opacity-open, 100%)",
-                y: 0,
-              },
-              close: {
-                visibility: "hidden",
-                opacity: "var(--opacity-close, 0)",
-                y: "var(--y-close, 0%)",
-              },
-            }}
-            transition={{ duration: 0.2 }}
-            className="bg-background-primary lg:absolute lg:z-50 lg:border lg:border-border-primary lg:p-2 lg:[--y-close:25%]"
-          >
-            {navLink.subMenuLinks?.map((subMenuLink, index) => (
-              <a
-                key={index}
-                href={subMenuLink.url}
-                className="block py-3 text-center lg:px-4 lg:py-2 lg:text-left"
-              >
-                {subMenuLink.title}
-              </a>
             ))}
-          </motion.nav>
-        </AnimatePresence>
+            {buttons.map((button, index) => (
+              <Link key={index} href={buttonLinks[index]}>
+                <Button className="w-full px-4 py-2" {...button}>
+                  {button.title}
+                </Button>
+              </Link>
+            ))}
+          </div>
+        </motion.div>
       )}
     </section>
   );
 };
 
+// Default Props
 export const Navbar2Defaults: Props = {
-  logo: {
-    url: "#",
-    src: "https://d22po4pjz3o32e.cloudfront.net/logo-image.svg",
-    alt: "Logo image",
-  },
   navLinks: [
-    { title: "Link One", url: "#" },
-    { title: "Link Two", url: "#" },
-    { title: "Link Three", url: "#" },
-    {
-      title: "Link Four",
-      url: "#",
-      subMenuLinks: [
-        { title: "Link Five", url: "#" },
-        { title: "Link Six", url: "#" },
-        { title: "Link Seven", url: "#" },
-      ],
-    },
+    { title: "Browse Artists", url: "/browse" },
+    { title: "For Artists", url: "/artists" },
+    { title: "About", url: "/about" },
+    { title: "FAQ", url: "/faq" },
   ],
   buttons: [
     {
-      title: "Button",
+      title: "Log In",
+      variant: "link",
+      size: "sm",
+    },
+    {
+      title: "Sign Up",
+      variant: "primary",
       size: "sm",
     },
   ],
 };
 
+// Framer Motion Menu Line Variants
 const topLineVariants = {
   open: {
     translateY: 8,

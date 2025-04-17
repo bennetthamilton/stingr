@@ -43,7 +43,7 @@ const calculateScales = (totalSections: number, scrollYProgress: MotionValue<num
 };
 
 export const Layout409 = (props: Layout409Props) => {
-  const { tagline, heading, description, featureSections } = {
+  const { featureSections } = {
     ...Layout409Defaults,
     ...props,
   };

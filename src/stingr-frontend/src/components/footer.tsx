@@ -4,7 +4,6 @@ import { Button, Input } from "@relume_io/relume-ui";
 import type { ButtonProps } from "@relume_io/relume-ui";
 import { FaXTwitter } from "react-icons/fa6";
 import {
-  BiLogoFacebookCircle,
   BiLogoInstagram,
   BiLogoLinkedinSquare,
   BiLogoYoutube,

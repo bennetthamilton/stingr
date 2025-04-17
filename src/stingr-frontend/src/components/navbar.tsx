@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Button, useMediaQuery } from "@relume_io/relume-ui";
+import { Button } from "@relume_io/relume-ui";
 import type { ButtonProps } from "@relume_io/relume-ui";
 import { motion } from "framer-motion";
 import Link from "next/link";
@@ -25,7 +25,7 @@ export const Navbar2 = (props: Navbar2Props) => {
   };
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const isMobile = useMediaQuery("(max-width: 991px)");
+  // const isMobile = useMediaQuery("(max-width: 991px)");
 
   const buttonLinks = ["/login", "/signup"];
 
@@ -36,9 +36,9 @@ export const Navbar2 = (props: Navbar2Props) => {
     >
       <div className="mx-auto w-full flex items-center justify-between">
         {/* Logo as Text */}
-        <a href="/" className="text-2xl font-logo text-honeyGold tracking-wide">
+        <Link href="/" className="text-2xl font-logo text-honeyGold tracking-wide">
           stingr
-        </a>
+        </Link>
 
         {/* Desktop Nav */}
         <div className="hidden md:flex items-center gap-6 ml-auto mr-6 font-heading">

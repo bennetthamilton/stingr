@@ -1,0 +1,78 @@
+mediaRoot:
+  get:
+    summary: List all media files for a booking
+    parameters:
+      - $ref: '../components/parameters.yaml#/bookingId'
+    responses:
+      '200':
+        description: List of media files
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '../components/schemas.yaml#/MediaItem'
+      '404':
+        $ref: '../components/responses.yaml#/BookingNotFound'
+
+  post:
+    summary: Upload media file for a booking
+    parameters:
+      - $ref: '../components/parameters.yaml#/bookingId'
+    requestBody:
+      required: true
+      content:
+        multipart/form-data:
+          schema:
+            type: object
+            required:
+              - file
+              - uploaded_by
+            properties:
+              file:
+                type: string
+                format: binary
+              uploaded_by:
+                type: string
+                enum: [client, artist]
+    responses:
+      '201':
+        description: Media file uploaded
+      '400':
+        $ref: '../components/responses.yaml#/BadRequest'
+      '404':
+        $ref: '../components/responses.yaml#/BookingNotFound'
+      '500':
+        $ref: '../components/responses.yaml#/ServerError'
+
+mediaFile:
+  get:
+    summary: Retrieve media file for a booking
+    parameters:
+      - $ref: '../components/parameters.yaml#/bookingId'
+      - $ref: '../components/parameters.yaml#/filename'
+    responses:
+      '200':
+        description: File returned
+        content:
+          application/octet-stream:
+            schema:
+              type: string
+              format: binary
+      '404':
+        $ref: '../components/responses.yaml#/MediaNotFound'
+      '500':
+        $ref: '../components/responses.yaml#/ServerError'
+
+  delete:
+    summary: Delete media file from a booking
+    parameters:
+      - $ref: '../components/parameters.yaml#/bookingId'
+      - $ref: '../components/parameters.yaml#/filename'
+    responses:
+      '204':
+        description: File deleted
+      '404':
+        $ref: '../components/responses.yaml#/MediaNotFound'
+      '500':
+        $ref: '../components/responses.yaml#/ServerError'

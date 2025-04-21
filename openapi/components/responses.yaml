@@ -1,0 +1,43 @@
+BookingNotFound:
+  description: Booking not found
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          error:
+            type: string
+            example: Booking not found
+
+MediaNotFound:
+  description: Media file not found
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          error:
+            type: string
+            example: Media file not found
+
+BadRequest:
+  description: Bad request
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          error:
+            type: string
+            example: Missing required fields
+
+ServerError:
+  description: Server error
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          error:
+            type: string
+            example: Internal server error

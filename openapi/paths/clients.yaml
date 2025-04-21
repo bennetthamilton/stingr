@@ -1,0 +1,45 @@
+/clients:
+  get:
+    summary: Get all clients
+    responses:
+      '200':
+        description: List of clients
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '../components/schemas.yaml#/Client'
+
+  post:
+    summary: Register a new client
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '../components/schemas.yaml#/ClientInput'
+    responses:
+      '201':
+        description: Client created
+      '400':
+        $ref: '../components/responses.yaml#/BadRequest'
+
+/clients/{clientId}:
+  get:
+    summary: Get a specific client
+    parameters:
+      - name: clientId
+        in: path
+        required: true
+        schema:
+          type: string
+    responses:
+      '200':
+        description: Client details
+        content:
+          application/json:
+            schema:
+              $ref: '../components/schemas.yaml#/Client'
+      '404':
+        description: Client not found

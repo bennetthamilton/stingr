@@ -1,0 +1,15 @@
+bookingId:
+  name: bookingId
+  in: path
+  required: true
+  schema:
+    type: string
+  description: Unique identifier for the booking
+
+filename:
+  name: filename
+  in: path
+  required: true
+  schema:
+    type: string
+  description: Name of the media file (e.g., reference.jpg)

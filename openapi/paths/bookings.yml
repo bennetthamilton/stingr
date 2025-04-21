@@ -1,0 +1,66 @@
+/bookings:
+  get:
+    summary: Get all bookings
+    responses:
+      '200':
+        description: List of bookings
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '../components/schemas.yaml#/Booking'
+  post:
+    summary: Create a new booking
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '../components/schemas.yaml#/BookingInput'
+    responses:
+      '201':
+        description: Booking created
+      '400':
+        $ref: '../components/responses.yaml#/BadRequest'
+
+/bookings/{bookingId}:
+  get:
+    summary: Get a specific booking
+    parameters:
+      - $ref: '../components/parameters.yaml#/bookingId'
+    responses:
+      '200':
+        description: Booking data
+        content:
+          application/json:
+            schema:
+              $ref: '../components/schemas.yaml#/Booking'
+      '404':
+        $ref: '../components/responses.yaml#/BookingNotFound'
+
+  patch:
+    summary: Update a booking
+    parameters:
+      - $ref: '../components/parameters.yaml#/bookingId'
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '../components/schemas.yaml#/BookingUpdate'
+    responses:
+      '200':
+        description: Booking updated
+      '404':
+        $ref: '../components/responses.yaml#/BookingNotFound'
+
+  delete:
+    summary: Delete a booking
+    parameters:
+      - $ref: '../components/parameters.yaml#/bookingId'
+    responses:
+      '204':
+        description: Booking deleted
+      '404':
+        $ref: '../components/responses.yaml#/

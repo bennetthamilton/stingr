@@ -1,0 +1,45 @@
+/messages:
+  get:
+    summary: Get all messages
+    responses:
+      '200':
+        description: List of messages
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '../components/schemas.yaml#/Message'
+
+  post:
+    summary: Send a new message
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '../components/schemas.yaml#/MessageInput'
+    responses:
+      '201':
+        description: Message sent
+      '400':
+        $ref: '../components/responses.yaml#/BadRequest'
+
+/messages/{messageId}:
+  get:
+    summary: Get a specific message
+    parameters:
+      - name: messageId
+        in: path
+        required: true
+        schema:
+          type: string
+    responses:
+      '200':
+        description: Message details
+        content:
+          application/json:
+            schema:
+              $ref: '../components/schemas.yaml#/Message'
+      '404':
+        description: Message not found

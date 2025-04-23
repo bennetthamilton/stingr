@@ -65,6 +65,19 @@ button:hover {
   background-color: var(--color-deepHoney);
 }
 
+.btn-unstyled {
+  background-color: transparent !important;
+  padding: 0 !important;
+  border: none;
+  color: var(--color-foreground) !important;
+  font-weight: 400;
+}
+
+.btn-unstyled:hover {
+  background-color: transparent !important;
+  color: var(--color-honeyGold) !important;
+}
+
 /* Inputs, Textareas, Selects */
 input,
 textarea,

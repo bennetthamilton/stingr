@@ -5,14 +5,14 @@ import { Button, Input, Label } from "@relume_io/relume-ui";
 import type { ButtonProps } from "@relume_io/relume-ui";
 import { BiLogoGoogle } from "react-icons/bi";
 
-type ImageProps = {
-  url?: string;
-  src: string;
-  alt?: string;
-};
+// type ImageProps = {
+//   url?: string;
+//   src: string;
+//   alt?: string;
+// };
 
 type Props = {
-  logo: ImageProps;
+  // logo: ImageProps;
   signUpText: string;
   signUpLink: {
     text: string;
@@ -33,7 +33,7 @@ export type Login1Props = React.ComponentPropsWithoutRef<"section"> & Partial<Pr
 
 export const Login1 = (props: Login1Props) => {
   const {
-    logo,
+    // logo,
     signUpText,
     signUpLink,
     title,
@@ -59,9 +59,6 @@ export const Login1 = (props: Login1Props) => {
     <section id="relume" className="px-[5%]">
       <div className="relative flex min-h-svh flex-col justify-center overflow-auto py-24 lg:py-20">
         <div className="absolute left-0 right-0 top-0 flex h-16 w-full items-center justify-between md:h-18">
-          <a href={logo.url}>
-            <img src={logo.src} alt={logo.alt} />
-          </a>
           <div className="inline-flex gap-x-1">
             <p className="hidden md:block">{signUpText}</p>
             <a href={signUpLink.url} className="underline">
@@ -134,29 +131,29 @@ export const Login1 = (props: Login1Props) => {
 };
 
 export const Login1Defaults: Props = {
-  logo: {
-    url: "#",
-    src: "https://d22po4pjz3o32e.cloudfront.net/logo-image.svg",
-    alt: "Logo text",
-  },
+  // logo: {
+  //   url: "/",
+  //   src: "/stingr-logo.svg", // replace with your actual logo path or use a text logo
+  //   alt: "Stingr logo",
+  // },
   signUpText: "Don't have an account?",
   signUpLink: {
     text: "Sign up",
-    url: "#",
+    url: "/signup",
   },
   title: "Log In",
-  description: "Lorem ipsum dolor sit amet adipiscing elit.",
+  description: "Welcome back. Find your next tattoo artist and keep your favorites synced.",
   logInButton: {
-    title: "Log in",
+    title: "Log In",
   },
   logInWithGoogleButton: {
     variant: "secondary",
-    title: "Log in with Google",
+    title: "Continue with Google",
     iconLeft: <BiLogoGoogle className="size-6" />,
   },
   forgotPassword: {
     text: "Forgot your password?",
-    url: "#",
+    url: "/reset-password", // or placeholder for now
   },
-  footerText: "© 2024 Relume",
+  footerText: "© 2025 Stingr. All rights reserved.",
 };

@@ -1,22 +1,113 @@
 @import "tailwindcss";
 
+/* ============================= */
+/*          Root Variables       */
+/* ============================= */
+
 :root {
-  --background: #212121;
-  --foreground: #fdf9e9;
+  /* Fonts */
   --font-logo: 'Righteous', cursive;
   --font-heading: 'Montserrat', sans-serif;
   --font-body: 'Raleway', sans-serif;
+
+  /* Colors */
+  --color-background: #212121;  /* charcoal */
+  --color-foreground: #fdf9e9;  /* off-white */
+  --color-lightHoney: #ffd54f;
+  --color-honeyGold: #fdb500;
+  --color-deepHoney: #d77d00;
+  --color-brown: #724800;
+  --color-teal: #26a69a;
 }
 
-/* @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-} */
+/* ============================= */
+/*         Global Resets         */
+/* ============================= */
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background-color: var(--color-background);
+  color: var(--color-foreground);
   font-family: var(--font-body);
+}
+
+/* ============================= */
+/*      Global Font Classes      */
+/* ============================= */
+
+.font-logo {
+  font-family: var(--font-logo);
+}
+
+.font-heading {
+  font-family: var(--font-heading);
+}
+
+.font-body {
+  font-family: var(--font-body);
+}
+
+/* ============================= */
+/*     Global Component Styles   */
+/* ============================= */
+
+/* Buttons */
+button {
+  border-radius: 0.5rem; /* rounded-md */
+  padding: 0.5rem 1rem;
+  background-color: var(--color-honeyGold);
+  color: var(--color-background);
+  font-family: var(--font-body);
+  font-weight: 600;
+  transition: background-color 0.2s ease;
+}
+
+button:hover {
+  background-color: var(--color-deepHoney);
+}
+
+/* Inputs, Textareas, Selects */
+input,
+textarea,
+select {
+  border-radius: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  background-color: #2a2a2a;
+  color: var(--color-foreground);
+  border: 1px solid var(--color-foreground);
+  font-family: var(--font-body);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--color-honeyGold);
+  border-color: var(--color-honeyGold);
+}
+
+/* Card-like Elements */
+.card,
+.relume-card {
+  border-radius: 0.75rem;
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* ============================= */
+/* Optional Text Color Helpers   */
+/* ============================= */
+
+.text-honeyGold {
+  color: var(--color-honeyGold);
+}
+
+.text-offWhite {
+  color: var(--color-foreground);
+}
+
+.bg-background {
+  background-color: var(--color-background);
 }

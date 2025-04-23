@@ -1,7 +1,13 @@
+import { Navbar2 } from '@/components/navbar';
+import { Footer1 } from '@/components/footer';
+import { Signup1 } from '@/components/signup';
+
 export default function Page() {
-    return (
-      <div className="min-h-screen flex items-center justify-center text-2xl font-heading text-honeyGold">
-        Sign Up Coming Soon
-      </div>
-    );
-  }
+  return (
+    <>
+      <Navbar2 />
+      <Signup1 />
+      <Footer1 />
+    </>
+  );
+}

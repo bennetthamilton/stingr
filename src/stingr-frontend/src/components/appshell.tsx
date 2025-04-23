@@ -226,16 +226,10 @@ export const ApplicationShell5 = (props: ApplicationShell5Props) => {
         </motion.div>
       </div>
       <main className="bg-background-secondary">
-        <div className="border-b-2 border-dashed border-[#d3d3d3] py-6 text-center text-black/50">
-          <span>Click and paste Page Header</span>
-        </div>
-        <div className="container grid grid-cols-1 gap-12 px-6 py-8 md:grid-cols-[0.5fr_1fr] md:py-10 lg:px-0 lg:py-12">
-          <span className="flex h-screen items-center justify-center border-2 border-dashed border-[#d3d3d3] text-center text-black/50">
-            Click and paste Secondary Content
-          </span>
-          <span className="flex h-screen items-center justify-center border-2 border-dashed border-[#d3d3d3] text-center text-black/50">
+        <div className="w-full max-w-7xl mx-auto px-6 py-8 md:px-8 md:py-10 lg:py-12">
+            <div className="flex min-h-screen items-center justify-center border-2 border-dashed border-[#d3d3d3] text-center text-black/50">
             Click and paste Main Content
-          </span>
+            </div>
         </div>
       </main>
     </section>

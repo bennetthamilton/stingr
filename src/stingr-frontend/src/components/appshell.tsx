@@ -105,7 +105,13 @@ export const ApplicationShell5 = (props: ApplicationShell5Props) => {
 
         <div className="ml-auto flex flex-row items-center gap-4 lg:order-last">
           <div className="hidden w-full max-w-md lg:block">
-            <Input className="w-full" placeholder="Search" icon={<BiSearch className="size-6" />} />
+          <div className="flex items-center gap-2">
+            <BiSearch className="size-5 text-[var(--color-foreground)]" />
+            <Input
+                className="w-full"
+                placeholder="Search"
+            />
+          </div>
           </div>
           <div className="flex shrink-0 items-center gap-2 md:gap-4">
             <button
@@ -129,7 +135,7 @@ export const ApplicationShell5 = (props: ApplicationShell5Props) => {
                   className="absolute bottom-0 left-0 right-0 top-16 mt-px flex h-16 max-w-md items-center justify-center border-b border-border-primary bg-white px-6 lg:hidden"
                 >
                   <Input
-                    className="w-full pl-100"
+                    className="w-full pl-10"
                     placeholder="Search"
                     icon={<BiSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--color-foreground)] size-5" />}
                   />

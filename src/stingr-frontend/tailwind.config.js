@@ -10,8 +10,6 @@ module.exports = {
         colors: {
           background: '#212121', // charcoal
           foreground: '#fdf9e9', // offWhite
-          charcoal: '#212121',
-          offWhite: '#fdf9e9',
           lightHoney: '#ffd54f',
           honeyGold: '#fd8500',
           deepHoney: '#d77d00',

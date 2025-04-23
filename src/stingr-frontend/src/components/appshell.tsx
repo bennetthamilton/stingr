@@ -47,35 +47,27 @@ export const ApplicationShell5 = (props: ApplicationShell5Props) => {
   const searchBarRef = useRef<HTMLDivElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
   const isMobile = useMediaQuery("(max-width: 991px)");
+
   useEffect(() => {
-    if (!isSearchIconClicked) {
-      return;
-    }
+    if (!isSearchIconClicked) return;
     const handleClickOutside = (event: PointerEvent) => {
       if (searchBarRef.current && !searchBarRef.current.contains(event.target as Node)) {
         setIsSearchIconClicked(false);
       }
     };
     document.addEventListener("pointerdown", handleClickOutside);
-    return () => {
-      document.removeEventListener("pointerdown", handleClickOutside);
-    };
+    return () => document.removeEventListener("pointerdown", handleClickOutside);
   }, [isSearchIconClicked]);
 
   useEffect(() => {
-    if (!menuRef) {
-      return;
-    }
     const handleClickOutside = (event: PointerEvent) => {
       if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
         setIsMobileMenuOpen(false);
       }
     };
     document.addEventListener("pointerdown", handleClickOutside);
-    return () => {
-      document.removeEventListener("pointerdown", handleClickOutside);
-    };
-  }, [isSearchIconClicked]);
+    return () => document.removeEventListener("pointerdown", handleClickOutside);
+  }, [isMobileMenuOpen]);
 
   return (
     <section id="relume">
@@ -105,10 +97,12 @@ export const ApplicationShell5 = (props: ApplicationShell5Props) => {
               variants={bottomLineVariants}
             />
           </button>
-          <a href={logo.url}>
-            <img src={logo.src} alt={logo.alt} />
+
+          <a href={logo.url} className="text-2xl font-logo text-[var(--color-honeyGold)]">
+            stingr
           </a>
         </div>
+
         <div className="ml-auto flex flex-row items-center gap-4 lg:order-last">
           <div className="hidden w-full max-w-md lg:block">
             <Input className="w-full" placeholder="Search" icon={<BiSearch className="size-6" />} />
@@ -128,31 +122,30 @@ export const ApplicationShell5 = (props: ApplicationShell5Props) => {
               {isSearchIconClicked && (
                 <motion.div
                   ref={searchBarRef}
-                  variants={{
-                    visible: { opacity: 1 },
-                    hidden: { opacity: 0 },
-                  }}
+                  variants={{ visible: { opacity: 1 }, hidden: { opacity: 0 } }}
                   initial="hidden"
                   exit="hidden"
                   animate={isSearchIconClicked ? "visible" : "hidden"}
                   className="absolute bottom-0 left-0 right-0 top-16 mt-px flex h-16 max-w-md items-center justify-center border-b border-border-primary bg-white px-6 lg:hidden"
                 >
                   <Input
-                    className="h-fit w-full"
+                    className="w-full pl-100"
                     placeholder="Search"
-                    icon={<BiSearch className="size-6" />}
+                    icon={<BiSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--color-foreground)] size-5" />}
                   />
-                  <button onClick={() => setIsSearchIconClicked(!isSearchIconClicked)}>
+                  <button onClick={() => setIsSearchIconClicked(false)}>
                     <RxCross2 className="ml-4 size-6" />
                   </button>
                 </motion.div>
               )}
             </AnimatePresence>
+
+            {/* Notification Bell */}
             <DropdownMenu>
-              <DropdownMenuTrigger className="relative">
-                <div className="absolute bottom-auto left-auto right-2 top-2 size-2 rounded-full bg-black outline outline-[3px] outline-offset-0 outline-white" />
-                <BiBell className="size-6" />
-              </DropdownMenuTrigger>
+            <DropdownMenuTrigger className="relative btn-unstyled">
+                <div className="absolute ..."/>
+                <BiBell className="size-6 text-[var(--color-honeyGold)]" />
+            </DropdownMenuTrigger>
               <DropdownMenuContent className="max-w-[19rem] px-0" align="end" sideOffset={0}>
                 <div className="flex flex-col">
                   <div className="flex items-center justify-between px-4 py-2">
@@ -162,26 +155,11 @@ export const ApplicationShell5 = (props: ApplicationShell5Props) => {
                   <DropdownMenuSeparator />
                   <div className="h-full max-h-[14rem] overflow-auto px-2 py-1">
                     <DropdownMenuItem className="mt-2 grid grid-cols-[max-content_1fr] gap-2 px-2 py-1">
-                      <div className="flex size-full flex-col items-start justify-start">
-                        <img
-                          src="https://d22po4pjz3o32e.cloudfront.net/relume-icon.svg"
-                          alt="Avatar"
-                          className="size-6"
-                        />
-                      </div>
-                      <div>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                        <p className="mt-2 text-sm">11 Jan 2022</p>
-                      </div>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem className="mt-2 grid grid-cols-[max-content_1fr] gap-2 px-2 py-1">
-                      <div className="flex size-full flex-col items-start justify-start">
-                        <img
-                          src="https://d22po4pjz3o32e.cloudfront.net/relume-icon.svg"
-                          alt="Avatar"
-                          className="size-6"
-                        />
-                      </div>
+                      <img
+                        src="https://d22po4pjz3o32e.cloudfront.net/relume-icon.svg"
+                        alt="Avatar"
+                        className="size-6"
+                      />
                       <div>
                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
                         <p className="mt-2 text-sm">11 Jan 2022</p>
@@ -197,45 +175,31 @@ export const ApplicationShell5 = (props: ApplicationShell5Props) => {
                 </div>
               </DropdownMenuContent>
             </DropdownMenu>
+
+            {/* Profile */}
             <DropdownMenu>
-              <DropdownMenuTrigger className="flex items-center p-0">
+            <DropdownMenuTrigger className="flex items-center btn-unstyled">
                 <img
-                  src="https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg"
-                  alt="Avatar"
-                  className="size-10 rounded-full object-cover"
+                    src="https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg"
+                    alt="Avatar"
+                    className="size-10 rounded-full object-cover border-2 border-[var(--color-honeyGold)]"
                 />
-              </DropdownMenuTrigger>
-              <DropdownMenuContent
-                align="end"
-                sideOffset={0}
-                className="mt-1.5 min-w-32 px-0 py-2 md:min-w-48"
-              >
+            </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" sideOffset={0} className="mt-1.5 min-w-32 px-0 py-2 md:min-w-48">
                 <DropdownMenuGroup>
-                  <DropdownMenuItem>
-                    <a href="#">My Profile</a>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem>
-                    <a href="#">Profile Settings</a>
-                  </DropdownMenuItem>
+                  <DropdownMenuItem><a href="#">My Profile</a></DropdownMenuItem>
+                  <DropdownMenuItem><a href="#">Profile Settings</a></DropdownMenuItem>
                   <DropdownMenuSeparator className="mx-4" />
-                  <DropdownMenuItem>
-                    <a href="#">Log Out</a>
-                  </DropdownMenuItem>
+                  <DropdownMenuItem><a href="#">Log Out</a></DropdownMenuItem>
                 </DropdownMenuGroup>
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
         </div>
+
         <motion.div
           ref={menuRef}
-          variants={{
-            open: {
-              height: "var(--height-open, auto)",
-            },
-            close: {
-              height: "var(--height-closed, 0)",
-            },
-          }}
+          variants={{ open: { height: "var(--height-open, auto)" }, close: { height: "var(--height-closed, 0)" } }}
           initial="close"
           exit="close"
           animate={isMobileMenuOpen ? "open" : "close"}
@@ -250,7 +214,7 @@ export const ApplicationShell5 = (props: ApplicationShell5Props) => {
                 <a key={index} href={navLink.url} className="block py-3 lg:px-4 lg:py-2">
                   {navLink.title}
                 </a>
-              ),
+              )
             )}
           </div>
         </motion.div>
@@ -281,35 +245,26 @@ const SubMenu = ({ navLink, isMobile }: { navLink: NavLink; isMobile: boolean })
       onMouseLeave={() => !isMobile && setIsDropdownOpen(false)}
     >
       <button
-        className="flex w-full items-center justify-between gap-2 py-3 text-left lg:flex-none lg:justify-start lg:px-4 lg:py-2"
+        className="btn-unstyled block py-3 lg:px-4 lg:py-2 text-left"
         onClick={() => setIsDropdownOpen((prev) => !prev)}
       >
-        <span>{navLink.title}</span>
-        <motion.span
-          variants={{
-            rotated: { rotate: 180 },
-            initial: { rotate: 0 },
-          }}
-          animate={isDropdownOpen ? "rotated" : "initial"}
-          transition={{ duration: 0.3 }}
-        >
-          <RxChevronDown />
-        </motion.span>
+        <span className="inline-flex items-center gap-2">
+            {navLink.title}
+            <motion.span
+                variants={{ rotated: { rotate: 180 }, initial: { rotate: 0 } }}
+                animate={isDropdownOpen ? "rotated" : "initial"}
+                transition={{ duration: 0.3 }}
+            >
+                <RxChevronDown />
+            </motion.span>
+        </span>
       </button>
       {isDropdownOpen && (
         <AnimatePresence>
           <motion.nav
             variants={{
-              open: {
-                visibility: "visible",
-                opacity: "var(--opacity-open, 100%)",
-                y: 0,
-              },
-              close: {
-                visibility: "hidden",
-                opacity: "var(--opacity-close, 0)",
-                y: "var(--y-close, 0%)",
-              },
+              open: { visibility: "visible", opacity: "var(--opacity-open, 100%)", y: 0 },
+              close: { visibility: "hidden", opacity: "var(--opacity-close, 0)", y: "var(--y-close, 0%)" },
             }}
             animate={isDropdownOpen ? "open" : "close"}
             initial="close"
@@ -331,65 +286,38 @@ const SubMenu = ({ navLink, isMobile }: { navLink: NavLink; isMobile: boolean })
 
 export const ApplicationShell5Defaults: Props = {
   logo: {
-    url: "#",
+    url: "/",
     src: "https://d22po4pjz3o32e.cloudfront.net/logo-image.svg",
-    alt: "Logo image",
+    alt: "Stingr Logo",
   },
   navLinks: [
-    { title: "Link One", url: "#" },
-    { title: "Link Two", url: "#" },
-    { title: "Link Three", url: "#" },
+    { title: "Browse", url: "/browse" },
+    { title: "Bookings", url: "/bookings" },
+    { title: "Messages", url: "/messages" },
     {
-      title: "Link Four",
+      title: "More",
       url: "#",
       subMenuLinks: [
-        { title: "Link Five", url: "#" },
-        { title: "Link Six", url: "#" },
-        { title: "Link Seven", url: "#" },
+        { title: "FAQ", url: "/faq" },
+        { title: "Support", url: "/support" },
       ],
     },
   ],
 };
 
 const topLineVariants = {
-  open: {
-    translateY: 8,
-    transition: { delay: 0.1 },
-  },
-  rotatePhase: {
-    rotate: -45,
-    transition: { delay: 0.2 },
-  },
-  closed: {
-    translateY: 0,
-    rotate: 0,
-    transition: { duration: 0.2 },
-  },
+  open: { translateY: 8, transition: { delay: 0.1 } },
+  rotatePhase: { rotate: -45, transition: { delay: 0.2 } },
+  closed: { translateY: 0, rotate: 0, transition: { duration: 0.2 } },
 };
 
 const middleLineVariants = {
-  open: {
-    width: 0,
-    transition: { duration: 0.1 },
-  },
-  closed: {
-    width: "1.5rem",
-    transition: { delay: 0.3, duration: 0.2 },
-  },
+  open: { width: 0, transition: { duration: 0.1 } },
+  closed: { width: "1.5rem", transition: { delay: 0.3, duration: 0.2 } },
 };
 
 const bottomLineVariants = {
-  open: {
-    translateY: -8,
-    transition: { delay: 0.1 },
-  },
-  rotatePhase: {
-    rotate: 45,
-    transition: { delay: 0.2 },
-  },
-  closed: {
-    translateY: 0,
-    rotate: 0,
-    transition: { duration: 0.2 },
-  },
+  open: { translateY: -8, transition: { delay: 0.1 } },
+  rotatePhase: { rotate: 45, transition: { delay: 0.2 } },
+  closed: { translateY: 0, rotate: 0, transition: { duration: 0.2 } },
 };

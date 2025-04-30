@@ -48,9 +48,12 @@ export const EventHeader4 = (props: EventHeader4Props) => {
     <section id="relume" className="px-[5%] py-16 md:py-24 lg:py-28">
       <div className="container">
         <div className="mb-12 md:mb-18 lg:mb-20">
-          <div className="w-full">
-            <h1 className="text-4xl text-heading font-bold">{heading}</h1>
-          </div>
+            <div className="flex w-full items-center justify-between">
+                <h1 className="text-4xl text-heading font-bold">{heading}</h1>
+                <Button>
+                    <a href="/booking/new">New Event</a>
+                </Button>
+            </div>
         </div>
         <div className="mb-16 grid auto-cols-fr auto-rows-auto grid-cols-1 items-start gap-8 lg:grid-cols-2">
           <div className="border border-border-primary">

@@ -16,6 +16,7 @@ import {
 import { AnimatePresence, motion } from "framer-motion";
 import { RxChevronDown, RxChevronRight, RxCross2 } from "react-icons/rx";
 import { BiBell, BiSearch } from "react-icons/bi";
+import { EventHeader4 } from "./events";
 
 type ImageProps = {
   url?: string;
@@ -227,9 +228,7 @@ export const ApplicationShell5 = (props: ApplicationShell5Props) => {
       </div>
       <main className="bg-background-secondary">
         <div className="w-full max-w-7xl mx-auto px-6 py-8 md:px-8 md:py-10 lg:py-12">
-            <div className="flex min-h-screen items-center justify-center border-2 border-dashed border-[#d3d3d3] text-center text-black/50">
-            Click and paste Main Content
-            </div>
+            <EventHeader4 />
         </div>
       </main>
     </section>

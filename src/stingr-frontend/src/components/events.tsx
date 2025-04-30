@@ -4,6 +4,7 @@ import { Button } from "@relume_io/relume-ui";
 import { RxChevronRight } from "react-icons/rx";
 import { clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
+import { HexCalendar } from "./hexcalendar";
 
 type ImageProps = {
   src: string;
@@ -47,6 +48,7 @@ export const EventHeader4 = (props: EventHeader4Props) => {
   return (
     <section id="relume" className="px-[5%] py-16 md:py-24 lg:py-28">
       <div className="container">
+
         <div className="mb-12 md:mb-18 lg:mb-20">
             <div className="flex w-full items-center justify-between">
                 <h1 className="text-4xl text-heading font-bold">{heading}</h1>
@@ -55,6 +57,7 @@ export const EventHeader4 = (props: EventHeader4Props) => {
                 </Button>
             </div>
         </div>
+
         <div className="mb-16 grid auto-cols-fr auto-rows-auto grid-cols-1 items-start gap-8 lg:grid-cols-2">
           <div className="border border-border-primary">
             <a href={event.url} className="relative block w-full max-w-full">
@@ -101,6 +104,13 @@ export const EventHeader4 = (props: EventHeader4Props) => {
               <FeaturedEvent key={index} {...event} />
             ))}
           </div>
+
+        </div>
+        
+        <div className="w-full overflow-x-auto">
+            <div className="min-w-[600px] mx-auto">
+                <HexCalendar />
+            </div>
         </div>
       </div>
     </section>

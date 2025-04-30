@@ -16,35 +16,33 @@ import {
 import { AnimatePresence, motion } from "framer-motion";
 import { RxChevronDown, RxChevronRight, RxCross2 } from "react-icons/rx";
 import { BiBell, BiSearch } from "react-icons/bi";
-import { EventHeader4 } from "./events";
 
-type ImageProps = {
+export type ImageProps = {
   url?: string;
   src: string;
   alt?: string;
 };
 
-type NavLink = {
+export type NavLink = {
   url: string;
   title: string;
   subMenuLinks?: NavLink[];
 };
 
-type Props = {
-  logo: ImageProps;
-  navLinks: NavLink[];
+export type ApplicationShell5Props = React.ComponentPropsWithoutRef<"section"> & {
+  logo?: ImageProps;
+  navLinks?: NavLink[];
+  children?: React.ReactNode;
 };
 
-export type ApplicationShell5Props = React.ComponentPropsWithoutRef<"section"> & Partial<Props>;
-
 export const ApplicationShell5 = (props: ApplicationShell5Props) => {
-  const { logo, navLinks } = {
+  const { logo, navLinks, children } = {
     ...ApplicationShell5Defaults,
     ...props,
   };
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isSearchIconClicked, setIsSearchIconClicked] = useState<boolean>(false);
+  const [isSearchIconClicked, setIsSearchIconClicked] = useState(false);
   const searchBarRef = useRef<HTMLDivElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
   const isMobile = useMediaQuery("(max-width: 991px)");
@@ -106,13 +104,10 @@ export const ApplicationShell5 = (props: ApplicationShell5Props) => {
 
         <div className="ml-auto flex flex-row items-center gap-4 lg:order-last">
           <div className="hidden w-full max-w-md lg:block">
-          <div className="flex items-center gap-2">
-            <BiSearch className="size-5 text-[var(--color-foreground)]" />
-            <Input
-                className="w-full"
-                placeholder="Search"
-            />
-          </div>
+            <div className="flex items-center gap-2">
+              <BiSearch className="size-5 text-[var(--color-foreground)]" />
+              <Input className="w-full" placeholder="Search" />
+            </div>
           </div>
           <div className="flex shrink-0 items-center gap-2 md:gap-4">
             <button
@@ -147,12 +142,11 @@ export const ApplicationShell5 = (props: ApplicationShell5Props) => {
               )}
             </AnimatePresence>
 
-            {/* Notification Bell */}
             <DropdownMenu>
-            <DropdownMenuTrigger className="relative btn-unstyled">
-                <div className="absolute ..."/>
+              <DropdownMenuTrigger className="relative btn-unstyled">
+                <div className="absolute ..." />
                 <BiBell className="size-6 text-[var(--color-honeyGold)]" />
-            </DropdownMenuTrigger>
+              </DropdownMenuTrigger>
               <DropdownMenuContent className="max-w-[19rem] px-0" align="end" sideOffset={0}>
                 <div className="flex flex-col">
                   <div className="flex items-center justify-between px-4 py-2">
@@ -183,15 +177,14 @@ export const ApplicationShell5 = (props: ApplicationShell5Props) => {
               </DropdownMenuContent>
             </DropdownMenu>
 
-            {/* Profile */}
             <DropdownMenu>
-            <DropdownMenuTrigger className="flex items-center btn-unstyled">
+              <DropdownMenuTrigger className="flex items-center btn-unstyled">
                 <img
-                    src="https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg"
-                    alt="Avatar"
-                    className="size-10 rounded-full object-cover border-2 border-[var(--color-honeyGold)]"
+                  src="https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg"
+                  alt="Avatar"
+                  className="size-10 rounded-full object-cover border-2 border-[var(--color-honeyGold)]"
                 />
-            </DropdownMenuTrigger>
+              </DropdownMenuTrigger>
               <DropdownMenuContent align="end" sideOffset={0} className="mt-1.5 min-w-32 px-0 py-2 md:min-w-48">
                 <DropdownMenuGroup>
                   <DropdownMenuItem><a href="#">My Profile</a></DropdownMenuItem>
@@ -228,7 +221,7 @@ export const ApplicationShell5 = (props: ApplicationShell5Props) => {
       </div>
       <main className="bg-background-secondary">
         <div className="w-full max-w-7xl mx-auto px-6 py-8 md:px-8 md:py-10 lg:py-12">
-            <EventHeader4 />
+          {children}
         </div>
       </main>
     </section>
@@ -248,14 +241,14 @@ const SubMenu = ({ navLink, isMobile }: { navLink: NavLink; isMobile: boolean })
         onClick={() => setIsDropdownOpen((prev) => !prev)}
       >
         <span className="inline-flex items-center gap-2">
-            {navLink.title}
-            <motion.span
-                variants={{ rotated: { rotate: 180 }, initial: { rotate: 0 } }}
-                animate={isDropdownOpen ? "rotated" : "initial"}
-                transition={{ duration: 0.3 }}
-            >
-                <RxChevronDown />
-            </motion.span>
+          {navLink.title}
+          <motion.span
+            variants={{ rotated: { rotate: 180 }, initial: { rotate: 0 } }}
+            animate={isDropdownOpen ? "rotated" : "initial"}
+            transition={{ duration: 0.3 }}
+          >
+            <RxChevronDown />
+          </motion.span>
         </span>
       </button>
       {isDropdownOpen && (
@@ -283,7 +276,7 @@ const SubMenu = ({ navLink, isMobile }: { navLink: NavLink; isMobile: boolean })
   );
 };
 
-export const ApplicationShell5Defaults: Props = {
+export const ApplicationShell5Defaults = {
   logo: {
     url: "/",
     src: "https://d22po4pjz3o32e.cloudfront.net/logo-image.svg",

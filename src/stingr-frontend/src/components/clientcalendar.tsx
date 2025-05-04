@@ -20,16 +20,6 @@ export const ClientCalendar = () => {
           value={value}
           calendarType="gregory"
           locale="en-US"
-          tileClassName={({ date, view }) => {
-            const today = new Date();
-            const isToday =
-              view === "month" &&
-              date.getDate() === today.getDate() &&
-              date.getMonth() === today.getMonth() &&
-              date.getFullYear() === today.getFullYear();
-
-            return isToday ? "react-calendar__tile--active" : null;
-          }}
         />
       </div>
     </div>

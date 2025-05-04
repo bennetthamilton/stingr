@@ -4,7 +4,7 @@ import { Button } from "@relume_io/relume-ui";
 import { RxChevronRight } from "react-icons/rx";
 import { clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
-import { HexCalendar } from "./hexcalendar";
+import { ClientCalendar } from "@/components/clientcalendar";
 
 type ImageProps = {
   src: string;
@@ -62,11 +62,7 @@ export const EventHeader4 = (props: EventHeader4Props) => {
           <div className="border border-border-primary">
             <a href={event.url} className="relative block w-full max-w-full">
               <div className="w-full overflow-hidden">
-                <img
-                  src={event.image.src}
-                  alt={event.image.alt}
-                  className="aspect-[3/2] size-full object-cover"
-                />
+                <ClientCalendar />
               </div>
               <EventDate
                 weekday={event.date.weekday}
@@ -107,11 +103,6 @@ export const EventHeader4 = (props: EventHeader4Props) => {
 
         </div>
         
-        <div className="w-full overflow-x-auto">
-            <div className="min-w-[600px] mx-auto">
-                <HexCalendar />
-            </div>
-        </div>
       </div>
     </section>
   );

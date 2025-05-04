@@ -64,13 +64,6 @@ export const EventHeader4 = (props: EventHeader4Props) => {
               <div className="w-full overflow-hidden">
                 <ClientCalendar />
               </div>
-              <EventDate
-                weekday={event.date.weekday}
-                day={event.date.day}
-                month={event.date.month}
-                year={event.date.year}
-                className="absolute right-4 top-4"
-              />
             </a>
             <div className="flex flex-col items-start p-6">
               <p className="mb-4 bg-background-secondary px-2 py-1 text-sm font-semibold">

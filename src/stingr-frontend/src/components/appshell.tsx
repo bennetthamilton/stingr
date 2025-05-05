@@ -70,7 +70,7 @@ export const ApplicationShell5 = (props: ApplicationShell5Props) => {
 
   return (
     <section id="relume">
-      <div className="sticky top-0 z-40 flex w-full flex-wrap items-center justify-between border-b border-border-primary bg-background-primary px-6 lg:px-8">
+      <div className="sticky top-0 z-40 flex w-full flex-wrap items-center justify-between border-b border-border-primary bg-background px-6 lg:px-8">
         <div className="flex min-h-16 items-center md:min-h-18">
           <button
             className="-ml-4 mr-4 flex size-12 flex-col items-center justify-center lg:hidden"

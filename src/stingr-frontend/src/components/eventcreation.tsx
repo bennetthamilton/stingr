@@ -30,9 +30,11 @@ type Props = {
   date: DateInfo;
 };
 
+export type EventFormData = Partial<Props>;
+
 export type EventItemHeader11Props = React.ComponentPropsWithoutRef<"section"> &
   Partial<Props> & {
-    onSubmit?: (data: any) => void;
+    onSubmit?: (data: EventFormData) => void;
   };
 
 export const EventItemHeader11 = (props: EventItemHeader11Props) => {

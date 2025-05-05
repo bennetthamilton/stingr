@@ -5,7 +5,7 @@ import Calendar from "react-calendar";
 // No need to import default styles if using globals.css
 
 export const ClientCalendar = () => {
-  const [value, setValue] = useState<Date>(new Date());
+  const [value] = useState<Date>(new Date());
 
   // const handleDateChange = (selectedDate: Date) => {
   //   setValue(selectedDate);

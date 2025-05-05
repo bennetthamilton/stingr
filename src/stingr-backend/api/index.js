@@ -1,9 +1,10 @@
-// index.js
 const express = require('express');
 const app = express();
 const bookingRoutes = require('./booking');
 
 app.use(express.json());
+
+console.log("Mounting /bookings routes...");
 app.use('/bookings', bookingRoutes);
 
 module.exports = app;

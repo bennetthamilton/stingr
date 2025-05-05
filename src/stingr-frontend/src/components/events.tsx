@@ -6,11 +6,6 @@ import { clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { ClientCalendar } from "@/components/clientcalendar";
 
-type ImageProps = {
-  src: string;
-  alt?: string;
-};
-
 type Date = {
   weekday: string;
   day: string;
@@ -20,7 +15,6 @@ type Date = {
 
 type Event = {
   url: string;
-  image: ImageProps;
   date: Date;
   category: string;
   title: string;
@@ -30,7 +24,7 @@ type Event = {
   button: ButtonProps;
 };
 
-type FeaturedEvent = Omit<Event, "image" | "category">;
+type FeaturedEvent = Omit<Event, "category">;
 
 type Props = {
   heading: string;
@@ -45,26 +39,25 @@ export const EventHeader4 = (props: EventHeader4Props) => {
     ...EventHeader4Defaults,
     ...props,
   };
+
   return (
     <section id="relume" className="px-[5%] py-16 md:py-24 lg:py-28">
       <div className="container">
-
         <div className="mb-12 md:mb-18 lg:mb-20">
-            <div className="flex w-full items-center justify-between">
-                <h1 className="text-4xl text-heading font-bold">{heading}</h1>
-                <Button>
-                    <a href="/bookings/new">New Event</a>
-                </Button>
-            </div>
+          <div className="flex w-full items-center justify-between">
+            <h1 className="text-4xl text-heading font-bold">{heading}</h1>
+            <Button>
+              <a href="/bookings/new">New Event</a>
+            </Button>
+          </div>
         </div>
 
         <div className="mb-16 grid auto-cols-fr auto-rows-auto grid-cols-1 items-start gap-8 lg:grid-cols-2">
+          {/* Calendar + Main Event Info */}
           <div className="border border-border-primary">
-            <a href={event.url} className="relative block w-full max-w-full">
-              <div className="w-full overflow-hidden">
-                <ClientCalendar />
-              </div>
-            </a>
+            <div className="w-full overflow-hidden">
+              <ClientCalendar />
+            </div>
             <div className="flex flex-col items-start p-6">
               <p className="mb-4 bg-background-secondary px-2 py-1 text-sm font-semibold">
                 {event.category}
@@ -88,20 +81,39 @@ export const EventHeader4 = (props: EventHeader4Props) => {
               </div>
             </div>
           </div>
-          <div className="flex flex-col gap-8">
-            {featuredEvents.map((event, index) => (
-              <FeaturedEvent key={index} {...event} />
-            ))}
-          </div>
 
+          {/* Upcoming Events Section */}
+          <div className="flex flex-col gap-8">
+            {featuredEvents.length > 0 ? (
+              <>
+                <h2 className="text-2xl font-bold">Upcoming Events</h2>
+                {featuredEvents.map((event, index) => (
+                  <UpcomingEvent key={index} {...event} />
+                ))}
+              </>
+            ) : (
+              <div className="flex flex-col items-start justify-center border border-border-primary px-6 py-10 text-left">
+                <h2 className="text-2xl font-bold mb-4">No Upcoming Appointments</h2>
+                <p className="mb-6 text-sm text-muted">
+                  You don’t have any upcoming appointments. Browse artists to find a new session.
+                </p>
+                <a
+                  href="/browse"
+                  className="inline-flex items-center justify-center gap-2 rounded-md bg-[var(--color-honeyGold)] px-4 py-2 font-semibold text-[var(--color-background)] transition-colors hover:bg-[var(--color-deepHoney)]"
+                >
+                  Browse Artists
+                  <RxChevronRight className="text-lg" />
+                </a>
+              </div>
+            )}
+          </div>
         </div>
-        
       </div>
     </section>
   );
 };
 
-const FeaturedEvent: React.FC<FeaturedEvent> = ({
+const UpcomingEvent: React.FC<FeaturedEvent> = ({
   date,
   url,
   title,
@@ -164,72 +176,27 @@ const EventDate: React.FC<Date & { className?: string }> = ({
 };
 
 export const EventHeader4Defaults: Props = {
-  heading: "Scheduled Appointments",
+  heading: "Your Appointments",
   event: {
-    url: "#",
-    image: {
-      src: "https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg",
-      alt: "Relume placeholder image 1",
-    },
+    url: "/messages",
     date: {
-      weekday: "Wed",
-      day: "07",
-      month: "Feb",
+      weekday: "Thu",
+      day: "02",
+      month: "May",
       year: "2024",
     },
-    category: "Category",
-    title: "Event title heading",
-    status: null,
-    location: "Location",
+    category: "Consultation",
+    title: "Consultation Overview",
+    status: "Confirmed",
+    location: "",
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros.",
-    button: { title: "View event", variant: "link", size: "link", iconRight: <RxChevronRight /> },
+      "You have a confirmed consultation scheduled. If you have any questions before your appointment, feel free to message the artist.",
+    button: {
+      title: "Message Artist",
+      // variant: "default",
+      // size: "medium",
+      iconRight: <RxChevronRight />,
+    },
   },
-  featuredEvents: [
-    {
-      url: "#",
-      date: {
-        weekday: "Fri",
-        day: "09",
-        month: "Feb",
-        year: "2024",
-      },
-      title: "Event title heading",
-      status: "Sold out",
-      location: "Location",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique.",
-      button: { title: "View event", variant: "link", size: "link", iconRight: <RxChevronRight /> },
-    },
-    {
-      url: "#",
-      date: {
-        weekday: "Sat",
-        day: "10",
-        month: "Feb",
-        year: "2024",
-      },
-      title: "Event title heading",
-      status: null,
-      location: "Location",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique.",
-      button: { title: "View event", variant: "link", size: "link", iconRight: <RxChevronRight /> },
-    },
-    {
-      url: "#",
-      date: {
-        weekday: "Sun",
-        day: "11",
-        month: "Feb",
-        year: "2024",
-      },
-      title: "Event title heading",
-      status: null,
-      location: "Location",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique.",
-      button: { title: "View event", variant: "link", size: "link", iconRight: <RxChevronRight /> },
-    },
-  ],
+  featuredEvents: [], // <- triggers fallback by default
 };

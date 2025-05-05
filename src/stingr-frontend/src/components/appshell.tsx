@@ -147,7 +147,7 @@ export const ApplicationShell5 = (props: ApplicationShell5Props) => {
                 <div className="absolute ..." />
                 <BiBell className="size-6 text-[var(--color-honeyGold)]" />
               </DropdownMenuTrigger>
-              <DropdownMenuContent className="max-w-[19rem] px-0" align="end" sideOffset={0}>
+              <DropdownMenuContent className="z-50 bg-background max-w-[19rem] px-0" align="end" sideOffset={0}>
                 <div className="flex flex-col">
                   <div className="flex items-center justify-between px-4 py-2">
                     <DropdownMenuLabel className="p-0">Notifications</DropdownMenuLabel>
@@ -219,7 +219,7 @@ export const ApplicationShell5 = (props: ApplicationShell5Props) => {
           </div>
         </motion.div>
       </div>
-      <main className="bg-background-secondary">
+      <main className="bg-background">
         <div className="w-full max-w-7xl mx-auto px-6 py-8 md:px-8 md:py-10 lg:py-12">
           {children}
         </div>
@@ -262,7 +262,7 @@ const SubMenu = ({ navLink, isMobile }: { navLink: NavLink; isMobile: boolean })
             initial="close"
             exit="close"
             transition={{ duration: 0.2 }}
-            className="bg-background-primary lg:absolute lg:z-50 lg:border lg:border-border-primary lg:p-2 lg:[--y-close:25%]"
+            className="bg-background lg:absolute lg:z-50 lg:border lg:border-border-primary lg:p-2 lg:[--y-close:25%]"
           >
             {navLink.subMenuLinks?.map((navLink, index) => (
               <a key={index} href={navLink.url} className="block px-4 py-2">

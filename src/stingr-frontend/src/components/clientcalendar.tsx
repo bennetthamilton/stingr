@@ -7,10 +7,10 @@ import Calendar from "react-calendar";
 export const ClientCalendar = () => {
   const [value, setValue] = useState<Date>(new Date());
 
-  const handleDateChange = (selectedDate: Date) => {
-    setValue(selectedDate);
-    console.log("Selected date:", selectedDate);
-  };
+  // const handleDateChange = (selectedDate: Date) => {
+  //   setValue(selectedDate);
+  //   console.log("Selected date:", selectedDate);
+  // };
 
   return (
     <div className="w-full flex justify-center">

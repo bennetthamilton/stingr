@@ -2,6 +2,8 @@
 
 import React, { useState, useEffect } from "react";
 import Calendar from "react-calendar";
+import { useRouter, useSearchParams } from "next/navigation";
+import { format } from "date-fns";
 
 type ValuePiece = Date | null;
 type Value = ValuePiece | [ValuePiece, ValuePiece];
@@ -13,11 +15,14 @@ export const ClientDatePicker = ({
   unavailableDates?: Date[];
   onDateChange?: (date: Date) => void;
 }) => {
-  const [value, setValue] = useState<Value>(new Date());
+  const [value, setValue] = useState<Value>(null);
   const [isClient, setIsClient] = useState(false);
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const artistId = searchParams.get("artistId");
 
   useEffect(() => {
-    setIsClient(true); // Trigger hydration-safe rendering
+    setIsClient(true);
   }, []);
 
   const handleDateChange = (selectedDate: Value, _event: React.MouseEvent<HTMLButtonElement>) => {
@@ -41,10 +46,19 @@ export const ClientDatePicker = ({
     return isBeforeToday || isManuallyUnavailable;
   };
 
+  const formattedDate =
+    value instanceof Date ? format(value, "yyyy-MM-dd") : null;
+
+  const handleNextClick = () => {
+    if (artistId && formattedDate) {
+      router.push(`/bookings/new?artistId=${artistId}&date=${formattedDate}`);
+    }
+  };
+
   if (!isClient) return null;
 
   return (
-    <div className="w-full flex justify-center">
+    <div className="w-full flex flex-col items-center gap-6">
       <div className="w-full max-w-xl rounded-xl bg-background shadow-md p-4 client-datepicker-calendar">
         <Calendar
           onChange={handleDateChange}
@@ -54,6 +68,24 @@ export const ClientDatePicker = ({
           tileDisabled={({ date }) => isDateUnavailable(date)}
         />
       </div>
+
+      {value instanceof Date && (
+        <div className="text-center">
+          <p className="text-lg font-semibold mb-4">
+            You’ve selected: {format(value, "MMMM d, yyyy")}
+          </p>
+          <button
+            onClick={handleNextClick}
+            className="px-6 py-3 rounded-lg font-medium text-white"
+            style={{
+              backgroundColor: "var(--color-honeyGold)",
+              cursor: "pointer",
+            }}
+          >
+            Next
+          </button>
+        </div>
+      )}
     </div>
   );
 };

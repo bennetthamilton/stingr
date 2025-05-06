@@ -13,6 +13,8 @@ import {
   CarouselPrevious,
 } from "@relume_io/relume-ui";
 
+import { RxChevronLeft, RxChevronRight } from "react-icons/rx";
+
 type ImageProps = {
   src: string;
   alt?: string;
@@ -69,8 +71,8 @@ export const ArtistList = (props: ArtistListProps) => {
       <div className="container">
         <div className="mb-12 grid grid-cols-1 items-end gap-12 md:mb-18 md:grid-cols-[1fr_max-content] lg:mb-20 lg:gap-20">
           <div className="max-w-lg">
-            <p className="mb-2 text-sm font-semibold text-neutral-600">{tagline}</p>
-            <h1 className="mb-3 text-5xl font-bold md:mb-4 md:text-7xl lg:text-8xl">{heading}</h1>
+            <p className="mb-4 text-sm font-semibold text-neutral-600">{tagline}</p>
+            <h1 className="mb-4 text-4xl font-bold md:text-5xl lg:text-5xl">{heading}</h1>
             <p className="md:text-md">{description}</p>
           </div>
           <Button
@@ -80,7 +82,7 @@ export const ArtistList = (props: ArtistListProps) => {
             style={{
               backgroundColor: selectedArtistId ? "var(--color-honeyGold)" : "var(--color-brown)",
               cursor: selectedArtistId ? "pointer" : "not-allowed",
-              color: "white",
+              color: "var(--color-background)",
             }}
           >
             Next
@@ -108,23 +110,9 @@ export const ArtistList = (props: ArtistListProps) => {
                 </CarouselItem>
               ))}
             </CarouselContent>
-            <div className="absolute bottom-0 flex w-full items-end justify-between">
-              <div className="flex h-7 pt-[10px]">
-                {uniqueArtists.map((_, index) => (
-                  <button
-                    key={index}
-                    onClick={() => api?.scrollTo(index)}
-                    className={clsx(
-                      "mx-[3px] size-2 rounded-full",
-                      current === index + 1 ? "bg-black" : "bg-neutral-light"
-                    )}
-                  />
-                ))}
-              </div>
-              <div className="flex gap-2 md:gap-4">
-                <CarouselPrevious className="static size-12 -translate-y-0" />
-                <CarouselNext className="static size-12 -translate-y-0" />
-              </div>
+            <div className="absolute bottom-0 left-0 flex items-end gap-4">
+                <RxChevronLeft className="size-6 text-[var(--color-lightHoney)]" />
+                <RxChevronRight className="size-6 text-[var(--color-lightHoney)]" />
             </div>
           </div>
         </Carousel>

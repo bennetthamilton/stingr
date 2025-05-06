@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Calendar from "react-calendar";
 
 type ValuePiece = Date | null;
@@ -14,9 +14,11 @@ export const ClientDatePicker = ({
   onDateChange?: (date: Date) => void;
 }) => {
   const [value, setValue] = useState<Value>(new Date());
+  const [isClient, setIsClient] = useState(false);
 
-  const today = new Date();
-  today.setHours(0, 0, 0, 0); // normalize to midnight
+  useEffect(() => {
+    setIsClient(true); // Trigger hydration-safe rendering
+  }, []);
 
   const handleDateChange = (selectedDate: Value, _event: React.MouseEvent<HTMLButtonElement>) => {
     if (selectedDate instanceof Date) {
@@ -25,24 +27,25 @@ export const ClientDatePicker = ({
     }
   };
 
-  const isDateUnavailable = (date: Date): boolean => {
-    const normalized = new Date(date);
-    normalized.setHours(0, 0, 0, 0);
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
 
-    // Disable past dates
-    if (normalized < today) return true;
-
-    // Disable custom unavailable dates
-    return unavailableDates.some((unavailable) => {
-      const d = new Date(unavailable);
-      d.setHours(0, 0, 0, 0);
-      return normalized.getTime() === d.getTime();
-    });
+  const isDateUnavailable = (date: Date) => {
+    const isBeforeToday = date < today;
+    const isManuallyUnavailable = unavailableDates?.some(
+      (unavailable) =>
+        date.getFullYear() === unavailable.getFullYear() &&
+        date.getMonth() === unavailable.getMonth() &&
+        date.getDate() === unavailable.getDate()
+    );
+    return isBeforeToday || isManuallyUnavailable;
   };
+
+  if (!isClient) return null;
 
   return (
     <div className="w-full flex justify-center">
-      <div className="w-full max-w-md rounded-xl bg-background shadow-md p-4">
+      <div className="w-full max-w-xl rounded-xl bg-background shadow-md p-4 client-datepicker-calendar">
         <Calendar
           onChange={handleDateChange}
           value={value}

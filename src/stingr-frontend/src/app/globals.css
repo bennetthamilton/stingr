@@ -211,3 +211,14 @@ select:focus {
 .react-calendar__month-view__days__day--weekend:not(.react-calendar__tile--active) {
   color: var(--color-lightHoney);
 }
+
+/* ===== Client Date Picker Calendar Styling ===== */
+.client-datepicker-calendar .react-calendar {
+  width: 100% !important;
+  max-width: 100% !important;
+  font-size: 1.2rem;
+}
+
+.client-datepicker-calendar .react-calendar__tile {
+  padding: 1.2em 1em !important;
+}

@@ -9,8 +9,6 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
 } from "@relume_io/relume-ui";
 
 import { RxChevronLeft, RxChevronRight } from "react-icons/rx";
@@ -39,13 +37,13 @@ type Props = {
 export type ArtistListProps = React.ComponentPropsWithoutRef<"section"> & Partial<Props>;
 
 export const ArtistList = (props: ArtistListProps) => {
-  const { tagline, heading, description, button, artists } = {
+  const { tagline, heading, description, artists } = {
     ...ArtistListDefaults,
     ...props,
   };
 
   const [api, setApi] = useState<CarouselApi>();
-  const [current, setCurrent] = useState<number>(0);
+  const [_select, setCurrent] = useState<number>(0);
   const [selectedArtistId, setSelectedArtistId] = useState<string | null>(null);
   const router = useRouter();
 
@@ -97,7 +95,7 @@ export const ArtistList = (props: ArtistListProps) => {
         >
           <div className="relative pb-24">
             <CarouselContent className="ml-0">
-              {uniqueArtists.map((artist, index) => (
+              {uniqueArtists.map((artist) => (
                 <CarouselItem
                   key={artist.artistId}
                   className="basis-[95%] pl-0 pr-6 sm:basis-4/5 md:basis-1/2 md:pr-8 lg:basis-1/4"
@@ -127,7 +125,6 @@ type ArtistCardExtendedProps = ArtistCardProps & {
 };
 
 const ArtistCard: React.FC<ArtistCardExtendedProps> = ({
-  artistId,
   image,
   name,
   bio,

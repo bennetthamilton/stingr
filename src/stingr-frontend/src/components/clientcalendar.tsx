@@ -2,13 +2,12 @@
 
 import React, { useState, useEffect } from "react";
 import Calendar from "react-calendar";
-import { isSameDay, isWithinInterval } from "date-fns";
+import { isWithinInterval } from "date-fns";
 
 type ValuePiece = Date | null;
 type Value = ValuePiece | [ValuePiece, ValuePiece];
 
 export const ClientCalendar = ({
-  appointments = [],
   unavailableDates = [],
   unavailableDateRanges = [],
   onDateChange,

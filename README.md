@@ -29,7 +29,7 @@ stingr is in its early stages of development. We’re currently focusing on inte
 - **Hosting:** Vercel/DigitalOcean
 
 ## Roadmap
-- [ ] Design finalized in Figma
+- [x] Design finalized in Figma
 - [ ] Build initial MLP (Minimum LOVABLE Product)
 - [ ] Implement authentication & artist profiles
 - [ ] Add booking functionality

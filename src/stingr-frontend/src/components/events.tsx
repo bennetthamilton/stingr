@@ -60,7 +60,7 @@ export const EventHeader4 = (props: EventHeader4Props) => {
           <div className="flex w-full items-center justify-between">
             <h1 className="text-4xl text-heading font-bold">{heading}</h1>
             <Button>
-              <a href="/bookings/new">New Event</a>
+              <a href="/bookings/select">New Appointment</a>
             </Button>
           </div>
         </div>

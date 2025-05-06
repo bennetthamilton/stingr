@@ -2,15 +2,20 @@
 
 import React, { useState } from "react";
 import Calendar from "react-calendar";
+import { isSameDay, isWithinInterval } from "date-fns";
 
 type ValuePiece = Date | null;
 type Value = ValuePiece | [ValuePiece, ValuePiece];
 
 export const ClientCalendar = ({
+  appointments = [],
   unavailableDates = [],
+  unavailableDateRanges = [],
   onDateChange,
 }: {
+  appointments: Date[];
   unavailableDates?: Date[];
+  unavailableDateRanges?: [Date, Date][];
   onDateChange?: (date: Date) => void;
 }) => {
   const [value, setValue] = useState<Value>(new Date());
@@ -22,6 +27,7 @@ export const ClientCalendar = ({
     }
   };
 
+  // Function to check if a date is unavailable
   const isDateUnavailable = (date: Date) =>
     unavailableDates.some(
       (unavailable) =>
@@ -29,6 +35,15 @@ export const ClientCalendar = ({
         date.getMonth() === unavailable.getMonth() &&
         date.getDate() === unavailable.getDate()
     );
+
+  // Function to check if a date is within any of the unavailable ranges
+  const isDateInRangeUnavailable = (date: Date) =>
+    unavailableDateRanges.some(
+      ([startDate, endDate]) => isWithinInterval(date, { start: startDate, end: endDate })
+    );
+
+  const isDateAvailable = (date: Date) =>
+    !isDateUnavailable(date) && !isDateInRangeUnavailable(date);
 
   return (
     <div className="w-full flex justify-center">
@@ -38,9 +53,7 @@ export const ClientCalendar = ({
           value={value}
           calendarType="gregory"
           locale="en-US"
-          tileDisabled={({ date }) =>
-            unavailableDates.length > 0 && isDateUnavailable(date)
-          }
+          tileDisabled={({ date }) => !isDateAvailable(date)}
         />
       </div>
     </div>

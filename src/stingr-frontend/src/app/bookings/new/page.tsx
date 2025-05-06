@@ -3,15 +3,10 @@
 import { ApplicationShell5 } from '@/components/appshell';
 import { EventItemHeader11 } from '@/components/eventcreation';
 import { useSearchParams } from 'next/navigation';
-import { useEffect, useMemo, useState } from 'react';
+import { Suspense, useMemo } from 'react';
 
-export default function Page() {
+function PageContent() {
   const searchParams = useSearchParams();
-  const [isHydrated, setIsHydrated] = useState(false);
-
-  useEffect(() => {
-    setIsHydrated(true);
-  }, []);
 
   const artistMap: { [key: string]: string } = {
     "123": "Jane Ink",
@@ -20,13 +15,11 @@ export default function Page() {
   };
 
   const artistName = useMemo(() => {
-    if (!isHydrated) return "";
     const artistId = searchParams.get("artistId");
     return artistId ? artistMap[artistId] || "Unknown Artist" : "";
-  }, [isHydrated, searchParams]);
+  }, [searchParams]);
 
   const formattedDate = useMemo(() => {
-    if (!isHydrated) return null;
     const dateParam = searchParams.get("date");
 
     const parseDate = (date: Date) => ({
@@ -43,15 +36,21 @@ export default function Page() {
     }
 
     return parseDate(new Date());
-  }, [isHydrated, searchParams]);
+  }, [searchParams]);
 
-  if (!isHydrated || !formattedDate) {
-    return null;
-  }
+  if (!formattedDate) return null;
 
   return (
+    <EventItemHeader11 artist={artistName} date={formattedDate} />
+  );
+}
+
+export default function Page() {
+  return (
     <ApplicationShell5>
-      <EventItemHeader11 artist={artistName} date={formattedDate} />
+      <Suspense fallback={<div>Loading...</div>}>
+        <PageContent />
+      </Suspense>
     </ApplicationShell5>
   );
 }

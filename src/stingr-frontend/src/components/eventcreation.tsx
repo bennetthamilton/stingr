@@ -28,6 +28,7 @@ type Props = {
   description: string;
   button: ButtonProps;
   date: DateInfo;
+  artist?: string;
 };
 
 type EventFormData = {
@@ -45,6 +46,7 @@ export type EventItemHeader11Props = React.ComponentPropsWithoutRef<"section"> &
   description?: string;
   button?: ButtonProps;
   date?: DateInfo;
+  artist?: string;
   onSubmit?: (data: EventFormData) => void;
 };
 
@@ -54,6 +56,7 @@ export const EventItemHeader11 = (props: EventItemHeader11Props) => {
     description,
     button,
     date,
+    artist = "", // Default to empty if not provided
     onSubmit,
   } = {
     ...EventItemHeader11Defaults,
@@ -63,7 +66,7 @@ export const EventItemHeader11 = (props: EventItemHeader11Props) => {
   const [clientName, setClientName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [phone, setPhone] = useState<string>("");
-  const [artist, setArtist] = useState<string>("");
+  const [artistName, setArtistName] = useState<string>(artist); // Using a state setter for artist
   const [appointmentType, setAppointmentType] = useState<string>("");
   const [tattooDescription, setTattooDescription] = useState<string>("");
   const [acceptTerms, setAcceptTerms] = useState<boolean | "indeterminate">(false);
@@ -80,7 +83,7 @@ export const EventItemHeader11 = (props: EventItemHeader11Props) => {
       clientName,
       email,
       phone,
-      artist,
+      artist: artistName, // Using the state variable here
       appointmentType,
       tattooDescription: appointmentType === "consultation" ? tattooDescription : undefined,
       acceptTerms: acceptTerms === true, // Cast to boolean in case of "indeterminate"
@@ -153,8 +156,8 @@ export const EventItemHeader11 = (props: EventItemHeader11Props) => {
                 <Input
                   type="text"
                   id="artist"
-                  value={artist}
-                  onChange={(e) => setArtist(e.target.value)}
+                  value={artistName}
+                  onChange={(e) => setArtistName(e.target.value)} // Updating state here
                   placeholder="Enter artist name (optional)"
                 />
               </div>

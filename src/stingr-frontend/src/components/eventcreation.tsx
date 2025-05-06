@@ -168,7 +168,7 @@ export const EventItemHeader11 = (props: EventItemHeader11Props) => {
                   <SelectTrigger>
                     <SelectValue placeholder="Choose one..." />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="bg-background">
                     {appointmentOptions.map((item) => (
                       <SelectItem key={item.value} value={item.value}>
                         {item.label}

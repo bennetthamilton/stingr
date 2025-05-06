@@ -44,6 +44,11 @@ export const ArtistList = (props: ArtistListProps) => {
 
   const [api, setApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState<number>(0);
+  const [selectedArtistId, setSelectedArtistId] = useState<string | null>(null);
+  const router = useRouter();
+
+  // Remove duplicate artists based on artistId
+  const uniqueArtists = [...new Map(artists.map((a) => [a.artistId, a])).values()];
 
   useEffect(() => {
     if (!api) return;
@@ -53,17 +58,32 @@ export const ArtistList = (props: ArtistListProps) => {
     });
   }, [api]);
 
+  const handleNext = () => {
+    if (selectedArtistId) {
+      router.push(`/bookings/select-date?artistId=${selectedArtistId}`);
+    }
+  };
+
   return (
     <section id="relume" className="overflow-hidden px-[5%] py-16 md:py-24 lg:py-28">
       <div className="container">
         <div className="mb-12 grid grid-cols-1 items-end gap-12 md:mb-18 md:grid-cols-[1fr_max-content] lg:mb-20 lg:gap-20">
           <div className="max-w-lg">
-            <p className="mb-3 font-semibold md:mb-4">{tagline}</p>
+            <p className="mb-2 text-sm font-semibold text-neutral-600">{tagline}</p>
             <h1 className="mb-3 text-5xl font-bold md:mb-4 md:text-7xl lg:text-8xl">{heading}</h1>
             <p className="md:text-md">{description}</p>
           </div>
-          <Button {...button} className="hidden md:flex">
-            {button.title}
+          <Button
+            onClick={handleNext}
+            disabled={!selectedArtistId}
+            className="hidden md:flex"
+            style={{
+              backgroundColor: selectedArtistId ? "var(--color-honeyGold)" : "var(--color-brown)",
+              cursor: selectedArtistId ? "pointer" : "not-allowed",
+              color: "white",
+            }}
+          >
+            Next
           </Button>
         </div>
         <Carousel
@@ -75,24 +95,28 @@ export const ArtistList = (props: ArtistListProps) => {
         >
           <div className="relative pb-24">
             <CarouselContent className="ml-0">
-              {artists.map((artist, index) => (
+              {uniqueArtists.map((artist, index) => (
                 <CarouselItem
-                  key={index}
+                  key={artist.artistId}
                   className="basis-[95%] pl-0 pr-6 sm:basis-4/5 md:basis-1/2 md:pr-8 lg:basis-1/4"
                 >
-                  <ArtistCard key={index} {...artist} />
+                  <ArtistCard
+                    {...artist}
+                    isSelected={selectedArtistId === artist.artistId}
+                    onSelect={() => setSelectedArtistId(artist.artistId)}
+                  />
                 </CarouselItem>
               ))}
             </CarouselContent>
             <div className="absolute bottom-0 flex w-full items-end justify-between">
               <div className="flex h-7 pt-[10px]">
-                {artists.map((_, index) => (
+                {uniqueArtists.map((_, index) => (
                   <button
                     key={index}
                     onClick={() => api?.scrollTo(index)}
                     className={clsx(
                       "mx-[3px] size-2 rounded-full",
-                      current === index + 1 ? "bg-black" : "bg-neutral-light",
+                      current === index + 1 ? "bg-black" : "bg-neutral-light"
                     )}
                   />
                 ))}
@@ -109,17 +133,30 @@ export const ArtistList = (props: ArtistListProps) => {
   );
 };
 
-const ArtistCard: React.FC<ArtistCardProps> = ({ artistId, image, name, bio, style }) => {
-  const router = useRouter();
+type ArtistCardExtendedProps = ArtistCardProps & {
+  isSelected: boolean;
+  onSelect: () => void;
+};
 
-  const handleClick = () => {
-    router.push(`/bookings/select-date?artistId=${artistId}`);
-  };
-
+const ArtistCard: React.FC<ArtistCardExtendedProps> = ({
+  artistId,
+  image,
+  name,
+  bio,
+  style,
+  isSelected,
+  onSelect,
+}) => {
   return (
-    <div onClick={handleClick} className="cursor-pointer font-semibold md:text-md">
+    <div
+      onClick={onSelect}
+      className={clsx(
+        "cursor-pointer font-semibold md:text-md border-2 rounded-xl p-2 transition-shadow",
+        isSelected ? "border-[var(--color-honeyGold)] shadow-lg" : "border-transparent"
+      )}
+    >
       <div className="mb-3 block aspect-[5/6] md:mb-4">
-        <img src={image.src} alt={image.alt} className="size-full object-cover rounded-xl" />
+        <img src={image.src} alt={image.alt} className="size-full object-cover rounded-lg" />
       </div>
       <div className="mb-2">
         <h3 className="text-lg font-bold">{name}</h3>
@@ -149,7 +186,7 @@ export const ArtistListDefaults: Props = {
   button: {
     variant: "secondary",
     size: "primary",
-    title: "View All Artists",
+    title: "Next",
   },
-  artists: [exampleArtist, exampleArtist, exampleArtist, exampleArtist],
+  artists: [exampleArtist, exampleArtist], // For testing, replace with unique artists
 };

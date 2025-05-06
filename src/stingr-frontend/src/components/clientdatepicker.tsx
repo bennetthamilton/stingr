@@ -60,6 +60,7 @@ export const ClientDatePicker = ({
   return (
     <div className="w-full flex flex-col items-center gap-6">
       <div className="w-full max-w-xl rounded-xl bg-background shadow-md p-4 client-datepicker-calendar">
+        <h2 className="mb-4 text-3xl font-bold md:text-3xl lg:text-4xl">Select an Appointment Date</h2>
         <Calendar
           onChange={handleDateChange}
           value={value}

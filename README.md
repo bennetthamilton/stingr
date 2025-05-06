@@ -44,6 +44,8 @@ npm install
 # Run the backend
 npm run dev
 
+# (In a new Terminal)
+
 # Navigate to frontend api directory
 cd stingr/src/stingr-frontend/src/app
 

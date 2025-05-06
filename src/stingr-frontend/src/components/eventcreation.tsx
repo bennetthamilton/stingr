@@ -30,10 +30,23 @@ type Props = {
   date: DateInfo;
 };
 
-export type EventItemHeader11Props = React.ComponentPropsWithoutRef<"section"> &
-  Partial<Props> & {
-    onSubmit?: (data: any) => void;
-  };
+type EventFormData = {
+  clientName: string;
+  email: string;
+  phone: string;
+  artist: string;
+  appointmentType: string;
+  tattooDescription?: string;
+  acceptTerms: boolean;
+};
+
+export type EventItemHeader11Props = React.ComponentPropsWithoutRef<"section"> & {
+  heading?: string;
+  description?: string;
+  button?: ButtonProps;
+  date?: DateInfo;
+  onSubmit?: (data: EventFormData) => void;
+};
 
 export const EventItemHeader11 = (props: EventItemHeader11Props) => {
   const {
@@ -63,14 +76,14 @@ export const EventItemHeader11 = (props: EventItemHeader11Props) => {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const payload = {
+    const payload: EventFormData = {
       clientName,
       email,
       phone,
       artist,
       appointmentType,
       tattooDescription: appointmentType === "consultation" ? tattooDescription : undefined,
-      acceptTerms,
+      acceptTerms: acceptTerms === true, // Cast to boolean in case of "indeterminate"
     };
     console.log("Event created:", payload);
     onSubmit?.(payload);

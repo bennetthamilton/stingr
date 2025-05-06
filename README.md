@@ -7,7 +7,7 @@ This repository is for **internal development** and is intended for Stingr's **e
 
 ## Release notes
 stingr is in its early stages of development. We’re currently focusing on integrating the booking feature by connecting the frontend with the backend. Next up, we’ll complete the login and sign-up interfaces and build the supporting backend API.
-# Bugs
+## Bugs
 - Booking form is not yet connected to the backend
 - User authentication and authorization are not implemented
 - No URL encryption

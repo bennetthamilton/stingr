@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Calendar from "react-calendar";
 import { isSameDay, isWithinInterval } from "date-fns";
 
@@ -19,6 +19,12 @@ export const ClientCalendar = ({
   onDateChange?: (date: Date) => void;
 }) => {
   const [value, setValue] = useState<Value>(new Date());
+  const [isClient, setIsClient] = useState(false);  // Track whether it's client-side
+
+  // Client-side effect to prevent hydration mismatch
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   const handleDateChange = (selectedDate: Value, _event: React.MouseEvent<HTMLButtonElement>) => {
     if (selectedDate instanceof Date) {
@@ -44,6 +50,11 @@ export const ClientCalendar = ({
 
   const isDateAvailable = (date: Date) =>
     !isDateUnavailable(date) && !isDateInRangeUnavailable(date);
+
+  // If the component is rendering server-side, return null to prevent hydration mismatch
+  if (!isClient) {
+    return null;
+  }
 
   return (
     <div className="w-full flex justify-center">

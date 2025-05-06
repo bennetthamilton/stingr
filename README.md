@@ -24,7 +24,7 @@ stingr is in its early stages of development. We’re currently focusing on inte
 
 ## Tech Stack
 - **Frontend:** React (Next.js) with Tailwind CSS
-- **Backend:** Node.js with Express & PostgreSQL
+- **Backend:** Node.js with Express & DynamoDB
 - **Authentication:** Firebase/Auth0
 - **Hosting:** Vercel/DigitalOcean
 

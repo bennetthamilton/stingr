@@ -80,9 +80,10 @@ stingr/
 │   ├── stingr-backend/          # Backend server code
 │   │   ├── __tests__/           # Backend tests
 │   │   ├── api/                 # API route handlers
+│   │   |   ├── index.js         # Backend entry point
+│   │   |   ├── routes           # API Routes
 │   │   ├── AWS-files/           # AWS-related scripts/files
 │   │   ├── .env                 # Backend environment config
-│   │   ├── index.js             # Backend entry point
 │   │   ├── package.json         # Backend dependencies
 │
 ├── stingr-frontend/             # Frontend code (Next.js)

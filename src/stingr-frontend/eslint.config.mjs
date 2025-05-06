@@ -23,6 +23,9 @@ const eslintConfig = [
         },
       ],
     },
+
+    // Disable warning about <img> usage
+    "@next/next/no-img-element": "off",
   },
 ];
 

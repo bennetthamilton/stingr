@@ -5,6 +5,17 @@ Stingr is a modern web app designed to connect tattoo clients with artists in an
 ## Overview for Developers
 This repository is for **internal development** and is intended for Stingr's **engineering team**. Below, you'll find guidelines for setting up, contributing, and maintaining the project.
 
+## Release notes
+stingr is in its early stages of development. We’re currently focusing on integrating the booking feature by connecting the frontend with the backend. Next up, we’ll complete the login and sign-up interfaces and build the supporting backend API.
+# Bugs
+- Booking form is not yet connected to the backend
+- User authentication and authorization are not implemented
+- No URL encryption
+- No placeholder images
+- Page navigation can be inconsistent
+- Some buttons are non-functional or require multiple clicks
+- Consultation dropdown is hard to read
+
 ## Features
 - **Swipe-based artist discovery** – Find artists based on style, location, and availability.
 - **Instant booking & consultations** – Simplify the appointment process with built-in scheduling.

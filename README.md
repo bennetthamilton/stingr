@@ -35,8 +35,17 @@ This repository is for **internal development** and is intended for Stingr's **e
 # Clone the repository
 git clone https://github.com/yourusername/stingr.git
 
-# Navigate to project directory
-cd stingr
+# Navigate to backend api directory
+cd stingr/src/stingr-backend/api
+
+# Install dependencies
+npm install
+
+# Run the backend
+npm run dev
+
+# Navigate to frontend api directory
+cd stingr/src/stingr-frontend/src/app
 
 # Install dependencies
 npm install

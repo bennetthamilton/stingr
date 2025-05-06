@@ -1,3 +1,5 @@
+"use client";
+
 import * as React from "react";
 import type { ButtonProps } from "@relume_io/relume-ui";
 import { Button } from "@relume_io/relume-ui";
@@ -6,7 +8,8 @@ import { clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { ClientCalendar } from "@/components/clientcalendar";
 
-type Date = {
+// Rename Date type to EventDate to avoid conflict with the built-in Date
+type EventDate = {
   weekday: string;
   day: string;
   month: string;
@@ -15,7 +18,7 @@ type Date = {
 
 type Event = {
   url: string;
-  date: Date;
+  date: EventDate;
   category: string;
   title: string;
   status: string | null;
@@ -40,6 +43,16 @@ export const EventHeader4 = (props: EventHeader4Props) => {
     ...props,
   };
 
+  // Convert event.date to a Date object
+  const eventDate = new Date(`${event.date.month} ${event.date.day}, ${event.date.year}`);
+  const appointments = [eventDate]; // Appointments as an array of Date objects
+
+  const handleDateChange = (selectedDate: Date) => {
+    // Logic to handle selected date change
+    // You can fetch or display appointments for the selected date
+    console.log("Selected date:", selectedDate);
+  };
+
   return (
     <section id="relume" className="px-[5%] py-16 md:py-24 lg:py-28">
       <div className="container">
@@ -56,7 +69,7 @@ export const EventHeader4 = (props: EventHeader4Props) => {
           {/* Calendar + Main Event Info */}
           <div className="border border-border-primary">
             <div className="w-full overflow-hidden">
-              <ClientCalendar />
+              <ClientCalendar appointments={appointments} onDateChange={handleDateChange} />
             </div>
             <div className="flex flex-col items-start p-6">
               <p className="mb-4 bg-background-secondary px-2 py-1 text-sm font-semibold">
@@ -150,7 +163,7 @@ const UpcomingEvent: React.FC<FeaturedEvent> = ({
   );
 };
 
-const EventDate: React.FC<Date & { className?: string }> = ({
+const EventDate: React.FC<EventDate & { className?: string }> = ({
   weekday,
   day,
   month,

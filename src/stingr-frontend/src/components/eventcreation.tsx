@@ -15,6 +15,7 @@ import {
 } from "@relume_io/relume-ui";
 import type { ButtonProps } from "@relume_io/relume-ui";
 import { BiCalendarAlt } from "react-icons/bi";
+import { useRouter } from "next/navigation";
 
 type DateInfo = {
   weekday: string;
@@ -56,7 +57,7 @@ export const EventItemHeader11 = (props: EventItemHeader11Props) => {
     description,
     button,
     date,
-    artist = "", // Default to empty if not provided
+    artist = "",
     onSubmit,
   } = {
     ...EventItemHeader11Defaults,
@@ -66,10 +67,13 @@ export const EventItemHeader11 = (props: EventItemHeader11Props) => {
   const [clientName, setClientName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [phone, setPhone] = useState<string>("");
-  const [artistName, setArtistName] = useState<string>(artist); // Using a state setter for artist
+  const [artistName, setArtistName] = useState<string>(artist);
   const [appointmentType, setAppointmentType] = useState<string>("");
   const [tattooDescription, setTattooDescription] = useState<string>("");
   const [acceptTerms, setAcceptTerms] = useState<boolean | "indeterminate">(false);
+  const [errorMessage, setErrorMessage] = useState<string>("");
+
+  const router = useRouter();
 
   const appointmentOptions = [
     { value: "consultation", label: "Consultation" },
@@ -79,17 +83,32 @@ export const EventItemHeader11 = (props: EventItemHeader11Props) => {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    if (!clientName || !email || !phone || !appointmentType || !acceptTerms) {
+      setErrorMessage("Please fill out all required fields and accept the terms.");
+      return;
+    }
+
+    if (appointmentType === "consultation" && !tattooDescription) {
+      setErrorMessage("Please provide a tattoo description for consultations.");
+      return;
+    }
+
+    setErrorMessage("");
+
     const payload: EventFormData = {
       clientName,
       email,
       phone,
-      artist: artistName, // Using the state variable here
+      artist: artistName,
       appointmentType,
       tattooDescription: appointmentType === "consultation" ? tattooDescription : undefined,
-      acceptTerms: acceptTerms === true, // Cast to boolean in case of "indeterminate"
+      acceptTerms: acceptTerms === true,
     };
+
     console.log("Event created:", payload);
     onSubmit?.(payload);
+    router.push("/bookings");
   };
 
   return (
@@ -157,14 +176,14 @@ export const EventItemHeader11 = (props: EventItemHeader11Props) => {
                   type="text"
                   id="artist"
                   value={artistName}
-                  onChange={(e) => setArtistName(e.target.value)} // Updating state here
+                  onChange={(e) => setArtistName(e.target.value)}
                   placeholder="Enter artist name (optional)"
                 />
               </div>
 
               <div className="grid w-full items-center">
                 <Label className="mb-2">Appointment type</Label>
-                <Select onValueChange={setAppointmentType}>
+                <Select onValueChange={setAppointmentType} value={appointmentType}>
                   <SelectTrigger>
                     <SelectValue placeholder="Choose one..." />
                   </SelectTrigger>
@@ -202,8 +221,16 @@ export const EventItemHeader11 = (props: EventItemHeader11Props) => {
                 </Label>
               </div>
 
+              {errorMessage && (
+                <h3 className="text-[13px] px-1" style={{ color: 'var(--color-teal)' }}>
+                  {errorMessage}
+                </h3>
+              )}
+
               <div className="text-left">
-                <Button {...button}>{button.title}</Button>
+                <Button type="submit" {...button}>
+                  {button.title}
+                </Button>
               </div>
             </form>
           </div>
@@ -224,3 +251,4 @@ export const EventItemHeader11Defaults: Props = {
     year: "2024",
   },
 };
+

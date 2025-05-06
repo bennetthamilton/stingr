@@ -38,7 +38,7 @@ stingr is in its early stages of development. We’re currently focusing on inte
 ## Development Setup
 ### Prerequisites
 - Node.js & npm installed
-- PostgreSQL database setup
+- DynamoDB database setup
 - Firebase/Auth0 credentials (for authentication)
 
 ### Installation
@@ -72,16 +72,35 @@ npm run dev
 ## Project Structure
 ```
 stingr/
-│── src/                # Source code
-│   ├── components/     # Reusable UI components
-│   ├── pages/          # Next.js pages
-│   ├── api/            # Backend API routes
-│── public/             # Static assets
-│── docs/               # Documentation
-│── tests/              # Unit & integration tests
-│── .env.example        # Environment variables template
-│── package.json        # Project dependencies
-│── README.md           # Project overview
+│
+├── node_modules/                # Project dependencies
+├── openapi/                     # OpenAPI documentation (if applicable)
+│
+├── src/                         # Source code
+│   ├── stingr-backend/          # Backend server code
+│   │   ├── __tests__/           # Backend tests
+│   │   ├── api/                 # API route handlers
+│   │   ├── AWS-files/           # AWS-related scripts/files
+│   │   ├── .env                 # Backend environment config
+│   │   ├── index.js             # Backend entry point
+│   │   ├── package.json         # Backend dependencies
+│
+├── stingr-frontend/             # Frontend code (Next.js)
+│   ├── .next/                   # Next.js build output
+│   ├── node_modules/            # Frontend dependencies
+│   ├── public/                  # Static assets (images, etc.)
+│   ├── src/                     # Frontend source
+│   │   ├── app/                 # App directory (Next.js routing)
+│   │   └── components/          # Reusable UI components
+│   ├── .gitignore
+│   ├── eslint.config.mjs       # Linting config
+│   ├── next.config.ts          # Next.js config
+│   ├── next-env.d.ts           # TypeScript environment
+│   ├── package.json             # Frontend dependencies
+│   ├── postcss.config.js        # PostCSS config
+│   ├── tailwind.config.ts       # Tailwind CSS config
+│   └── README.md                # Project documentation
+
 ```
 
 ## Contribution Guidelines

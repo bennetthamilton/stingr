@@ -86,6 +86,8 @@ export const handler = async (event, context) => {
               date_booked: requestJSON.date_booked,
               client: requestJSON.client,
               artist: requestJSON.artist,
+              phone: requestJSON.phone,
+              email: requestJSON.email,
               appointment_date: requestJSON.appointment_date,
               status: requestJSON.status,
               description: requestJSON.description,

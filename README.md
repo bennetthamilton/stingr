@@ -13,12 +13,12 @@ This repository is for **internal development** and is intended for Stingr's **e
 
 ## Tech Stack
 - **Frontend:** React (Next.js) with Tailwind CSS
-- **Backend:** Node.js with Express & PostgreSQL
+- **Backend:** Node.js with Express & DynamoDB
 - **Authentication:** Firebase/Auth0
 - **Hosting:** Vercel/DigitalOcean
 
 ## Roadmap
-- [ ] Design finalized in Figma
+- [x] Design finalized in Figma
 - [ ] Build initial MLP (Minimum LOVABLE Product)
 - [ ] Implement authentication & artist profiles
 - [ ] Add booking functionality
@@ -27,7 +27,7 @@ This repository is for **internal development** and is intended for Stingr's **e
 ## Development Setup
 ### Prerequisites
 - Node.js & npm installed
-- PostgreSQL database setup
+- DynamoDB database setup
 - Firebase/Auth0 credentials (for authentication)
 
 ### Installation
@@ -35,8 +35,19 @@ This repository is for **internal development** and is intended for Stingr's **e
 # Clone the repository
 git clone https://github.com/yourusername/stingr.git
 
-# Navigate to project directory
-cd stingr
+# Navigate to backend api directory
+cd stingr/src/stingr-backend/api
+
+# Install dependencies
+npm install
+
+# Run the backend
+npm run dev
+
+# (In a new Terminal)
+
+# Navigate to frontend api directory
+cd stingr/src/stingr-frontend/src/app
 
 # Install dependencies
 npm install
@@ -50,16 +61,36 @@ npm run dev
 ## Project Structure
 ```
 stingr/
-│── src/                # Source code
-│   ├── components/     # Reusable UI components
-│   ├── pages/          # Next.js pages
-│   ├── api/            # Backend API routes
-│── public/             # Static assets
-│── docs/               # Documentation
-│── tests/              # Unit & integration tests
-│── .env.example        # Environment variables template
-│── package.json        # Project dependencies
-│── README.md           # Project overview
+│
+├── node_modules/                # Project dependencies
+├── openapi/                     # OpenAPI documentation (if applicable)
+│
+├── src/                         # Source code
+│   ├── stingr-backend/          # Backend server code
+│   │   ├── __tests__/           # Backend tests
+│   │   ├── api/                 # API route handlers
+│   │   |   ├── index.js         # Backend entry point
+│   │   |   ├── routes           # API Routes
+│   │   ├── AWS-files/           # AWS-related scripts/files
+│   │   ├── .env                 # Backend environment config
+│   │   ├── package.json         # Backend dependencies
+│
+├── stingr-frontend/             # Frontend code (Next.js)
+│   ├── .next/                   # Next.js build output
+│   ├── node_modules/            # Frontend dependencies
+│   ├── public/                  # Static assets (images, etc.)
+│   ├── src/                     # Frontend source
+│   │   ├── app/                 # App directory (Next.js routing)
+│   │   └── components/          # Reusable UI components
+│   ├── .gitignore
+│   ├── eslint.config.mjs       # Linting config
+│   ├── next.config.ts          # Next.js config
+│   ├── next-env.d.ts           # TypeScript environment
+│   ├── package.json             # Frontend dependencies
+│   ├── postcss.config.js        # PostCSS config
+│   ├── tailwind.config.ts       # Tailwind CSS config
+│   └── README.md                # Project documentation
+
 ```
 
 ## Contribution Guidelines

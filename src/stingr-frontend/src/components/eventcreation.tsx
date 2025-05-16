@@ -15,6 +15,7 @@ import {
 } from "@relume_io/relume-ui";
 import type { ButtonProps } from "@relume_io/relume-ui";
 import { BiCalendarAlt } from "react-icons/bi";
+import { useRouter } from "next/navigation";
 
 type DateInfo = {
   weekday: string;
@@ -28,6 +29,7 @@ type Props = {
   description: string;
   button: ButtonProps;
   date: DateInfo;
+  artist?: string;
 };
 
 type BookingPayload = {
@@ -56,6 +58,7 @@ export const EventItemHeader11 = (props: EventItemHeader11Props) => {
     description,
     button,
     date,
+    artist = "",
     onSubmit,
   } = {
     ...EventItemHeader11Defaults,
@@ -65,11 +68,14 @@ export const EventItemHeader11 = (props: EventItemHeader11Props) => {
   const [clientName, setClientName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [phone, setPhone] = useState<string>("");
-  const [artist, setArtist] = useState<string>("");
+  const [artistName, setArtistName] = useState<string>(artist);
   const [appointmentType, setAppointmentType] = useState<string>("");
   const [appointmentDate, setAppointmentDate] = useState<string>(""); // Optional: use a date picker
   const [tattooDescription, setTattooDescription] = useState<string>("");
   const [acceptTerms, setAcceptTerms] = useState<boolean | "indeterminate">(false);
+  const [errorMessage, setErrorMessage] = useState<string>("");
+
+  const router = useRouter();
 
   const appointmentOptions = [
     { value: "consultation", label: "Consultation" },
@@ -190,19 +196,19 @@ export const EventItemHeader11 = (props: EventItemHeader11Props) => {
                 <Input
                   type="text"
                   id="artist"
-                  value={artist}
-                  onChange={(e) => setArtist(e.target.value)}
+                  value={artistName}
+                  onChange={(e) => setArtistName(e.target.value)}
                   placeholder="Enter artist name (optional)"
                 />
               </div>
 
               <div className="grid w-full items-center">
                 <Label className="mb-2">Appointment type</Label>
-                <Select onValueChange={setAppointmentType}>
+                <Select onValueChange={setAppointmentType} value={appointmentType}>
                   <SelectTrigger>
                     <SelectValue placeholder="Choose one..." />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="bg-background">
                     {appointmentOptions.map((item) => (
                       <SelectItem key={item.value} value={item.value}>
                         {item.label}
@@ -236,8 +242,16 @@ export const EventItemHeader11 = (props: EventItemHeader11Props) => {
                 </Label>
               </div>
 
+              {errorMessage && (
+                <h3 className="text-[13px] px-1" style={{ color: 'var(--color-teal)' }}>
+                  {errorMessage}
+                </h3>
+              )}
+
               <div className="text-left">
-                <Button {...button}>{button.title}</Button>
+                <Button type="submit" {...button}>
+                  {button.title}
+                </Button>
               </div>
             </form>
           </div>
@@ -258,3 +272,4 @@ export const EventItemHeader11Defaults: Props = {
     year: "2024",
   },
 };
+

@@ -89,7 +89,7 @@ export const handler = async (event, context) => {
               phone: requestJSON.phone,
               email: requestJSON.email,
               appointment_date: requestJSON.appointment_date,
-              status: requestJSON.status,
+              appointment_type: requestJSON.appointment_type,
               description: requestJSON.description,
             },
           })

@@ -32,14 +32,16 @@ type Props = {
   artist?: string;
 };
 
-type EventFormData = {
-  clientName: string;
-  email: string;
-  phone: string;
+type BookingPayload = {
+  booking_id: string;
+  date_booked: string;
+  client: string;
   artist: string;
-  appointmentType: string;
-  tattooDescription?: string;
-  acceptTerms: boolean;
+  phone: string;
+  email: string;
+  appointment_date: string;
+  appointment_type: string;
+  description?: string;
 };
 
 export type EventItemHeader11Props = React.ComponentPropsWithoutRef<"section"> & {
@@ -47,8 +49,7 @@ export type EventItemHeader11Props = React.ComponentPropsWithoutRef<"section"> &
   description?: string;
   button?: ButtonProps;
   date?: DateInfo;
-  artist?: string;
-  onSubmit?: (data: EventFormData) => void;
+  onSubmit?: (data: BookingPayload) => void;
 };
 
 export const EventItemHeader11 = (props: EventItemHeader11Props) => {
@@ -69,6 +70,7 @@ export const EventItemHeader11 = (props: EventItemHeader11Props) => {
   const [phone, setPhone] = useState<string>("");
   const [artistName, setArtistName] = useState<string>(artist);
   const [appointmentType, setAppointmentType] = useState<string>("");
+  const [appointmentDate, setAppointmentDate] = useState<string>(""); // Optional: use a date picker
   const [tattooDescription, setTattooDescription] = useState<string>("");
   const [acceptTerms, setAcceptTerms] = useState<boolean | "indeterminate">(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
@@ -81,34 +83,53 @@ export const EventItemHeader11 = (props: EventItemHeader11Props) => {
     { value: "custom", label: "Custom Piece" },
   ];
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    if (!clientName || !email || !phone || !appointmentType || !acceptTerms) {
-      setErrorMessage("Please fill out all required fields and accept the terms.");
-      return;
-    }
+    const bookingId = crypto.randomUUID();
+    const dateBooked = new Date().toISOString();
+    const formattedAppointmentDate =
+      appointmentDate || `${date?.year}-${date?.month}-${date?.day}`;
 
-    if (appointmentType === "consultation" && !tattooDescription) {
-      setErrorMessage("Please provide a tattoo description for consultations.");
-      return;
-    }
-
-    setErrorMessage("");
-
-    const payload: EventFormData = {
-      clientName,
-      email,
-      phone,
-      artist: artistName,
-      appointmentType,
-      tattooDescription: appointmentType === "consultation" ? tattooDescription : undefined,
-      acceptTerms: acceptTerms === true,
+    const payload: BookingPayload = {
+      booking_id: bookingId,
+      date_booked: dateBooked,
+      client: clientName,
+      artist: artist,
+      phone: phone,
+      email: email,
+      appointment_date: formattedAppointmentDate,
+      appointment_type: appointmentType,
+      description: appointmentType === "consultation" ? tattooDescription : undefined,
     };
 
-    console.log("Event created:", payload);
-    onSubmit?.(payload);
-    router.push("/bookings");
+    try {
+      const response = await fetch("https://7lymo673b0.execute-api.us-west-2.amazonaws.com/bookings", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const responseBody = await response.text();
+      console.log("Booking response:", responseBody);
+      alert("Your appointment has been successfully booked!");
+
+      // Optional callback
+      onSubmit?.(payload);
+
+      // Reload the page after successful submission
+      window.location.reload();
+
+    } catch (error) {
+      console.error("Failed to create/update booking:", error);
+      alert("There was an error submitting your booking. Please try again.");
+    }
   };
 
   return (

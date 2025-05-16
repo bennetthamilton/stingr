@@ -89,9 +89,9 @@ export const EventItemHeader11 = (props: EventItemHeader11Props) => {
       booking_id: bookingId,
       date_booked: dateBooked,
       client: clientName,
-      artist,
-      phone,
-      email,
+      artist: artist,
+      phone: phone,
+      email: email,
       appointment_date: formattedAppointmentDate,
       appointment_type: appointmentType,
       description: appointmentType === "consultation" ? tattooDescription : undefined,
@@ -112,7 +112,14 @@ export const EventItemHeader11 = (props: EventItemHeader11Props) => {
 
       const responseBody = await response.text();
       console.log("Booking response:", responseBody);
+      alert("Your appointment has been successfully booked!");
+
+      // Optional callback
       onSubmit?.(payload);
+
+      // Reload the page after successful submission
+      window.location.reload();
+
     } catch (error) {
       console.error("Failed to create/update booking:", error);
       alert("There was an error submitting your booking. Please try again.");

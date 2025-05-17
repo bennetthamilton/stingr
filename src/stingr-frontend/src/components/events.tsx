@@ -98,7 +98,7 @@ export const EventHeader4 = ({ heading = "Your Appointments", bookings, setBooki
                       <Button iconRight={<RxChevronRight />}>Message Artist</Button>
                       <button
                         onClick={() => handleDelete(booking.booking_id)}
-                        className="ml-4 rounded-md bg-background-secondary p-2 hover:bg-[var(--color-deepHoney)]"
+                        className="btn-warn rounded-md"
                         title="Delete booking"
                       >
                         <FiTrash className="size-5" />

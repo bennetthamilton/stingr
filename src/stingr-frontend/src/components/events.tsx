@@ -1,57 +1,63 @@
 "use client";
 
 import * as React from "react";
-import type { ButtonProps } from "@relume_io/relume-ui";
+import { ClientCalendar } from "@/components/clientcalendar";
 import { Button } from "@relume_io/relume-ui";
 import { RxChevronRight } from "react-icons/rx";
+import { FiTrash } from "react-icons/fi";
 import { clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
-import { ClientCalendar } from "@/components/clientcalendar";
+import { DateTime } from "luxon";
 
-// Rename Date type to EventDate to avoid conflict with the built-in Date
-type EventDate = {
-  weekday: string;
-  day: string;
-  month: string;
-  year: string;
-};
-
-type Event = {
-  url: string;
-  date: EventDate;
-  category: string;
-  title: string;
-  status: string | null;
-  location: string;
+type Booking = {
+  booking_id: string;
+  date_booked: string;
+  client: string;
+  artist: string;
+  phone: string;
+  email: string;
+  appointment_date: string;
+  appointment_type: string;
   description: string;
-  button: ButtonProps;
 };
-
-type FeaturedEvent = Omit<Event, "category">;
 
 type Props = {
-  heading: string;
-  event: Event;
-  featuredEvents: FeaturedEvent[];
+  heading?: string;
+  bookings: Booking[];
+  setBookings: React.Dispatch<React.SetStateAction<Booking[]>>;
 };
 
-export type EventHeader4Props = React.ComponentPropsWithoutRef<"section"> & Partial<Props>;
+export const EventHeader4 = ({ heading = "Your Appointments", bookings, setBookings }: Props) => {
+  const [selectedDate, setSelectedDate] = React.useState<string | null>(null);
+  const [selectedBookings, setSelectedBookings] = React.useState<Booking[]>([]);
 
-export const EventHeader4 = (props: EventHeader4Props) => {
-  const { heading, event, featuredEvents } = {
-    ...EventHeader4Defaults,
-    ...props,
+  const handleDateChange = (date: Date) => {
+    const formatted = DateTime.fromJSDate(date).toFormat("yyyy-MMM-dd");
+    setSelectedDate(formatted);
+    const matches = bookings.filter(b => b.appointment_date === formatted);
+    setSelectedBookings(matches);
   };
 
-  // Convert event.date to a Date object
-  const eventDate = new Date(`${event.date.month} ${event.date.day}, ${event.date.year}`);
-  const appointments = [eventDate]; // Appointments as an array of Date objects
+  const handleDelete = async (bookingId: string) => {
+    try {
+      const res = await fetch(
+        `https://7lymo673b0.execute-api.us-west-2.amazonaws.com/bookings/${bookingId}`,
+        { method: "DELETE" }
+      );
 
-  const handleDateChange = (selectedDate: Date) => {
-    // Logic to handle selected date change
-    // You can fetch or display appointments for the selected date
-    console.log("Selected date:", selectedDate);
+      if (!res.ok) throw new Error("Failed to delete booking.");
+
+      setBookings(prev => prev.filter(b => b.booking_id !== bookingId));
+      setSelectedBookings(prev => prev.filter(b => b.booking_id !== bookingId));
+    } catch (err) {
+      console.error(err);
+      alert("Failed to delete booking.");
+    }
   };
+
+  const appointments = bookings.map(b =>
+    DateTime.fromFormat(b.appointment_date, "yyyy-MMM-dd").toJSDate()
+  );
 
   return (
     <section id="relume" className="px-[5%] py-16 md:py-24 lg:py-28">
@@ -66,49 +72,62 @@ export const EventHeader4 = (props: EventHeader4Props) => {
         </div>
 
         <div className="mb-16 grid auto-cols-fr auto-rows-auto grid-cols-1 items-start gap-8 lg:grid-cols-2">
-          {/* Calendar + Main Event Info */}
+          {/* Calendar + Selected Booking Info */}
           <div className="border border-border-primary">
             <div className="w-full overflow-hidden">
               <ClientCalendar appointments={appointments} onDateChange={handleDateChange} />
             </div>
-            <div className="flex flex-col items-start p-6">
-              <p className="mb-4 bg-background-secondary px-2 py-1 text-sm font-semibold">
-                {event.category}
-              </p>
-              <div className="flex w-full flex-col items-start justify-start">
-                <div className="flex flex-wrap items-center gap-4">
-                  <a href={event.url}>
-                    <h2 className="text-xl font-bold md:text-2xl">{event.title}</h2>
-                  </a>
-                  {event?.status && (
-                    <p className="bg-background-secondary px-2 py-1 text-sm font-semibold">
-                      {event.status}
-                    </p>
-                  )}
+            {selectedDate && selectedBookings.length > 0 ? (
+              selectedBookings.map((booking, index) => (
+                <div
+                  key={index}
+                  className="relative flex flex-col items-start p-6 border-t border-border-primary"
+                >
+                  <p className="mb-4 bg-background-secondary px-2 py-1 text-sm font-semibold">
+                    {booking.appointment_type}
+                  </p>
+                  <div className="flex w-full flex-col items-start justify-start">
+                    <div className="flex flex-wrap items-center gap-4">
+                      <a href="/messages">
+                        <h2 className="text-xl font-bold md:text-2xl">{booking.artist}</h2>
+                      </a>
+                    </div>
+                    <p className="mb-2">{booking.appointment_date}</p>
+                    <p>{booking.description ?? "No description provided."}</p>
+                    <div className="mt-5 md:mt-6 flex w-full justify-between items-center">
+                      <Button iconRight={<RxChevronRight />}>Message Artist</Button>
+                      <button
+                        onClick={() => handleDelete(booking.booking_id)}
+                        className="ml-4 rounded-md bg-background-secondary p-2 hover:bg-[var(--color-deepHoney)]"
+                        title="Delete booking"
+                      >
+                        <FiTrash className="size-5" />
+                      </button>
+                    </div>
+                  </div>
                 </div>
-                <p className="mb-2">{event.location}</p>
-                <p>{event.description}</p>
-                <Button {...event.button} className="mt-5 md:mt-6">
-                  {event.button.title}
-                </Button>
-              </div>
-            </div>
+              ))
+            ) : selectedDate ? (
+              <div className="p-6 text-muted">No appointments found for {selectedDate}.</div>
+            ) : (
+              <div className="p-6 text-muted">Select a date to view appointment details.</div>
+            )}
           </div>
 
-          {/* Upcoming Events Section */}
+          {/* Upcoming Bookings Section */}
           <div className="flex flex-col gap-8">
-            {featuredEvents.length > 0 ? (
+            {bookings.length > 0 ? (
               <>
-                <h2 className="text-2xl font-bold">Upcoming Events</h2>
-                {featuredEvents.map((event, index) => (
-                  <UpcomingEvent key={index} {...event} />
+                <h2 className="text-2xl font-bold">Upcoming Appointments</h2>
+                {bookings.map((b, i) => (
+                  <UpcomingBooking key={i} booking={b} onDelete={handleDelete} />
                 ))}
               </>
             ) : (
               <div className="flex flex-col items-start justify-center border border-border-primary px-6 py-10 text-left">
                 <h2 className="text-2xl font-bold mb-4">No Upcoming Appointments</h2>
                 <p className="mb-6 text-sm text-muted">
-                  You don’t have any upcoming appointments. Browse artists to find a new session.
+                  You don’t have any upcoming appointments.
                 </p>
                 <a
                   href="/browse"
@@ -126,15 +145,25 @@ export const EventHeader4 = (props: EventHeader4Props) => {
   );
 };
 
-const UpcomingEvent: React.FC<FeaturedEvent> = ({
-  date,
-  url,
-  title,
-  status,
-  location,
-  description,
-  button,
+type FormattedDate = {
+  weekday: string;
+  day: string;
+  month: string;
+  year: string;
+};
+
+const UpcomingBooking: React.FC<{ booking: Booking; onDelete: (id: string) => void }> = ({
+  booking,
+  onDelete
 }) => {
+  const dateObj = DateTime.fromFormat(booking.appointment_date, "yyyy-MMM-dd");
+  const date: FormattedDate = {
+    weekday: dateObj.toFormat("ccc"),
+    day: dateObj.toFormat("dd"),
+    month: dateObj.toFormat("MMM"),
+    year: dateObj.toFormat("yyyy"),
+  };
+
   return (
     <div className="flex flex-col items-center border border-border-primary px-4 py-6 md:flex-row md:py-4">
       <EventDate
@@ -144,26 +173,38 @@ const UpcomingEvent: React.FC<FeaturedEvent> = ({
         year={date.year}
         className="min-w-24 shrink-0 p-0 text-base md:px-1 md:py-3"
       />
-      <div className="mt-6 flex flex-col items-start border-t border-border-primary pt-6 md:ml-6 md:mt-0 md:border-l md:border-t-0 md:pl-6 md:pt-0">
-        <div className="flex flex-wrap items-center gap-4">
-          <a href={url}>
-            <h2 className="text-xl font-bold md:text-2xl">{title}</h2>
+      <div className="mt-6 flex flex-col items-start border-t border-border-primary pt-6 md:ml-6 md:mt-0 md:border-l md:border-t-0 md:pl-6 md:pt-0 w-full">
+        <div className="flex flex-wrap items-center justify-between w-full gap-4">
+          <a href="/messages">
+            <h2 className="text-xl font-bold md:text-2xl">
+              {booking.appointment_type} with {booking.artist}
+            </h2>
           </a>
-          {status && (
-            <p className="bg-background-secondary px-2 py-1 text-sm font-semibold">{status}</p>
-          )}
+          
         </div>
-        <p className="mb-2 text-sm">{location}</p>
-        <p>{description}</p>
-        <Button {...button} className="mt-5 md:mt-6">
-          {button.title}
-        </Button>
+        <p className="mb-2 text-sm">{booking.appointment_date}</p>
+        <p>{booking.description}</p>
+        <div className="mt-5 md:mt-6 flex w-full items-center justify-between">
+          <Button 
+            className="btn-unstyled flex items-center gap-1"
+            iconRight={<RxChevronRight />}
+          >
+            View Details
+          </Button>
+          <Button
+            onClick={() => onDelete(booking.booking_id)}
+            className="btn-warn rounded-md"
+            title="Delete booking"
+          >
+            <FiTrash className="size-5" />
+          </Button>
+        </div>
       </div>
     </div>
   );
 };
 
-const EventDate: React.FC<EventDate & { className?: string }> = ({
+const EventDate: React.FC<FormattedDate & { className?: string }> = ({
   weekday,
   day,
   month,
@@ -186,30 +227,4 @@ const EventDate: React.FC<EventDate & { className?: string }> = ({
       </span>
     </div>
   );
-};
-
-export const EventHeader4Defaults: Props = {
-  heading: "Your Appointments",
-  event: {
-    url: "/messages",
-    date: {
-      weekday: "Thu",
-      day: "02",
-      month: "May",
-      year: "2024",
-    },
-    category: "Consultation",
-    title: "Consultation Overview",
-    status: "Confirmed",
-    location: "",
-    description:
-      "You have a confirmed consultation scheduled. If you have any questions before your appointment, feel free to message the artist.",
-    button: {
-      title: "Message Artist",
-      // variant: "default",
-      // size: "medium",
-      iconRight: <RxChevronRight />,
-    },
-  },
-  featuredEvents: [], // <- triggers fallback by default
 };

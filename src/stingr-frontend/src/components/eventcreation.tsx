@@ -15,7 +15,6 @@ import {
 } from "@relume_io/relume-ui";
 import type { ButtonProps } from "@relume_io/relume-ui";
 import { BiCalendarAlt } from "react-icons/bi";
-import { useRouter } from "next/navigation";
 
 type DateInfo = {
   weekday: string;
@@ -49,6 +48,7 @@ export type EventItemHeader11Props = React.ComponentPropsWithoutRef<"section"> &
   description?: string;
   button?: ButtonProps;
   date?: DateInfo;
+  artist?: string;
   onSubmit?: (data: BookingPayload) => void;
 };
 
@@ -70,12 +70,10 @@ export const EventItemHeader11 = (props: EventItemHeader11Props) => {
   const [phone, setPhone] = useState<string>("");
   const [artistName, setArtistName] = useState<string>(artist);
   const [appointmentType, setAppointmentType] = useState<string>("");
-  const [appointmentDate, setAppointmentDate] = useState<string>(""); // Optional: use a date picker
+  const [appointmentDate, _setAppointmentDate] = useState<string>(""); // Optional: use a date picker
   const [tattooDescription, setTattooDescription] = useState<string>("");
   const [acceptTerms, setAcceptTerms] = useState<boolean | "indeterminate">(false);
-  const [errorMessage, setErrorMessage] = useState<string>("");
-
-  const router = useRouter();
+  const [errorMessage, _setErrorMessage] = useState<string>("");
 
   const appointmentOptions = [
     { value: "consultation", label: "Consultation" },

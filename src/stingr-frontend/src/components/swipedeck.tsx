@@ -61,10 +61,13 @@ export const SwipeDeck = () => {
         <div className="relative w-full max-w-lg h-[600px]">
           {dummyArtists.map((artist) => (
             <TinderCard
-              key={artist.name}
-              className="absolute w-full h-full"
-              preventSwipe={["up", "down"]}
-              onSwipe={(dir) => handleSwipe(dir, artist)}
+                key={artist.name}
+                className="absolute w-full h-full"
+                preventSwipe={["up", "down"]}
+                onSwipe={(dir) => handleSwipe(dir, artist)}
+                flickOnSwipe={true} 
+                swipeRequirementType="position" // or "velocity"
+                swipeThreshold={100} // adjust this value to change the swipe sensitivity
             >
               <SwipeCard artist={artist} />
             </TinderCard>

@@ -71,7 +71,7 @@ export const SwipeDeck = () => {
           {/* Dislike Button */}
             <button
                 onClick={() => swipe("left")}
-                className="text-4xl transition"
+                className="btn-hex text-4xl transition"
             >
                 <FaTimes />
             </button>
@@ -100,7 +100,7 @@ export const SwipeDeck = () => {
           {/* Like Button */}
             <button
                 onClick={() => swipe("right")}
-                className="text-4xl transition"
+                className="btn-hex text-4xl transition"
             >
                 <FaHeart />
             </button>

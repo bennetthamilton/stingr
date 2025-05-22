@@ -51,6 +51,8 @@ export const SwipeDeck = () => {
   const [currentIndex, setCurrentIndex] = useState(dummyArtists.length - 1);
   const cardRefs = useRef<Array<any>>([]);
 
+  const noMoreCards = currentIndex < 0;
+
   const handleSwipe = (direction: string, artist: Artist) => {
     if (direction === "right") {
       setLiked((prev) => [...prev, artist]);
@@ -58,7 +60,7 @@ export const SwipeDeck = () => {
   };
 
   const swipe = async (dir: "left" | "right") => {
-    if (currentIndex >= 0 && cardRefs.current[currentIndex]) {
+    if (!noMoreCards && cardRefs.current[currentIndex]) {
       await cardRefs.current[currentIndex].swipe(dir);
     }
   };
@@ -71,36 +73,49 @@ export const SwipeDeck = () => {
           {/* Dislike Button */}
             <button
                 onClick={() => swipe("left")}
-                className="btn-hex text-4xl transition"
+                className={`btn-hex text-4xl transition ${
+                    noMoreCards
+                    ? "opacity-50 cursor-not-allowed"
+                    : ""
+                }`}
             >
                 <FaTimes />
             </button>
 
           {/* Card Stack */}
             <div className="relative w-full max-w-md h-full flex-1 flex items-center justify-center">
-            {dummyArtists.map((artist, index) => (
-                <TinderCard
-                key={artist.name}
-                className="absolute w-full h-full"
-                preventSwipe={["up", "down"]}
-                flickOnSwipe={true}
-                swipeRequirementType="position"
-                swipeThreshold={60}
-                onSwipe={(dir) => {
-                    handleSwipe(dir, artist);
-                    setCurrentIndex((prev) => prev - 1);
-                }}
-                ref={(el) => { cardRefs.current[index] = el; }}
-                >
-                <SwipeCard artist={artist} />
-                </TinderCard>
-            ))}
+                {/* No more matches message (base layer) */}
+                <div className="absolute z-0 flex items-center justify-center w-full h-full bg-background text-neutral-400 text-lg font-semibold text-center px-4">
+                    No more matches — check back later!
+                </div>
+                {/* Tinder cards */}
+                {dummyArtists.map((artist, index) => (
+                    <TinderCard
+                    key={artist.name}
+                    className="absolute w-full h-full"
+                    preventSwipe={["up", "down"]}
+                    flickOnSwipe={true}
+                    swipeRequirementType="position"
+                    swipeThreshold={60}
+                    onSwipe={(dir) => {
+                        handleSwipe(dir, artist);
+                        setCurrentIndex((prev) => prev - 1);
+                    }}
+                    ref={(el) => { cardRefs.current[index] = el; }}
+                    >
+                    <SwipeCard artist={artist} />
+                    </TinderCard>
+                ))}
             </div>
 
           {/* Like Button */}
             <button
                 onClick={() => swipe("right")}
-                className="btn-hex text-4xl transition"
+                className={`btn-hex text-4xl transition ${
+                    noMoreCards
+                        ? "opacity-50 cursor-not-allowed"
+                        : ""
+                    }`}
             >
                 <FaHeart />
             </button>

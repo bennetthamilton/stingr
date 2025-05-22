@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import TinderCard from "react-tinder-card";
 import { SwipeCard } from "./swipecard";
+import { FaHeart, FaTimes } from "react-icons/fa";
 
 type Artist = {
   name: string;
@@ -47,6 +48,8 @@ const dummyArtists: Artist[] = [
 
 export const SwipeDeck = () => {
   const [liked, setLiked] = useState<Artist[]>([]);
+  const [currentIndex, setCurrentIndex] = useState(dummyArtists.length - 1);
+  const cardRefs = useRef<Array<any>>([]);
 
   const handleSwipe = (direction: string, artist: Artist) => {
     if (direction === "right") {
@@ -54,24 +57,53 @@ export const SwipeDeck = () => {
     }
   };
 
+  const swipe = async (dir: "left" | "right") => {
+    if (currentIndex >= 0 && cardRefs.current[currentIndex]) {
+      await cardRefs.current[currentIndex].swipe(dir);
+    }
+  };
+
   return (
     <div className="flex w-full min-h-screen p-4 gap-4">
-      {/* Swipe cards */}
-      <div className="w-2/3 flex justify-center items-center">
-        <div className="relative w-full max-w-lg h-[600px]">
-          {dummyArtists.map((artist) => (
-            <TinderCard
+      {/* Swipe cards and buttons */}
+      <div className="w-2/3 flex flex-col items-center justify-center">
+        <div className="w-full max-w-4xl h-[600px] flex items-center justify-between px-6 gap-6">
+          {/* Dislike Button */}
+            <button
+                onClick={() => swipe("left")}
+                className="text-4xl transition"
+            >
+                <FaTimes />
+            </button>
+
+          {/* Card Stack */}
+            <div className="relative w-full max-w-md h-full flex-1 flex items-center justify-center">
+            {dummyArtists.map((artist, index) => (
+                <TinderCard
                 key={artist.name}
                 className="absolute w-full h-full"
                 preventSwipe={["up", "down"]}
-                onSwipe={(dir) => handleSwipe(dir, artist)}
-                flickOnSwipe={true} 
-                swipeRequirementType="position" // or "velocity"
-                swipeThreshold={100} // adjust this value to change the swipe sensitivity
+                flickOnSwipe={true}
+                swipeRequirementType="position"
+                swipeThreshold={60}
+                onSwipe={(dir) => {
+                    handleSwipe(dir, artist);
+                    setCurrentIndex((prev) => prev - 1);
+                }}
+                ref={(el) => { cardRefs.current[index] = el; }}
+                >
+                <SwipeCard artist={artist} />
+                </TinderCard>
+            ))}
+            </div>
+
+          {/* Like Button */}
+            <button
+                onClick={() => swipe("right")}
+                className="text-4xl transition"
             >
-              <SwipeCard artist={artist} />
-            </TinderCard>
-          ))}
+                <FaHeart />
+            </button>
         </div>
       </div>
 

@@ -7,41 +7,41 @@ import { FaHeart, FaTimes } from "react-icons/fa";
 
 type Artist = {
   name: string;
-  image: { src: string; alt?: string };
   bio: string;
   style: string;
+  images: { src: string; alt?: string }[];
 };
 
 const dummyArtists: Artist[] = [
     {
         name: "Ava Ink",
-        image: { src: "/artist1.jpg", alt: "Ava Ink" },
         bio: "Linework and blackwork specialist. Based in Portland.",
         style: "Linework / Blackwork",
+        images: [
+        { src: "/portfolio/ava1.jpg", alt: "Tattoo 1" },
+        { src: "/portfolio/ava2.jpg", alt: "Tattoo 2" },
+        { src: "/portfolio/ava3.jpg", alt: "Tattoo 3" },
+        ],
     },
     {
-        name: "Zane Shade",
-        image: { src: "/artist2.jpg", alt: "Zane Shade" },
-        bio: "Neo-traditional and vibrant color pieces. Seattle based.",
-        style: "Neo-traditional / Color",
+        name: "Liam Ink",
+        bio: "Realism and portrait artist. Based in Seattle.",
+        style: "Realism / Portraits",
+        images: [
+        { src: "/portfolio/liam1.jpg", alt: "Tattoo 1" },
+        { src: "/portfolio/liam2.jpg", alt: "Tattoo 2" },
+        { src: "/portfolio/liam3.jpg", alt: "Tattoo 3" },
+        ],
     },
     {
-        name: "Luna Star",
-        image: { src: "/artist3.jpg", alt: "Luna Star" },
-        bio: "Floral and nature-inspired tattoos. Based in San Francisco.",
-        style: "Floral / Nature",
-    },
-    {
-        name: "Max Steel",
-        image: { src: "/artist4.jpg", alt: "Max Steel" },
-        bio: "Realism and portrait tattoos. Based in Los Angeles.",
-        style: "Realism / Portrait",
-    },
-    {
-        name: "Raven Black",
-        image: { src: "/artist5.jpg", alt: "Raven Black" },
-        bio: "Black and grey realism. Based in New York.",
-        style: "Black and Grey / Realism",
+        name: "Mia Ink",
+        bio: "Floral and watercolor tattoo artist. Based in San Francisco.",
+        style: "Floral / Watercolor",
+        images: [
+        { src: "/portfolio/mia1.jpg", alt: "Tattoo 1" },
+        { src: "/portfolio/mia2.jpg", alt: "Tattoo 2" },
+        { src: "/portfolio/mia3.jpg", alt: "Tattoo 3" },
+        ],
     },
 ];
 
@@ -123,28 +123,28 @@ export const SwipeDeck = () => {
       </div>
 
       {/* Liked profiles */}
-      <div className="w-1/3 bg-background border-l border-neutral-700 px-4 py-2 overflow-y-auto">
-        <h2 className="text-xl font-bold mb-4 text-[var(--color-honeyGold)]">Liked Artists</h2>
-        {liked.length === 0 ? (
-          <p className="text-neutral-500 italic">No swipes yet</p>
-        ) : (
-          <ul className="space-y-4">
-            {liked.map((artist) => (
-              <li key={artist.name} className="flex gap-2 items-start">
-                <img
-                  src={artist.image.src}
-                  alt={artist.image.alt}
-                  className="w-12 h-12 object-cover rounded"
-                />
-                <div>
-                  <p className="font-semibold text-[var(--color-foreground)]">{artist.name}</p>
-                  <p className="text-sm text-neutral-400">{artist.style}</p>
-                </div>
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
+        <div className="w-1/3 bg-background border-l border-neutral-700 px-4 py-2 overflow-y-auto">
+            <h2 className="text-xl font-bold mb-4 text-[var(--color-honeyGold)]">Liked Artists</h2>
+            {liked.length === 0 ? (
+                <p className="text-neutral-500 italic">No swipes yet</p>
+            ) : (
+                <ul className="space-y-4">
+                {liked.map((artist) => (
+                    <li key={artist.name} className="flex gap-2 items-start">
+                    <img
+                        src={artist.images[0]?.src}
+                        alt={artist.images[0]?.alt || `${artist.name}'s work`}
+                        className="w-12 h-12 object-cover rounded"
+                    />
+                    <div>
+                        <p className="font-semibold text-[var(--color-foreground)]">{artist.name}</p>
+                        <p className="text-sm text-neutral-400">{artist.style}</p>
+                    </div>
+                    </li>
+                ))}
+                </ul>
+            )}
+        </div>
     </div>
   );
 };

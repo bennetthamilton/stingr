@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import Link from 'next/link'
 import { ClientCalendar } from "@/components/clientcalendar";
 import { Button } from "@relume_io/relume-ui";
 import { RxChevronRight } from "react-icons/rx";
@@ -54,6 +55,10 @@ export const EventHeader4 = ({ heading = "Your Appointments", bookings, setBooki
       alert("Failed to delete booking.");
     }
   };
+
+  const handleReschedule: any = (bookingID: string) => {
+    <Link href='/bookings/new'/>
+  }
 
   const appointments = bookings.map(b =>
     DateTime.fromFormat(b.appointment_date, "yyyy-MMM-dd").toJSDate()
@@ -185,11 +190,8 @@ const UpcomingBooking: React.FC<{ booking: Booking; onDelete: (id: string) => vo
         <p className="mb-2 text-sm">{booking.appointment_date}</p>
         <p>{booking.description}</p>
         <div className="mt-5 md:mt-6 flex w-full items-center justify-between">
-          <Button 
-            className="btn-unstyled flex items-center gap-1"
-            iconRight={<RxChevronRight />}
-          >
-            View Details
+          <Button>
+            <a href={`/bookings/reschedule/?bid=${booking.booking_id}`}>Reschedule Appointment</a>
           </Button>
           <Button
             onClick={() => onDelete(booking.booking_id)}

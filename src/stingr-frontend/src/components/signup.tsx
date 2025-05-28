@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { Button, Input, Label } from "@relume_io/relume-ui";
 import type { ButtonProps } from "@relume_io/relume-ui";
-import { BiLogoGoogle } from "react-icons/bi";
 
 // type ImageProps = {
 //   url?: string;
@@ -21,7 +20,6 @@ type Props = {
   title: string;
   description: string;
   signUpButton: ButtonProps;
-  signUpWithGoogleButton: ButtonProps;
   footerText: string;
 };
 
@@ -35,7 +33,6 @@ export const Signup1 = (props: Signup1Props) => {
     title,
     description,
     signUpButton,
-    signUpWithGoogleButton,
     footerText,
   } = {
     ...Signup1Defaults,
@@ -113,15 +110,6 @@ export const Signup1 = (props: Signup1Props) => {
               >
                 {signUpButton.title}
               </Button>
-              <Button
-                variant={signUpWithGoogleButton.variant}
-                size={signUpWithGoogleButton.size}
-                iconLeft={signUpWithGoogleButton.iconLeft}
-                iconRight={signUpWithGoogleButton.iconRight}
-                className="gap-x-3"
-              >
-                {signUpWithGoogleButton.title}
-              </Button>
             </div>
           </form>
         </div>
@@ -148,11 +136,6 @@ export const Signup1Defaults: Props = {
   description: "Create your account and start discovering artists who match your style.",
   signUpButton: {
     title: "Sign Up",
-  },
-  signUpWithGoogleButton: {
-    variant: "secondary",
-    title: "Sign up with Google",
-    iconLeft: <BiLogoGoogle className="size-6" />,
   },
   footerText: "© 2025 Stingr. All rights reserved.",
 };

@@ -88,7 +88,7 @@ export const Signup1Defaults: Props = {
     url: "/login",
   },
   title: "Sign Up",
-  description: "Create your account and start discovering artists who match your style.",
+  description: "Create your account to get discovered by clients who like your style!",
   artistSignUpButton: {
     title: "Sign Up as Artist",
     variant: "primary",

@@ -78,6 +78,46 @@ button:hover {
   color: var(--color-honeyGold) !important;
 }
 
+.btn-hex {
+  clip-path: polygon(
+    50% 0%, 
+    93% 25%, 
+    93% 75%, 
+    50% 100%, 
+    7% 75%, 
+    7% 25%
+  );
+  background-color: var(--color-honeyGold);
+  color: var(--color-background);
+  padding: 1.25rem 1.25rem;
+  font-weight: bold;
+  text-align: center;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-body);
+  transition: all 0.3s ease;
+  display: inline-block;
+}
+
+.btn-hex:hover {
+  background-color: var(--color-deepHoney);
+}
+
+/* Danger/Warn Button - icon-only actions like delete, close, block */
+.btn-warn {
+  background-color: transparent !important;
+  color: var(--color-honeyGold);
+  padding: 0.25rem;
+  border: none;
+  border-radius: 0.375rem; /* rounded-md */
+  transition: color 0.2s ease;
+}
+
+.btn-warn:hover {
+  background-color: transparent !important;
+  color: var(--color-teal);
+}
+
 /* Inputs, Textareas, Selects */
 input,
 textarea,

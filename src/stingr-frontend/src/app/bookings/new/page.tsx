@@ -5,14 +5,14 @@ import { EventItemHeader11 } from '@/components/eventcreation';
 import { useSearchParams } from 'next/navigation';
 import { Suspense, useMemo } from 'react';
 
+const artistMap: { [key: string]: string } = {
+  "123": "Jane Ink",
+  "456": "Mark Steel",
+  "789": "Lily Rose",
+};
+
 function PageContent() {
   const searchParams = useSearchParams();
-
-  const artistMap: { [key: string]: string } = {
-    "123": "Jane Ink",
-    "456": "Mark Steel",
-    "789": "Lily Rose",
-  };
 
   const artistName = useMemo(() => {
     const artistId = searchParams.get("artistId");

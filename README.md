@@ -47,7 +47,7 @@ npm run dev
 # (In a new Terminal)
 
 # Navigate to frontend api directory
-cd stingr/src/stingr-frontend/src/app
+cd stingr/src/stingr-frontend/
 
 # Install dependencies
 npm install
@@ -83,9 +83,9 @@ stingr/
 │   │   ├── app/                 # App directory (Next.js routing)
 │   │   └── components/          # Reusable UI components
 │   ├── .gitignore
-│   ├── eslint.config.mjs       # Linting config
-│   ├── next.config.ts          # Next.js config
-│   ├── next-env.d.ts           # TypeScript environment
+│   ├── eslint.config.mjs        # Linting config
+│   ├── next.config.ts           # Next.js config
+│   ├── next-env.d.ts            # TypeScript environment
 │   ├── package.json             # Frontend dependencies
 │   ├── postcss.config.js        # PostCSS config
 │   ├── tailwind.config.ts       # Tailwind CSS config
@@ -122,5 +122,5 @@ npm test
 ### Reporting Issues
 If you encounter a bug or want to request a feature, submit an issue in our [Issue Tracker](https://github.com/yourusername/stingr/issues).
 
-This README is for **internal developers only**. Please follow best practices to maintain code quality and ensure a smooth development workflow. 🚀
+This README is for **internal developers only**. Please follow best practices to maintain code quality and ensure a smooth development workflow. 
 

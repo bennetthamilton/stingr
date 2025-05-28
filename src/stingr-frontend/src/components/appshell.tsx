@@ -220,7 +220,7 @@ export const ApplicationShell5 = (props: ApplicationShell5Props) => {
         </motion.div>
       </div>
       <main className="bg-background">
-        <div className="w-full max-w-7xl mx-auto px-6 py-8 md:px-8 md:py-10 lg:py-12">
+        <div className="w-full max-w-7xl mx-auto px-6 py-5 md:px-8 md:py-5 lg:px-10 lg:py-5">
           {children}
         </div>
       </main>

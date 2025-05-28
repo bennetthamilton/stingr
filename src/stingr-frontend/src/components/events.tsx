@@ -59,6 +59,16 @@ export const EventHeader4 = ({ heading = "Your Appointments", bookings, setBooki
     DateTime.fromFormat(b.appointment_date, "yyyy-MMM-dd").toJSDate()
   );
 
+  const today = DateTime.now().startOf("day");
+
+  const sortedBookings = [...bookings]
+    .filter(b => DateTime.fromFormat(b.appointment_date, "yyyy-MMM-dd") >= today)
+    .sort((a, b) => {
+      const dateA = DateTime.fromFormat(a.appointment_date, "yyyy-MMM-dd");
+      const dateB = DateTime.fromFormat(b.appointment_date, "yyyy-MMM-dd");
+      return dateA.toMillis() - dateB.toMillis();
+    });
+
   return (
     <section id="relume" className="px-[5%] py-16 md:py-24 lg:py-28">
       <div className="container">
@@ -116,10 +126,10 @@ export const EventHeader4 = ({ heading = "Your Appointments", bookings, setBooki
 
           {/* Upcoming Bookings Section */}
           <div className="flex flex-col gap-8">
-            {bookings.length > 0 ? (
+            {sortedBookings.length > 0 ? (
               <>
                 <h2 className="text-2xl font-bold">Upcoming Appointments</h2>
-                {bookings.map((b, i) => (
+                {sortedBookings.map((b, i) => (
                   <UpcomingBooking key={i} booking={b} onDelete={handleDelete} />
                 ))}
               </>

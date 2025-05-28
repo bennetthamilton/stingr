@@ -13,7 +13,7 @@ type Props = {
   title: string;
   description: string;
   artistSignUpButton: ButtonProps;
-  clientSignUpButton: ButtonProps;
+  // clientSignUpButton: ButtonProps;
   footerText: string;
 };
 
@@ -26,7 +26,7 @@ export const Signup1 = (props: Signup1Props) => {
     title,
     description,
     artistSignUpButton,
-    clientSignUpButton,
+    // clientSignUpButton,
     footerText,
   } = {
     ...Signup1Defaults,
@@ -62,7 +62,7 @@ export const Signup1 = (props: Signup1Props) => {
             >
               {artistSignUpButton.title}
             </Button>
-            <Button
+            {/* <Button
               variant={clientSignUpButton.variant}
               size={clientSignUpButton.size}
               iconLeft={clientSignUpButton.iconLeft}
@@ -70,7 +70,7 @@ export const Signup1 = (props: Signup1Props) => {
               onClick={() => router.push("/signup/client")}
             >
               {clientSignUpButton.title}
-            </Button>
+            </Button> */}
           </div>
         </div>
         <footer className="absolute bottom-0 left-0 right-0 flex h-16 items-center justify-center md:h-18">
@@ -93,9 +93,9 @@ export const Signup1Defaults: Props = {
     title: "Sign Up as Artist",
     variant: "primary",
   },
-  clientSignUpButton: {
-    title: "Sign Up as Client",
-    variant: "secondary",
-  },
+  // clientSignUpButton: {
+  //   title: "Sign Up as Client",
+  //   variant: "secondary",
+  // },
   footerText: "© 2025 Stingr. All rights reserved.",
 };

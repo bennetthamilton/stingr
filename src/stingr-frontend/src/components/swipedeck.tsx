@@ -49,7 +49,10 @@ const dummyArtists: Artist[] = [
 export const SwipeDeck = () => {
   const [liked, setLiked] = useState<Artist[]>([]);
   const [currentIndex, setCurrentIndex] = useState(dummyArtists.length - 1);
-  const cardRefs = useRef<Array<any>>([]);
+
+  // ref to hold card swipe functionality
+  type SwipeableCard = { swipe: (dir: "left" | "right") => void };
+  const cardRefs = useRef<(SwipeableCard | null)[]>([]);
 
   const noMoreCards = currentIndex < 0;
 

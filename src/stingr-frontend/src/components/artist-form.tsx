@@ -6,6 +6,11 @@ import {
   Label,
   Button,
   Textarea,
+  Select,
+  SelectTrigger,
+  SelectContent,
+  SelectItem,
+  SelectValue,
 } from "@relume_io/relume-ui";
 import { BiEnvelope } from "react-icons/bi";
 import { GoEye } from "react-icons/go";
@@ -34,25 +39,49 @@ export const Form4 = (props: Form4Props) => {
     ...props,
   };
 
-  const [photoInput, setPhotoInput] = useState("");
   const [userNameInput, setUserNameInput] = useState("");
-  const [emailInput, setEmailInput] = useState("");
-  const [aboutInput, setAboutInput] = useState("");
-  const [passwordInput, setPasswordInput] = useState("");
-  const [newPasswordInput, setNewPasswordInput] = useState("");
-  const [artImages, setArtImages] = useState<string[]>([]);
+  const [aboutInput, setAboutInput] = useState(""); // bio
+  const [photoInput, setPhotoInput] = useState(""); // profile_pic (S3 URL)
+  const [artImages, setArtImages] = useState<string[]>([]); // art_pictures
+  const [stylesInput, setStylesInput] = useState<string[]>([]); // styles
+  const [locationInput, setLocationInput] = useState(""); // location
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const [emailInput, setEmailInput] = useState(""); // email
+  const [passwordInput, setPasswordInput] = useState(""); // current password
+  const [newPasswordInput, setNewPasswordInput] = useState(""); // new password
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log({
-      profile_pic: photoInput,
+
+    const payload = {
       name: userNameInput,
-      email: emailInput,
       bio: aboutInput,
-      password: passwordInput,
-      newPassword: newPasswordInput,
+      profile_pic: photoInput,
       art_pictures: artImages,
-    });
+      styles: stylesInput,
+      location: locationInput,
+    };
+
+    try {
+      const response = await fetch("https://jmhj1f9z4i.execute-api.us-west-2.amazonaws.com/portfolio", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Failed to update profile: ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      console.log("Profile updated successfully:", data);
+      // Optionally show a success toast or navigate
+    } catch (error) {
+      console.error("Error submitting profile:", error);
+      // Optionally show an error message to the user
+    }
   };
 
   const handleArtUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -158,6 +187,54 @@ export const Form4 = (props: Form4Props) => {
             />
             <p className="mt-2 text-sm">{263 - aboutInput.length} characters left</p>
           </div>
+
+          {/* Styles Select (single selection due to component limitation) */}
+          <div className="grid grid-cols-1 items-center">
+            <Label className="mb-2">Styles</Label>
+            <Select
+              onValueChange={(value) =>
+                setStylesInput(value ? [value] : [])
+              }
+              value={stylesInput[0] || ""}
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Select a style..." />
+              </SelectTrigger>
+              <SelectContent className="bg-background text-foreground">
+                {[
+                  "minimalist",
+                  "linework",
+                  "traditional",
+                  "fine line",
+                  "blackwork",
+                  "watercolor",
+                  "geometric",
+                  "neo-traditional",
+                  "realism",
+                  "stick-and-poke",
+                ].map((style) => (
+                  <SelectItem key={style} value={style}>
+                    {style}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
+          {/* Location Input */}
+          <div className="grid grid-cols-1 items-center">
+            <Label htmlFor="location" className="mb-2">
+              Location
+            </Label>
+            <Input
+              type="text"
+              id="location"
+              placeholder="City, State"
+              value={locationInput}
+              onChange={(e) => setLocationInput(e.target.value)}
+            />
+          </div>
+
 
           <div className="grid grid-cols-1 items-center">
             <Label htmlFor="password" className="mb-2">

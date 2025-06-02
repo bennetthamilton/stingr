@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Button,
   Form,
@@ -15,35 +17,26 @@ import {
 } from "@relume_io/relume-ui";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { BiCheck, BiEnvelope } from "react-icons/bi";
+import { BiCheck } from "react-icons/bi";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import clsx from "clsx";
 
 const formSchema = z.object({
-  name: z.string().min(1, {
-    message: "This field is required",
-  }),
-  email: z
-    .string()
-    .min(1, { message: "This field is required" })
-    .email({ message: "Please enter a valid email address" }),
-  serviceType: z.string().min(1, { message: "This field is required" }),
-  budget: z.string().min(1, { message: "This field is required" }),
-  aboutProject: z.string().min(1, { message: "This field is required" }),
-  companyName: z.string().min(1, { message: "This field is required" }),
-  employees: z.string().min(1, { message: "This field is required" }),
-  website: z.string().min(1, { message: "This field is required" }).url(),
-  country: z.string().min(1, { message: "This field is required" }),
-  date: z.date({
-    required_error: "This field is required",
-  }),
+  name: z.string().min(1, { message: "Name is required" }),
+  email: z.string().email("Enter a valid email").min(1),
+  bio: z.string().min(1, { message: "Bio is required" }),
+  profile_pic: z.string().url("Must be a valid URL").min(1),
+  art_pictures: z.array(z.string().url()).min(1, { message: "At least one art image is required" }),
+  styles: z.array(z.string()).min(1, { message: "Select at least one style" }),
+  location: z.string().min(1, { message: "Location is required" }),
 });
 
 type FormValues = z.infer<typeof formSchema>;
 
 interface StepProps {
   form: ReturnType<typeof useForm<FormValues>>;
+  addArtPicture?: (url: string) => void;
 }
 
 export const MultiForm13 = () => {
@@ -53,30 +46,46 @@ export const MultiForm13 = () => {
     defaultValues: {
       name: "",
       email: "",
-      serviceType: "",
-      budget: "",
-      aboutProject: "",
-      companyName: "",
-      employees: "",
-      website: "",
-      country: "",
+      bio: "",
+      profile_pic: "",
+      art_pictures: [],
+      styles: [],
+      location: "",
     },
     mode: "onChange",
   });
-  const onSubmit = (values: FormValues) => {
-    console.log(values);
-    // Handle form submission here
+
+  const addArtPicture = (url: string) => {
+    const current = form.getValues("art_pictures");
+    form.setValue("art_pictures", [...current, url]);
   };
+
+  const onSubmit = async (values: FormValues) => {
+    const res = await fetch("https://jmhj1f9z4i.execute-api.us-west-2.amazonaws.com/portfolio", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(values),
+    });
+
+    if (res.ok) {
+      alert("Profile created!");
+    } else {
+      alert("Failed to create profile.");
+    }
+  };
+
   const steps = [
-    { component: StepOne, fields: ["name", "email"] },
-    { component: StepTwo, fields: ["serviceType", "budget", "aboutProject"] },
-    { component: StepThree, fields: ["companyName", "employees", "website"] },
+    { component: StepOne, fields: ["name", "email", "bio"] },
+    { component: StepTwo, fields: ["profile_pic", "art_pictures"] },
+    { component: StepThree, fields: ["styles", "location"] },
   ] as const;
+
   const Step = steps[step].component;
   const currentFields = steps[step].fields;
   const totalSteps = steps.length;
   const isLastStep = step === steps.length - 1;
   const isFirstStep = step === 0;
+
   const handleNext = async () => {
     const output = await form.trigger(currentFields);
     if (output) {
@@ -91,7 +100,7 @@ export const MultiForm13 = () => {
   };
 
   return (
-    <section id="relume" className="px-[5%] py-16 md:py-24 lg:py-28">
+    <section className="px-[5%] py-16 md:py-24 lg:py-28">
       <div className="mx-auto w-full max-w-md">
         <Form {...form}>
           <form
@@ -104,8 +113,8 @@ export const MultiForm13 = () => {
               }
             }}
           >
-            <ProgressBar step={step} totalSteps={totalSteps} />
-            <Step form={form} />
+            {/* <ProgressBar step={step} totalSteps={totalSteps} /> */}
+            <Step form={form} addArtPicture={addArtPicture} />
             <StepAction isFirstStep={isFirstStep} isLastStep={isLastStep} handlePrev={handlePrev} />
           </form>
         </Form>
@@ -114,25 +123,25 @@ export const MultiForm13 = () => {
   );
 };
 
-const ProgressBar = ({ step, totalSteps }: { step: number; totalSteps: number }) => {
-  return (
-    <div className="relative mb-8 flex justify-between before:absolute before:left-0 before:top-1/2 before:-z-10 before:h-px before:w-full before:-translate-y-1/2 before:bg-border-primary">
-      {Array.from({ length: totalSteps }, (_, index) => (
-        <div
-          key={index}
-          className={clsx(
-            "flex size-8 items-center justify-center rounded-full border border-border-primary",
-            step >= index
-              ? "bg-background-alternative text-text-alternative"
-              : "bg-white text-text-primary",
-          )}
-        >
-          {step > index ? <BiCheck className="size-6" /> : index + 1}
-        </div>
-      ))}
-    </div>
-  );
-};
+// const ProgressBar = ({ step, totalSteps }: { step: number; totalSteps: number }) => {
+//   return (
+//     <div className="relative mb-8 flex justify-between before:absolute before:left-0 before:top-1/2 before:-z-10 before:h-px before:w-full before:-translate-y-1/2 before:bg-border-primary">
+//       {Array.from({ length: totalSteps }, (_, index) => (
+//         <div
+//           key={index}
+//           className={clsx(
+//             "flex size-8 items-center justify-center rounded-full border border-border-primary",
+//             step >= index
+//               ? "bg-background-alternative text-text-alternative"
+//               : "bg-white text-text-primary",
+//           )}
+//         >
+//           {step > index ? <BiCheck className="size-6" /> : index + 1}
+//         </div>
+//       ))}
+//     </div>
+//   );
+// };
 
 const StepAction = ({
   isFirstStep,
@@ -155,265 +164,117 @@ const StepAction = ({
     >
       {isFirstStep ? "Cancel" : "Back"}
     </Button>
-    <Button type="submit">{isLastStep ? "Get started" : "Next"}</Button>
+    <Button type="submit">{isLastStep ? "Create Profile" : "Next"}</Button>
   </div>
 );
 
 const StepOne: React.FC<StepProps> = ({ form }) => (
-  <React.Fragment>
-    <div className="mb-6 text-center md:mb-8">
-      <h2 className="text-2xl font-bold md:text-3xl md:leading-[1.3] lg:text-4xl">
-        Let’s start with your name & email
-      </h2>
-      <p className="mt-3 md:mt-4">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros.
-      </p>
-    </div>
-    <div className="flex flex-col gap-y-6">
-      <FormField
-        control={form.control}
-        name="name"
-        render={({ field, fieldState }) => (
-          <FormItem>
-            <FormLabel className={clsx({ "text-text-error": fieldState.invalid })}>
-              Enter your name
-            </FormLabel>
-            <FormControl>
-              <Input className={clsx({ "border-border-error": fieldState.invalid })} {...field} />
-            </FormControl>
-            <FormMessage className="text-base text-text-error" />
-          </FormItem>
-        )}
-      />
-      <FormField
-        control={form.control}
-        name="email"
-        render={({ field, fieldState }) => (
-          <FormItem>
-            <FormLabel className={clsx({ "text-text-error": fieldState.invalid })}>
-              Enter your email*
-            </FormLabel>
-            <FormControl>
-              <Input
-                placeholder="hello@relume.io"
-                iconPosition="left"
-                icon={<BiEnvelope className="size-6" />}
-                className={clsx({ "border-border-error": fieldState.invalid })}
-                {...field}
-              />
-            </FormControl>
-            <FormMessage className="text-base text-text-error" />
-          </FormItem>
-        )}
-      />
-    </div>
-  </React.Fragment>
+  <>
+    <FormField name="name" control={form.control} render={({ field }) => (
+      <FormItem>
+        <FormLabel>Name</FormLabel>
+        <FormControl><Input {...field} /></FormControl>
+        <FormMessage />
+      </FormItem>
+    )} />
+    <FormField name="email" control={form.control} render={({ field }) => (
+      <FormItem>
+        <FormLabel>Email</FormLabel>
+        <FormControl><Input {...field} /></FormControl>
+        <FormMessage />
+      </FormItem>
+    )} />
+    <FormField name="bio" control={form.control} render={({ field }) => (
+      <FormItem>
+        <FormLabel>Short Bio</FormLabel>
+        <FormControl><Input {...field} /></FormControl>
+        <FormMessage />
+      </FormItem>
+    )} />
+  </>
 );
 
 const StepTwo: React.FC<StepProps> = ({ form }) => {
-  const serviceTypeData = [
-    {
-      label: "Website design",
-      value: "A",
-    },
-    {
-      label: "Webflow development",
-      value: "B",
-    },
-    {
-      label: "Custom code solutions",
-      value: "C",
-    },
-    {
-      label: "Other",
-      value: "D",
-    },
+  const tattooStyles = [
+    "minimalist",
+    "stick-and-poke",
+    "handpoke",
+    "blackwork",
+    "color",
   ];
+
   return (
-    <React.Fragment>
-      <div className="mb-6 text-center md:mb-8">
-        <h2 className="text-2xl font-bold md:text-3xl md:leading-[1.3] lg:text-4xl">
-          What can we help you with?
-        </h2>
-        <p className="mt-3 md:mt-4">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros.
-        </p>
-      </div>
-      <div className="flex flex-col gap-y-6">
-        <FormField
-          control={form.control}
-          name="serviceType"
-          render={({ field, fieldState }) => (
-            <FormItem>
-              <FormLabel className={clsx({ "text-text-error": fieldState.invalid })}>
-                Service type
-              </FormLabel>
-              <FormControl>
-                <div className="flex flex-wrap gap-2">
-                  {serviceTypeData.map((item, index) => {
-                    return (
-                      <Button
-                        key={index}
-                        className="py-2 pl-2 pr-4"
-                        type="button"
-                        variant={field.value === item.value ? "primary" : "secondary"}
-                        onClick={() => field.onChange(item.value)}
-                      >
-                        <span className="mr-2 inline-flex size-8 items-center justify-center border border-border-primary uppercase">
-                          {item.value}
-                        </span>
-                        {item.label}
-                      </Button>
-                    );
-                  })}
-                </div>
-              </FormControl>
-              <FormMessage className="text-base text-text-error" />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="budget"
-          render={({ field, fieldState }) => (
-            <FormItem>
-              <FormLabel className={clsx({ "text-text-error": fieldState.invalid })}>
-                Your budget
-              </FormLabel>
-              <FormControl>
-                <Select onValueChange={field.onChange} defaultValue={field.value}>
-                  <SelectTrigger className={clsx({ "border-border-error": fieldState.invalid })}>
-                    <SelectValue placeholder="Select one..." />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="first">First choice</SelectItem>
-                    <SelectItem value="second">Second choice</SelectItem>
-                    <SelectItem value="third">Third choice</SelectItem>
-                  </SelectContent>
-                </Select>
-              </FormControl>
-              <FormMessage className="text-base text-text-error" />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="aboutProject"
-          render={({ field, fieldState }) => (
-            <FormItem>
-              <FormLabel className={clsx({ "text-text-error": fieldState.invalid })}>
-                About the project
-              </FormLabel>
-              <FormControl>
-                <Input className={clsx({ "border-border-error": fieldState.invalid })} {...field} />
-              </FormControl>
-              <FormMessage className="text-base text-text-error" />
-            </FormItem>
-          )}
-        />
-      </div>
-    </React.Fragment>
+    <>
+      <FormField
+        name="styles"
+        control={form.control}
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Pick your styles</FormLabel>
+            <FormControl>
+              <div className="flex flex-wrap gap-2">
+                {tattooStyles.map((style) => (
+                  <Button
+                    key={style}
+                    type="button"
+                    variant={field.value.includes(style) ? "primary" : "secondary"}
+                    onClick={() =>
+                      field.onChange(
+                        field.value.includes(style)
+                          ? field.value.filter((s: string) => s !== style)
+                          : [...field.value, style]
+                      )
+                    }
+                  >
+                    {style}
+                  </Button>
+                ))}
+              </div>
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+      <FormField
+        name="location"
+        control={form.control}
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Location</FormLabel>
+            <FormControl>
+              <Input {...field} />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+    </>
   );
 };
 
-const StepThree: React.FC<StepProps> = ({ form }) => {
-  const employeesData = [
-    {
-      label: "Just me",
-      value: "1",
-    },
-    {
-      label: "2-10",
-      value: "2-10",
-    },
-    {
-      label: "11-50",
-      value: "11-50",
-    },
-    {
-      label: "51-100",
-      value: "51-100",
-    },
-    {
-      label: "101-500",
-      value: "101-500",
-    },
-    {
-      label: "501+",
-      value: "501+",
-    },
-  ];
-  return (
-    <React.Fragment>
-      <div className="mb-6 text-center md:mb-8">
-        <h2 className="text-2xl font-bold md:text-3xl md:leading-[1.3] lg:text-4xl">
-          Let's confirm your company info
-        </h2>
-        <p className="mt-3 md:mt-4">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros.
-        </p>
-      </div>
-      <div className="flex flex-col gap-y-6">
-        <FormField
-          control={form.control}
-          name="companyName"
-          render={({ field, fieldState }) => (
-            <FormItem>
-              <FormLabel className={clsx({ "text-text-error": fieldState.invalid })}>
-                What is your company name?
-              </FormLabel>
-              <FormControl>
-                <Input className={clsx({ "border-border-error": fieldState.invalid })} {...field} />
-              </FormControl>
-              <FormMessage className="text-base text-text-error" />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="employees"
-          render={({ field, fieldState }) => (
-            <FormItem>
-              <FormLabel className={clsx({ "text-text-error": fieldState.invalid })}>
-                How many people are you working with?
-              </FormLabel>
-              <FormControl>
-                <div className="flex flex-wrap gap-2">
-                  {employeesData.map((item, index) => {
-                    return (
-                      <Button
-                        key={index}
-                        type="button"
-                        className="px-4 py-2"
-                        variant={field.value === item.value ? "primary" : "secondary"}
-                        onClick={() => field.onChange(item.value)}
-                      >
-                        {item.label}
-                      </Button>
-                    );
-                  })}
-                </div>
-              </FormControl>
-              <FormMessage className="text-base text-text-error" />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="website"
-          render={({ field, fieldState }) => (
-            <FormItem>
-              <FormLabel className={clsx({ "text-text-error": fieldState.invalid })}>
-                Website link
-              </FormLabel>
-              <FormControl>
-                <Input className={clsx({ "border-border-error": fieldState.invalid })} {...field} />
-              </FormControl>
-              <FormMessage className="text-base text-text-error" />
-            </FormItem>
-          )}
-        />
-      </div>
-    </React.Fragment>
-  );
-};
+const StepThree: React.FC<StepProps> = ({ form, addArtPicture }) => (
+  <>
+    <FormField name="profile_pic" control={form.control} render={({ field }) => (
+      <FormItem>
+        <FormLabel>Profile Picture URL</FormLabel>
+        <FormControl><Input {...field} /></FormControl>
+        <FormMessage />
+      </FormItem>
+    )} />
+    <FormItem>
+      <FormLabel>Art Portfolio Image URLs</FormLabel>
+      <Input
+        placeholder="Paste image URL & press enter"
+        onKeyDown={(e) => {
+          if (e.key === "Enter") {
+            e.preventDefault();
+            const input = e.target as HTMLInputElement;
+            const url = input.value;
+            if (url) addArtPicture?.(url);
+            input.value = "";
+          }
+        }}
+      />
+    </FormItem>
+  </>
+);

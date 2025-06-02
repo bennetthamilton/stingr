@@ -1,18 +1,10 @@
 "use client";
 
-import { useState } from "react";
-import { Button, Input, Label } from "@relume_io/relume-ui";
+import { Button } from "@relume_io/relume-ui";
 import type { ButtonProps } from "@relume_io/relume-ui";
-import { BiLogoGoogle } from "react-icons/bi";
-
-// type ImageProps = {
-//   url?: string;
-//   src: string;
-//   alt?: string;
-// };
+import { useRouter } from "next/navigation";
 
 type Props = {
-  // logo: ImageProps;
   loginText: string;
   loginLink: {
     text: string;
@@ -20,8 +12,8 @@ type Props = {
   };
   title: string;
   description: string;
-  signUpButton: ButtonProps;
-  signUpWithGoogleButton: ButtonProps;
+  artistSignUpButton: ButtonProps;
+  // clientSignUpButton: ButtonProps;
   footerText: string;
 };
 
@@ -29,27 +21,19 @@ export type Signup1Props = React.ComponentPropsWithoutRef<"section"> & Partial<P
 
 export const Signup1 = (props: Signup1Props) => {
   const {
-    // logo,
     loginText,
     loginLink,
     title,
     description,
-    signUpButton,
-    signUpWithGoogleButton,
+    artistSignUpButton,
+    // clientSignUpButton,
     footerText,
   } = {
     ...Signup1Defaults,
     ...props,
   };
 
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    console.log({ name, email, password });
-  };
+  const router = useRouter();
 
   return (
     <section id="relume" className="px-[5%]">
@@ -67,63 +51,27 @@ export const Signup1 = (props: Signup1Props) => {
             <h1 className="mb-5 text-5xl font-bold md:mb-6 md:text-7xl lg:text-8xl">{title}</h1>
             <p className="md:text-md">{description}</p>
           </div>
-          <form className="grid grid-cols-1 gap-6" onSubmit={handleSubmit}>
-            <div className="grid grid-cols-1">
-              <Label htmlFor="name" className="mb-2">
-                Name*
-              </Label>
-              <Input
-                type="text"
-                id="name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                required
-              />
-            </div>
-            <div className="grid grid-cols-1">
-              <Label htmlFor="email" className="mb-2">
-                Email*
-              </Label>
-              <Input
-                type="email"
-                id="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
-            </div>
-            <div className="grid grid-cols-1">
-              <Label htmlFor="password" className="mb-2">
-                Password*
-              </Label>
-              <Input
-                type="password"
-                id="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
-            </div>
-            <div className="grid grid-cols-1 gap-4">
-              <Button
-                variant={signUpButton.variant}
-                size={signUpButton.size}
-                iconLeft={signUpButton.iconLeft}
-                iconRight={signUpButton.iconRight}
-              >
-                {signUpButton.title}
-              </Button>
-              <Button
-                variant={signUpWithGoogleButton.variant}
-                size={signUpWithGoogleButton.size}
-                iconLeft={signUpWithGoogleButton.iconLeft}
-                iconRight={signUpWithGoogleButton.iconRight}
-                className="gap-x-3"
-              >
-                {signUpWithGoogleButton.title}
-              </Button>
-            </div>
-          </form>
+
+          <div className="grid grid-cols-1 gap-6">
+            <Button
+              variant={artistSignUpButton.variant}
+              size={artistSignUpButton.size}
+              iconLeft={artistSignUpButton.iconLeft}
+              iconRight={artistSignUpButton.iconRight}
+              onClick={() => router.push("/signup/artist")}
+            >
+              {artistSignUpButton.title}
+            </Button>
+            {/* <Button
+              variant={clientSignUpButton.variant}
+              size={clientSignUpButton.size}
+              iconLeft={clientSignUpButton.iconLeft}
+              iconRight={clientSignUpButton.iconRight}
+              onClick={() => router.push("/signup/client")}
+            >
+              {clientSignUpButton.title}
+            </Button> */}
+          </div>
         </div>
         <footer className="absolute bottom-0 left-0 right-0 flex h-16 items-center justify-center md:h-18">
           <p className="text-sm">{footerText}</p>
@@ -134,26 +82,20 @@ export const Signup1 = (props: Signup1Props) => {
 };
 
 export const Signup1Defaults: Props = {
-  // logo: {
-  //   url: "/",
-  //   src: "/stingr-logo.svg",
-  //   alt: "Stingr logo",
-  // },
   loginText: "Already have an account?",
   loginLink: {
     text: "Log In",
     url: "/login",
   },
   title: "Sign Up",
-  description: "Create your account and start discovering artists who match your style.",
-  signUpButton: {
-    title: "Sign Up",
+  description: "Create your account to get discovered by clients who like your style!",
+  artistSignUpButton: {
+    title: "Sign Up as Artist",
+    variant: "primary",
   },
-  signUpWithGoogleButton: {
-    variant: "secondary",
-    title: "Sign up with Google",
-    iconLeft: <BiLogoGoogle className="size-6" />,
-  },
+  // clientSignUpButton: {
+  //   title: "Sign Up as Client",
+  //   variant: "secondary",
+  // },
   footerText: "© 2025 Stingr. All rights reserved.",
 };
-

@@ -122,9 +122,10 @@ export const Navbar2 = (props: Navbar2Props) => {
 export const Navbar2Defaults: Props = {
   navLinks: [
     { title: "Browse Artists", url: "/browse" },
-    { title: "For Artists", url: "/artists" },
-    { title: "About", url: "/about" },
-    { title: "FAQ", url: "/faq" },
+    { title: "Bookings", url: "/bookings" },
+    // { title: "For Artists", url: "/artists" },
+    // { title: "About", url: "/about" },
+    // { title: "FAQ", url: "/faq" },
   ],
   buttons: [
     {

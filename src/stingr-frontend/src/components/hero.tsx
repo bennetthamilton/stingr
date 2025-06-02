@@ -3,6 +3,7 @@
 import { Button, Input } from "@relume_io/relume-ui";
 import type { ButtonProps } from "@relume_io/relume-ui";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 type ImageProps = {
   src: string;
@@ -40,6 +41,12 @@ export const Header6 = (props: Header6Props) => {
     console.log({ emailInput });
   };
 
+  const router = useRouter();
+
+  const handleSignUpClick = () => {
+    router.push("/signup");
+  };
+
   return (
     <section id="hero" className="relative px-6 md:px-12 lg:px-[5%]">
       <div className="container relative z-10 mx-auto">
@@ -63,7 +70,9 @@ export const Header6 = (props: Header6Props) => {
                   value={emailInput}
                   onChange={(e) => setEmailInput(e.target.value)}
                 />
-                <Button {...button}>{button.title}</Button>
+                <Button {...button} type="button" onClick={handleSignUpClick}>
+                  {button.title}
+                </Button>
               </form>
               <div
                 className="text-xs text-foreground font-body"

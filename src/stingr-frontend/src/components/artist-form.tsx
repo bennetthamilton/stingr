@@ -137,8 +137,10 @@ export const Form4 = (props: Form4Props) => {
               id="email"
               value={emailInput}
               icon={<BiEnvelope className="size-6" />}
+              iconPosition="left"
               placeholder="hello@relume.io"
               onChange={(e) => setEmailInput(e.target.value)}
+              className="input-icon-left"
             />
           </div>
 
@@ -167,18 +169,20 @@ export const Form4 = (props: Form4Props) => {
                 id="password"
                 value={passwordInput}
                 icon={<GoEye className="size-5" />}
-                iconPosition="right"
+                iconPosition="left"
                 placeholder="Current password"
                 onChange={(e) => setPasswordInput(e.target.value)}
+                className="input-icon-left"
               />
               <Input
                 type="password"
                 id="newPassword"
                 value={newPasswordInput}
                 icon={<GoEye className="size-5" />}
-                iconPosition="right"
+                iconPosition="left"
                 placeholder="New password"
                 onChange={(e) => setNewPasswordInput(e.target.value)}
+                className="input-icon-left"
               />
             </div>
           </div>

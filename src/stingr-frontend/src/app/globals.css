@@ -262,3 +262,32 @@ select:focus {
 .client-datepicker-calendar .react-calendar__tile {
   padding: 1.2em 1em !important;
 }
+
+/* ==================================  */
+/*     Relume Component Overrides      */
+/* ==================================  */
+
+#relume input {
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.5rem;
+  background-color: #2a2a2a;
+  color: var(--color-foreground);
+  border: 1px solid var(--color-foreground);
+  font-family: var(--font-body);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Ensure room for icons */
+#relume input.input-icon-left {
+  padding-left: 2.5rem !important;
+}
+
+#relume input.input-icon-right {
+  padding-right: 2.5rem !important;
+}
+
+#relume input:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--color-honeyGold);
+  border-color: var(--color-honeyGold);
+}

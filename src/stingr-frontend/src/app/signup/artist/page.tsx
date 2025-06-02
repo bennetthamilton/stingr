@@ -2,13 +2,13 @@
 
 import { Navbar2 } from '@/components/navbar';
 import { Footer1 } from '@/components/footer';
-import { MultiForm13 } from '@/components/artist-multiform';
+import { Form4 } from '@/components/artist-form';
 
 export default function Page() {
     return (
         <>
             <Navbar2 />
-            <MultiForm13 />
+            <Form4 />
             <Footer1 />
         </>
     );

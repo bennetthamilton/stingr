@@ -74,10 +74,10 @@ export const Header6 = (props: Header6Props) => {
                   {button.title}
                 </Button>
               </form>
-              <div
+              {/* <div
                 className="text-xs text-foreground font-body"
                 dangerouslySetInnerHTML={{ __html: termsAndConditions }}
-              />
+              /> */}
             </div>
           </div>
         </div>

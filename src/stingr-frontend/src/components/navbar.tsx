@@ -25,8 +25,6 @@ export const Navbar2 = (props: Navbar2Props) => {
   };
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  // const isMobile = useMediaQuery("(max-width: 991px)");
-
   const buttonLinks = ["/login", "/signup"];
 
   return (
@@ -35,7 +33,7 @@ export const Navbar2 = (props: Navbar2Props) => {
       className="z-[999] flex w-full items-center border-b border-border-primary bg-background px-[5%] py-4"
     >
       <div className="mx-auto w-full flex items-center justify-between">
-        {/* Logo as Text */}
+        {/* Logo */}
         <Link href="/" className="text-2xl font-logo text-honeyGold tracking-wide">
           stingr
         </Link>
@@ -46,7 +44,7 @@ export const Navbar2 = (props: Navbar2Props) => {
             <a
               key={index}
               href={navLink.url}
-              className="text-base text-offWhite hover:text-honeyGold transition-colors"
+              className="text-base text-offWhite px-3 py-2 rounded-md hover:text-honeyGold hover:bg-honeyGold/10 transition-colors"
             >
               {navLink.title}
             </a>
@@ -57,9 +55,7 @@ export const Navbar2 = (props: Navbar2Props) => {
         <div className="hidden md:flex gap-4">
           {buttons.map((button, index) => (
             <Link key={index} href={buttonLinks[index]}>
-              <Button className="px-4 py-2" {...button}>
-                {button.title}
-              </Button>
+              <Button {...button}>{button.title}</Button>
             </Link>
           ))}
         </div>
@@ -67,7 +63,7 @@ export const Navbar2 = (props: Navbar2Props) => {
         {/* Mobile Menu Button */}
         <div className="md:hidden flex items-center gap-2">
           <button
-            className="flex flex-col items-center justify-center"
+            className="flex flex-col items-center justify-center rounded-md p-2 bg-honeyGold hover:bg-deepHoney transition"
             onClick={() => setIsMobileMenuOpen((prev) => !prev)}
           >
             <motion.span
@@ -103,14 +99,14 @@ export const Navbar2 = (props: Navbar2Props) => {
               <a
                 key={index}
                 href={navLink.url}
-                className="text-base font-heading text-offWhite hover:text-honeyGold"
+                className="text-base font-heading text-offWhite px-3 py-2 rounded-md hover:text-honeyGold hover:bg-honeyGold/10"
               >
                 {navLink.title}
               </a>
             ))}
             {buttons.map((button, index) => (
               <Link key={index} href={buttonLinks[index]}>
-                <Button className="w-full px-4 py-2" {...button}>
+                <Button className="w-full" {...button}>
                   {button.title}
                 </Button>
               </Link>
@@ -134,11 +130,6 @@ export const Navbar2Defaults: Props = {
     {
       title: "Log In",
       variant: "link",
-      size: "sm",
-    },
-    {
-      title: "Sign Up",
-      variant: "primary",
       size: "sm",
     },
   ],

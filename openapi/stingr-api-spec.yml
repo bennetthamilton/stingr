@@ -1,0 +1,33 @@
+openapi: 3.0.3
+info:
+  title: stingr API
+  version: 1.0.0
+  description: |
+    The stingr API connects tattoo clients and artists with streamlined features for bookings,
+    media sharing, messaging, and profile management.
+
+servers:
+  - url: https://stingr.com
+    description: Production server
+
+paths:
+  /bookings:
+    $ref: './paths/bookings.yaml'
+  /bookings/{bookingId}/media:
+    $ref: './paths/media.yaml#/mediaRoot'
+  /bookings/{bookingId}/media/{filename}:
+    $ref: './paths/media.yaml#/mediaFile'
+  /artists:
+    $ref: './paths/artists.yaml'
+  /clients:
+    $ref: './paths/clients.yaml'
+  /messages:
+    $ref: './paths/messages.yaml'
+
+components:
+  schemas:
+    $ref: './components/schemas.yaml'
+  responses:
+    $ref: './components/responses.yaml'
+  parameters:
+    $ref: './components/parameters.yaml'

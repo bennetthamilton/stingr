@@ -1,30 +1,22 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-    content: [
-      "./app/**/*.{js,ts,jsx,tsx}",
-      "./components/**/*.{js,ts,jsx,tsx}",
-      "./src/**/*.{js,ts,jsx,tsx}",
-    ],
-    theme: {
-      extend: {
-        colors: {
-          background: '#212121', // charcoal
-          foreground: '#fdf9e9', // offWhite
-          charcoal: '#212121',
-          offWhite: '#fdf9e9',
-          lightHoney: '#ffd54f',
-          honeyGold: '#fd8500',
-          deepHoney: '#d77d00',
-          brown: '#724800',
-          teal: '#26a69a',
-        },
-        fontFamily: {
-          righteous: ['var(--font-logo)', 'cursive'],
-          heading: ['var(--font-heading)', 'sans-serif'],
-          body: ['var(--font-body)', 'sans-serif'],
-        },
+  content: [
+    "./node_modules/@relume_io/relume-ui/dist/**/*.{js,ts,jsx,tsx}", // Relume UI components
+    "./app/**/*.{js,ts,jsx,tsx}",
+    "./components/**/*.{js,ts,jsx,tsx}",
+    "./src/**/*.{js,ts,jsx,tsx}",
+  ],
+  presets: [require("@relume_io/relume-tailwind")], // Relume preset
+  theme: {
+    extend: {
+      colors: {
+        background: "var(--color-background)",
+        foreground: "var(--color-foreground)",
+        honeyGold: "var(--color-honeyGold)",
+        offWhite: "var(--color-offWhite)",
       },
     },
-    plugins: [],
-  };
+  },
+  plugins: [],
+};
   

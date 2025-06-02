@@ -1,22 +1,264 @@
 @import "tailwindcss";
 
+/* ============================= */
+/*          Root Variables       */
+/* ============================= */
+
 :root {
-  --background: #212121;
-  --foreground: #fdf9e9;
+  /* Fonts */
   --font-logo: 'Righteous', cursive;
   --font-heading: 'Montserrat', sans-serif;
   --font-body: 'Raleway', sans-serif;
+
+  /* Colors */
+  --color-background: #212121;  /* charcoal */
+  --color-foreground: #fdf9e9;  /* off-white */
+  --color-lightHoney: #ffd54f;
+  --color-honeyGold: #fdb500;
+  --color-deepHoney: #d77d00;
+  --color-brown: #724800;
+  --color-teal: #26a69a;
 }
 
-/* @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-} */
+/* ============================= */
+/*         Global Resets         */
+/* ============================= */
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background-color: var(--color-background);
+  color: var(--color-foreground);
   font-family: var(--font-body);
+}
+
+/* ============================= */
+/*      Global Font Classes      */
+/* ============================= */
+
+.font-logo {
+  font-family: var(--font-logo);
+}
+
+.font-heading {
+  font-family: var(--font-heading);
+}
+
+.font-body {
+  font-family: var(--font-body);
+}
+
+/* ============================= */
+/*     Global Component Styles   */
+/* ============================= */
+
+/* Buttons */
+button {
+  border-radius: 0.5rem; /* rounded-md */
+  padding: 0.5rem 1rem;
+  background-color: var(--color-honeyGold);
+  color: var(--color-background);
+  font-family: var(--font-body);
+  font-weight: 600;
+  transition: background-color 0.2s ease;
+}
+
+button:hover {
+  background-color: var(--color-deepHoney);
+}
+
+.btn-unstyled {
+  background-color: transparent !important;
+  padding: 0 !important;
+  border: none;
+  color: var(--color-foreground) !important;
+  font-weight: 400;
+}
+
+.btn-unstyled:hover {
+  background-color: transparent !important;
+  color: var(--color-honeyGold) !important;
+}
+
+.btn-hex {
+  clip-path: polygon(
+    50% 0%, 
+    93% 25%, 
+    93% 75%, 
+    50% 100%, 
+    7% 75%, 
+    7% 25%
+  );
+  background-color: var(--color-honeyGold);
+  color: var(--color-background);
+  padding: 1.25rem 1.25rem;
+  font-weight: bold;
+  text-align: center;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-body);
+  transition: all 0.3s ease;
+  display: inline-block;
+}
+
+.btn-hex:hover {
+  background-color: var(--color-deepHoney);
+}
+
+/* Danger/Warn Button - icon-only actions like delete, close, block */
+.btn-warn {
+  background-color: transparent !important;
+  color: var(--color-honeyGold);
+  padding: 0.25rem;
+  border: none;
+  border-radius: 0.375rem; /* rounded-md */
+  transition: color 0.2s ease;
+}
+
+.btn-warn:hover {
+  background-color: transparent !important;
+  color: var(--color-teal);
+}
+
+/* Inputs, Textareas, Selects */
+input,
+textarea,
+select {
+  border-radius: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  background-color: #2a2a2a;
+  color: var(--color-foreground);
+  border: 1px solid var(--color-foreground);
+  font-family: var(--font-body);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--color-honeyGold);
+  border-color: var(--color-honeyGold);
+}
+
+/* Card-like Elements */
+.card,
+.relume-card {
+  border-radius: 0.75rem;
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* ============================= */
+/* Optional Text Color Helpers   */
+/* ============================= */
+
+.text-honeyGold {
+  color: var(--color-honeyGold);
+}
+
+.text-offWhite {
+  color: var(--color-foreground);
+}
+
+.bg-background {
+  background-color: var(--color-background);
+}
+
+/* ============================= */
+/*     React Calendar Overrides  */
+/* ============================= */
+
+.react-calendar {
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+  border: none;
+  border-radius: 0.75rem;
+  width: 100%;
+  padding: 1rem;
+}
+
+.react-calendar__navigation {
+  background: none;
+  margin-bottom: 1rem;
+}
+
+.react-calendar__navigation button {
+  /* display: flex; */
+  /* flex-direction: row; */
+  justify-content: center; 
+  align-items: center;
+  gap: 2rem; 
+  margin-bottom: 1rem;
+
+  color: var(--color-foreground);
+  font-weight: 600;
+  font-family: var(--font-body);
+  background: none;  
+}
+
+.react-calendar__month-view__weekdays {
+  min-width: 2rem;
+  text-align: center;
+
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  color: #ccc;
+}
+
+
+.react-calendar__tile {
+  clip-path: polygon(
+    50% 0%, 
+    93% 25%, 
+    93% 75%, 
+    50% 100%, 
+    7% 75%, 
+    7% 25%
+  );
+  background: transparent;
+  color: var(--color-foreground);
+  text-align: center;
+  padding: 0.75rem 0.75rem;
+  border-radius: 0.5rem;
+  transition: background 0.3s ease;
+  font-family: var(--font-body);
+}
+
+.react-calendar__tile:enabled:hover {
+  background-color: var(--color-brown); 
+}
+
+.react-calendar__tile:disabled {
+  background-color: var(--color-background); 
+  color: var(--color-brown);
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.react-calendar__tile--active {   /* selected date */
+  background-color: var(--color-honeyGold);
+  color: var(--color-background);
+  font-weight: 600;
+}
+
+.react-calendar__tile--now:not(.react-calendar__tile--active) {   /* today's date */
+  background-color: var(--color-brown);
+  color: var(--color-background);
+  font-weight: 600;
+}
+
+.react-calendar__month-view__days__day--weekend:not(.react-calendar__tile--active) {
+  color: var(--color-lightHoney);
+}
+
+/* ===== Client Date Picker Calendar Styling ===== */
+.client-datepicker-calendar .react-calendar {
+  width: 100% !important;
+  max-width: 100% !important;
+  font-size: 1.2rem;
+}
+
+.client-datepicker-calendar .react-calendar__tile {
+  padding: 1.2em 1em !important;
 }

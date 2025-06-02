@@ -1,0 +1,36 @@
+#from https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-s3-bucket.html
+
+Resources:
+  StingrBucket:
+    Type: 'AWS::S3::Bucket'
+    Properties:
+      BucketName: stingr-bucket-cf
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: false
+        BlockPublicPolicy: false
+        IgnorePublicAcls: false
+        RestrictPublicBuckets: false
+      WebsiteConfiguration:
+        IndexDocument: index.html
+        ErrorDocument: error.html
+  MyBucketPolicy:
+    Type: 'AWS::S3::BucketPolicy'
+    Properties:
+      Bucket:
+        Ref: 'StingrBucket'
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal: '*'
+            Action: 's3:GetObject'
+            Resource:
+              Fn::Join:
+                - ''
+                - - 'arn:aws:s3:::'
+                  - Ref: 'StingrBucket'
+                  - '/*'
+Outputs:
+  WebsiteURL:
+    Description: URL for the website hosted on the S3 bucket
+    Value: !GetAtt StingrBucket.WebsiteURL

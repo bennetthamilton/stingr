@@ -5,14 +5,14 @@ import { Button, Input, Label } from "@relume_io/relume-ui";
 import type { ButtonProps } from "@relume_io/relume-ui";
 import { BiLogoGoogle } from "react-icons/bi";
 
-type ImageProps = {
-  url?: string;
-  src: string;
-  alt?: string;
-};
+// type ImageProps = {
+//   url?: string;
+//   src: string;
+//   alt?: string;
+// };
 
 type Props = {
-  logo: ImageProps;
+  // logo: ImageProps;
   loginText: string;
   loginLink: {
     text: string;
@@ -29,7 +29,7 @@ export type Signup1Props = React.ComponentPropsWithoutRef<"section"> & Partial<P
 
 export const Signup1 = (props: Signup1Props) => {
   const {
-    logo,
+    // logo,
     loginText,
     loginLink,
     title,
@@ -55,9 +55,6 @@ export const Signup1 = (props: Signup1Props) => {
     <section id="relume" className="px-[5%]">
       <div className="relative flex min-h-svh flex-col justify-center overflow-auto py-24 lg:pb-24 lg:pt-16">
         <div className="absolute left-0 right-0 top-0 flex h-16 items-center justify-between md:h-18">
-          <a href={logo.url}>
-            <img src={logo.src} alt={logo.alt} />
-          </a>
           <div className="inline-flex gap-x-1">
             <p className="hidden md:block">{loginText}</p>
             <a href={loginLink.url} className="underline">
@@ -137,25 +134,26 @@ export const Signup1 = (props: Signup1Props) => {
 };
 
 export const Signup1Defaults: Props = {
-  logo: {
-    url: "#",
-    src: "https://d22po4pjz3o32e.cloudfront.net/logo-image.svg",
-    alt: "Logo text",
-  },
+  // logo: {
+  //   url: "/",
+  //   src: "/stingr-logo.svg",
+  //   alt: "Stingr logo",
+  // },
   loginText: "Already have an account?",
   loginLink: {
     text: "Log In",
     url: "/login",
   },
   title: "Sign Up",
-  description: "Lorem ipsum dolor sit amet adipiscing elit.",
+  description: "Create your account and start discovering artists who match your style.",
   signUpButton: {
-    title: "Sign up",
+    title: "Sign Up",
   },
   signUpWithGoogleButton: {
     variant: "secondary",
     title: "Sign up with Google",
     iconLeft: <BiLogoGoogle className="size-6" />,
   },
-  footerText: "© 2024 Relume",
+  footerText: "© 2025 Stingr. All rights reserved.",
 };
+

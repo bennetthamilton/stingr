@@ -37,10 +37,10 @@ type Props = {
   newsletterDescription: string;
   inputPlaceholder?: string;
   button: ButtonProps;
-  termsAndConditions: string;
+  // termsAndConditions: string;
   columnLinks: ColumnLinks[];
   footerText: string;
-  footerLinks: FooterLink[];
+  // footerLinks: FooterLink[];
 };
 
 export type Footer1Props = React.ComponentPropsWithoutRef<"section"> & Partial<Props>;
@@ -51,10 +51,10 @@ export const Footer1 = (props: Footer1Props) => {
     newsletterDescription,
     inputPlaceholder,
     button,
-    termsAndConditions,
+    // termsAndConditions,
     columnLinks,
     footerText,
-    footerLinks,
+    // footerLinks,
   } = {
     ...Footer1Defaults,
     ...props,
@@ -91,7 +91,7 @@ export const Footer1 = (props: Footer1Props) => {
                 />
                 <Button {...button}>{button.title}</Button>
               </form>
-              <div dangerouslySetInnerHTML={{ __html: termsAndConditions }} />
+              {/* <div dangerouslySetInnerHTML={{ __html: termsAndConditions }} /> */}
             </div>
           </div>
           <div className="grid grid-cols-1 items-start gap-y-10 sm:grid-cols-3 sm:gap-x-6 md:gap-x-8 md:gap-y-4">
@@ -115,13 +115,13 @@ export const Footer1 = (props: Footer1Props) => {
         <div className="h-px w-full bg-black" />
         <div className="flex flex-col-reverse items-start justify-between pb-4 pt-6 text-sm md:flex-row md:items-center md:pb-0 md:pt-8">
           <p className="mt-6 md:mt-0">{footerText}</p>
-          <ul className="grid grid-flow-row grid-cols-[max-content] justify-center gap-y-4 text-sm md:grid-flow-col md:gap-x-6 md:gap-y-0">
+          {/* <ul className="grid grid-flow-row grid-cols-[max-content] justify-center gap-y-4 text-sm md:grid-flow-col md:gap-x-6 md:gap-y-0">
             {footerLinks.map((link, index) => (
               <li key={index} className="underline">
                 <a href={link.url}>{link.title}</a>
               </li>
             ))}
-          </ul>
+          </ul> */}
         </div>
       </div>
     </footer>
@@ -131,7 +131,7 @@ export const Footer1 = (props: Footer1Props) => {
 export const Footer1Defaults: Props = {
   logo: {
     url: "/",
-    src: "/stingr-logo.svg", // Replace with your actual logo path or use text if component supports it
+    src: "/stingr-logo.svg",
     alt: "Stingr logo",
   },
   newsletterDescription: "Get occasional updates from the Stingr team — no spam, just tattoos.",
@@ -141,47 +141,38 @@ export const Footer1Defaults: Props = {
     variant: "secondary",
     size: "sm",
   },
-  termsAndConditions: `
-    <p class='text-xs'>
-      By subscribing, you agree to our
-      <a href='/privacy' class='underline'>Privacy Policy</a>
-      and consent to receive updates from Stingr.
-    </p>
-  `,
+  // termsAndConditions: "",
   columnLinks: [
     {
       title: "Product",
       links: [
         { title: "Browse Artists", url: "/browse" },
-        { title: "For Artists", url: "/artists" },
-        { title: "FAQ", url: "/faq" },
+        { title: "Bookings", url: "/bookings" },
         { title: "Sign Up", url: "/signup" },
         { title: "Log In", url: "/login" },
       ],
     },
     {
-      title: "Company",
-      links: [
-        { title: "About", url: "/about" },
-        { title: "Contact", url: "/contact" }, // future page
-        { title: "Press", url: "#" }, // optional
-        { title: "Careers", url: "#" }, // optional
-      ],
-    },
-    {
       title: "Follow us",
       links: [
-        { title: "Instagram", url: "https://instagram.com/stingr", icon: <BiLogoInstagram className="size-6" /> },
-        { title: "X", url: "https://x.com/stingr", icon: <FaXTwitter className="size-6 p-0.5" /> },
-        { title: "LinkedIn", url: "https://linkedin.com/company/stingr", icon: <BiLogoLinkedinSquare className="size-6" /> },
-        { title: "YouTube", url: "https://youtube.com/@stingr", icon: <BiLogoYoutube className="size-6" /> },
+        {
+          title: "Instagram",
+          url: "https://instagram.com/stingrstudio",
+          icon: <BiLogoInstagram className="size-6" />,
+        },
+        {
+          title: "LinkedIn",
+          url: "https://www.linkedin.com/in/bennett-hamilton-640301202",
+          icon: <BiLogoLinkedinSquare className="size-6" />,
+        },
+        {
+          title: "YouTube",
+          url: "https://www.youtube.com/@stingrstudio",
+          icon: <BiLogoYoutube className="size-6" />,
+        },
       ],
     },
   ],
   footerText: "© 2025 Stingr. All rights reserved.",
-  footerLinks: [
-    { title: "Privacy Policy", url: "/privacy" },
-    { title: "Terms of Service", url: "/terms" },
-    { title: "Cookie Settings", url: "/cookies" },
-  ],
+  // footerLinks: [],
 };

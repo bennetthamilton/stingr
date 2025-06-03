@@ -41,7 +41,7 @@ export const Form4 = (props: Form4Props) => {
 
   const [userNameInput, setUserNameInput] = useState("");
   const [aboutInput, setAboutInput] = useState("");
-  const [photoInput, setPhotoInput] = useState<File | null>(null);
+  const [_photoInput, setPhotoInput] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [artImages, setArtImages] = useState<string[]>([]);
   const [stylesInput, setStylesInput] = useState<string[]>([]);

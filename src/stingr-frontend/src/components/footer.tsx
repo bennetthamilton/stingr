@@ -2,7 +2,6 @@
 
 import { Button, Input } from "@relume_io/relume-ui";
 import type { ButtonProps } from "@relume_io/relume-ui";
-import { FaXTwitter } from "react-icons/fa6";
 import {
   BiLogoInstagram,
   BiLogoLinkedinSquare,
@@ -25,11 +24,6 @@ type Links = {
 type ColumnLinks = {
   title: string;
   links: Links[];
-};
-
-type FooterLink = {
-  title: string;
-  url: string;
 };
 
 type Props = {

@@ -28,7 +28,7 @@ export const Header6 = (props: Header6Props) => {
     button,
     inputPlaceholder,
     image,
-    termsAndConditions,
+    // termsAndConditions,
   } = {
     ...Header6Defaults,
     ...props,

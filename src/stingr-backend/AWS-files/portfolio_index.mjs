@@ -1,107 +1,77 @@
-const AWS = require('aws-sdk');
+import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
+import {
+  DynamoDBDocumentClient,
+  GetCommand,
+  PutCommand,
+  ScanCommand,
+  DeleteCommand,
+} from "@aws-sdk/lib-dynamodb";
 
-const dynamoDb = new AWS.DynamoDB.DocumentClient();
-const TABLE_NAME = 'portfolio';
+const client = new DynamoDBClient({});
+const dynamo = DynamoDBDocumentClient.from(client);
 
-exports.handler = async (event) => {
-  const method = event.httpMethod;
+const tableName = "portfolio";
 
-  if (method === 'GET') {
-    const name = event.queryStringParameters?.name;
+export const handler = async (event, context) => {
+  let body;
+  let statusCode = 200;
+  const headers = {
+    "Content-Type": "application/json",
+  };
 
-    if (name) {
-      // 🔍 Get profile by name
-      try {
-        const result = await dynamoDb.get({
-          TableName: TABLE_NAME,
-          Key: { name }
-        }).promise();
+  try {
+    switch (event.routeKey) {
+      case "GET /profile":
+        const scanResult = await dynamo.send(new ScanCommand({ TableName: tableName }));
+        body = scanResult.Items;
+        break;
 
-        if (!result.Item) {
-          return {
-            statusCode: 404,
-            body: JSON.stringify({ error: 'Profile not found' })
-          };
+      case "GET /profile/{name}":
+        const getResult = await dynamo.send(new GetCommand({
+          TableName: tableName,
+          Key: { id: event.pathParameters.name },
+        }));
+        body = getResult.Item || { error: "Profile not found" };
+        break;
+
+      case "PUT /profile":
+        const requestJSON = JSON.parse(event.body);
+        const { name, bio, profile_pic, art_pictures, styles, location } = requestJSON;
+
+        // Validate fields
+        if (!name || !bio || !profile_pic || !Array.isArray(art_pictures) || !Array.isArray(styles) || !location) {
+          throw new Error("Missing or invalid fields");
         }
 
-        return {
-          statusCode: 200,
-          headers: {
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': '*',
-          },
-          body: JSON.stringify(result.Item),
-        };
-      } catch (err) {
-        console.error('GET by name error:', err);
-        return {
-          statusCode: 500,
-          body: JSON.stringify({ error: 'Error retrieving profile' }),
-        };
-      }
-    } else {
-      // 📋 Get all profiles
-      try {
-        const data = await dynamoDb.scan({ TableName: TABLE_NAME }).promise();
-        return {
-          statusCode: 200,
-          headers: {
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': '*',
-          },
-          body: JSON.stringify(data.Items),
-        };
-      } catch (err) {
-        console.error('GET all error:', err);
-        return {
-          statusCode: 500,
-          body: JSON.stringify({ error: 'Error retrieving profiles' }),
-        };
-      }
+        // Use name as the ID
+        const id = name;
+
+        await dynamo.send(new PutCommand({
+          TableName: tableName,
+          Item: { id, name, bio, profile_pic, art_pictures, styles, location },
+        }));
+        body = `Created/updated profile for ${name}`;
+        break;
+
+      case "DELETE /profile/{name}":
+        await dynamo.send(new DeleteCommand({
+          TableName: tableName,
+          Key: { id: event.pathParameters.name },
+        }));
+        body = `Deleted profile ${event.pathParameters.name}`;
+        break;
+
+      default:
+        throw new Error(`Unsupported route: "${event.routeKey}"`);
     }
+  } catch (err) {
+    statusCode = 400;
+    body = JSON.stringify({ error: err.message });
   }
 
-  if (method === 'POST') {
-    // ➕ Add new profile
-    try {
-      const body = JSON.parse(event.body);
-      const { name, bio, profile_pic, art_pictures, styles, location } = body;
-
-      if (!name || !bio || !profile_pic || !Array.isArray(art_pictures) || !Array.isArray(styles) || !location) {
-        return {
-          statusCode: 400,
-          body: JSON.stringify({ error: 'Missing or invalid fields' }),
-        };
-      }
-
-      const newItem = { name, bio, profile_pic, art_pictures, styles, location };
-
-      await dynamoDb.put({
-        TableName: TABLE_NAME,
-        Item: newItem,
-      }).promise();
-
-      return {
-        statusCode: 201,
-        headers: {
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*',
-        },
-        body: JSON.stringify({ message: 'Profile added', item: newItem }),
-      };
-    } catch (err) {
-      console.error('POST error:', err);
-      return {
-        statusCode: 500,
-        body: JSON.stringify({ error: 'Failed to add profile' }),
-      };
-    }
-  }
-
-  // ❌ Method Not Allowed
   return {
-    statusCode: 405,
-    headers: { 'Allow': 'GET, POST' },
-    body: JSON.stringify({ error: 'Method not allowed' }),
+    statusCode,
+    body: typeof body === "string" ? body : JSON.stringify(body),
+    headers,
   };
 };

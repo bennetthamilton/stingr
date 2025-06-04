@@ -7,6 +7,7 @@ import { useRef } from "react";
 import { RxChevronRight } from "react-icons/rx";
 import clsx from "clsx";
 import React from "react";
+import { useRouter } from "next/navigation";
 
 type ImageProps = {
   src: string;
@@ -17,7 +18,7 @@ type FeatureSectionProps = {
   tagline: string;
   heading: string;
   description: string;
-  buttons: ButtonProps[];
+  buttons: (ButtonProps & { href?: string })[];
   image: ImageProps;
 };
 
@@ -60,11 +61,6 @@ export const Layout409 = (props: Layout409Props) => {
   return (
     <section id="relume" className="px-[5%] py-16 md:py-24 lg:py-28">
       <div className="container">
-        {/* <div className="mx-auto mb-12 w-full max-w-lg text-center md:mb-18 lg:mb-20">
-          <p className="mb-3 font-semibold md:mb-4">{tagline}</p>
-          <h1 className="mb-5 text-5xl font-bold md:mb-6 md:text-7xl lg:text-8xl">{heading}</h1>
-          <p className="md:text-md">{description}</p>
-        </div> */}
         <div ref={containerRef} className="sticky top-0 grid grid-cols-1 gap-6 md:gap-0">
           {featureSections.map((featureSection, index) => (
             <FeatureSection key={index} {...featureSection} scale={scales[index]} index={index} />
@@ -89,12 +85,12 @@ const FeatureSection = ({
   return (
     <React.Fragment>
       {isMobile ? (
-        <div className="static grid grid-cols-1 content-center overflow-hidden border border-border-primary bg-neutral-white">
+        <div className="static grid grid-cols-1 content-center overflow-hidden border border-border-primary bg-background">
           <FeatureSectionContent isEven={isEven} {...featureSection} />
         </div>
       ) : (
         <motion.div
-          className="static grid grid-cols-1 content-center overflow-hidden border border-border-primary bg-neutral-white md:sticky md:top-[10%] md:mb-[10vh] md:h-[80vh] md:grid-cols-2"
+          className="static grid grid-cols-1 content-center overflow-hidden border border-border-primary bg-background md:sticky md:top-[10%] md:mb-[10vh] md:h-[80vh] md:grid-cols-2"
           style={{ scale }}
         >
           <FeatureSectionContent isEven={isEven} {...featureSection} />
@@ -107,37 +103,49 @@ const FeatureSection = ({
 const FeatureSectionContent = ({
   isEven,
   ...featureSection
-}: FeatureSectionProps & { isEven: boolean }) => (
-  <React.Fragment>
-    <div
-      className={clsx(
-        "order-first flex flex-col justify-center p-6 md:p-8 lg:p-12",
-        isEven ? "md:order-first" : "md:order-last",
-      )}
-    >
-      <p className="mb-2 font-semibold">{featureSection.tagline}</p>
-      <h2 className="rb-5 mb-5 text-4xl font-bold leading-[1.2] md:mb-6 md:text-5xl lg:text-6xl">
-        {featureSection.heading}
-      </h2>
-      <p>{featureSection.description}</p>
-      <div className="mt-6 flex items-center gap-x-4 md:mt-8">
-        {featureSection.buttons.map((button, index) => (
-          <Button key={index} {...button}>
-            {button.title}
-          </Button>
-        ))}
+}: FeatureSectionProps & { isEven: boolean }) => {
+  const router = useRouter();
+
+  return (
+    <>
+      <div
+        className={clsx(
+          "order-first flex flex-col justify-center p-6 md:p-8 lg:p-12",
+          isEven ? "md:order-first" : "md:order-last"
+        )}
+      >
+        <p className="mb-2 font-semibold">{featureSection.tagline}</p>
+        <h2 className="rb-5 mb-5 text-4xl font-bold leading-[1.2] md:mb-6 md:text-5xl lg:text-6xl">
+          {featureSection.heading}
+        </h2>
+        <p>{featureSection.description}</p>
+        <div className="mt-6 flex items-center gap-x-4 md:mt-8">
+          {featureSection.buttons.map((button, index) => (
+            <Button
+              key={index}
+              {...button}
+              onClick={() => {
+                if (button.href) {
+                  router.push(button.href);
+                }
+              }}
+            >
+              {button.title}
+            </Button>
+          ))}
+        </div>
       </div>
-    </div>
-    <div
-      className={clsx(
-        "order-last flex flex-col items-center justify-center",
-        isEven ? "md:order-last" : "md:order-first",
-      )}
-    >
-      <img src={featureSection.image.src} alt={featureSection.image.alt} />
-    </div>
-  </React.Fragment>
-);
+      <div
+        className={clsx(
+          "order-last flex flex-col items-center justify-center",
+          isEven ? "md:order-last" : "md:order-first"
+        )}
+      >
+        <img src={featureSection.image.src} alt={featureSection.image.alt} />
+      </div>
+    </>
+  );
+};
 
 export const Layout409Defaults: Props = {
   tagline: "How It Works",
@@ -151,10 +159,10 @@ export const Layout409Defaults: Props = {
       description:
         "Easily browse portfolios by tattoo style, location, or vibe. Like what you see? Swipe right to save your favorites.",
       buttons: [
-        { title: "Browse Artists", variant: "primary" },
+        { title: "Browse Artists", variant: "primary", href: "/browse" },
       ],
       image: {
-        src: "/images/steps/swipe.png", // Replace with your actual asset
+        src: "https://source.unsplash.com/800x600/?tattoo,portfolio",
         alt: "Swiping through artist profiles",
       },
     },
@@ -164,10 +172,10 @@ export const Layout409Defaults: Props = {
       description:
         "When there’s a match, you’ll instantly be able to chat. No awkward emails, no waiting days for a reply.",
       buttons: [
-        { title: "Sign Up", variant: "primary" },
+        { title: "Sign Up", variant: "primary", href: "/signup" },
       ],
       image: {
-        src: "/images/steps/match.png",
+        src: "https://source.unsplash.com/800x600/?chat,mobile-app",
         alt: "Client messaging tattoo artist",
       },
     },
@@ -177,13 +185,10 @@ export const Layout409Defaults: Props = {
       description:
         "Schedule your consultation or tattoo session directly in the app. Everything happens in one place.",
       buttons: [
-        {
-          title: "Create an Account",
-          variant: "primary",
-        },
+        { title: "Create an Account", variant: "primary", href: "/signup" },
       ],
       image: {
-        src: "/images/steps/book.png",
+        src: "https://source.unsplash.com/800x600/?calendar,booking",
         alt: "Booking screen example",
       },
     },
@@ -198,10 +203,11 @@ export const Layout409Defaults: Props = {
           variant: "link",
           size: "link",
           iconRight: <RxChevronRight />,
+          href: "/browse",
         },
       ],
       image: {
-        src: "/images/steps/tattoo.png",
+        src: "https://source.unsplash.com/800x600/?tattoo-session",
         alt: "Tattoo artist working on a client",
       },
     },

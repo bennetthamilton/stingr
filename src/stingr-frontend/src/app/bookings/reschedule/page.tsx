@@ -60,7 +60,7 @@ export default function PageContent() {
 
   return (
     <ApplicationShell5>
-      <div className="p-6 space-y-6">
+      <div className="p-6 flex flex-col items-center justify-center space-y-6 text-center">
         {booking ? (
           <>
             <h1 className="text-3xl font-bold">Reschedule Appointment</h1>

@@ -14,8 +14,8 @@ import {
   useMediaQuery,
 } from "@relume_io/relume-ui";
 import { AnimatePresence, motion } from "framer-motion";
-import { RxChevronDown, RxChevronRight, RxCross2 } from "react-icons/rx";
-import { BiBell, BiSearch } from "react-icons/bi";
+import { RxChevronDown } from "react-icons/rx";
+// import { BiBell, BiSearch } from "react-icons/bi";
 
 export type ImageProps = {
   url?: string;

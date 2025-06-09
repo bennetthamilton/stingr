@@ -43,6 +43,7 @@ export const Form4 = (props: Form4Props) => {
   const [aboutInput, setAboutInput] = useState("");
   const [_photoInput, setPhotoInput] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const [artPreviews, setArtPreviews] = useState<string[]>([]);
   const [artImages, setArtImages] = useState<string[]>([]);
   const [stylesInput, setStylesInput] = useState<string[]>([]);
   const [locationInput, setLocationInput] = useState("");
@@ -50,70 +51,90 @@ export const Form4 = (props: Form4Props) => {
   const [passwordInput, setPasswordInput] = useState("");
   const [newPasswordInput, setNewPasswordInput] = useState("");
 
+  const uploadToS3 = async (file: File): Promise<string | null> => {
+    const contentType = file.type || "application/octet-stream";
+    const safeName = encodeURIComponent(file.name.replace(/[^a-zA-Z0-9._-]/g, "_"));
+
+    try {
+      const res = await fetch(`/api/upload-url?filename=${safeName}&contentType=${encodeURIComponent(contentType)}`);
+      const { url } = await res.json();
+
+      const uploadRes = await fetch(url, {
+        method: "PUT",
+        headers: { "Content-Type": contentType },
+        body: file,
+      });
+
+      if (!uploadRes.ok) throw new Error("Upload failed");
+      return url.split("?")[0];
+    } catch (error) {
+      console.error("Upload failed:", error);
+      return null;
+    }
+  };
+
+  const handleArtUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    const localUrl = URL.createObjectURL(file);
+    setArtPreviews((prev) => [...prev, localUrl]);
+
+    const s3Url = await uploadToS3(file);
+    if (s3Url) setArtImages((prev) => [...prev, s3Url]);
+  };
+
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const payload = {
       name: userNameInput,
       bio: aboutInput,
-      profile_pic: previewUrl || image.src, // In production, use uploaded S3 URL
+      profile_pic: previewUrl || image.src,
       art_pictures: artImages,
       styles: stylesInput,
       location: locationInput,
     };
 
     try {
-      const response = await fetch("https://jmhj1f9z4i.execute-api.us-west-2.amazonaws.com/portfolio", {
+      const response = await fetch("https://16juj9qjsj.execute-api.us-west-2.amazonaws.com/profile", {
         method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
 
-      if (!response.ok) {
-        throw new Error(`Failed to update profile: ${response.statusText}`);
-      }
+      if (!response.ok) throw new Error(`Failed to update profile: ${response.statusText}`);
 
       const data = await response.json();
       console.log("Profile updated successfully:", data);
+      alert("Profile saved!");
+      window.location.reload();
     } catch (error) {
       console.error("Error submitting profile:", error);
+      alert("Error submitting profile. Please try again.");
     }
-  };
-
-  const handleArtUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (!file) return;
-
-    const objectUrl = URL.createObjectURL(file);
-    setArtImages((prev) => [...prev, objectUrl]);
-
-    // Replace with S3 upload logic if needed
   };
 
   return (
     <section id="relume">
       <div className="grid items-start gap-6 lg:grid-cols-[1fr_1.25fr] lg:gap-12">
-        {/* Left: Art Upload */}
         <div>
           <h2 className="text-xl font-bold md:text-2xl mb-4">{heading}</h2>
           <p className="mb-4">{description}</p>
 
           <Label htmlFor="art-upload" className="mb-2 block">Upload Art Image</Label>
           <Input id="art-upload" type="file" onChange={handleArtUpload} />
-          {artImages.length > 0 && (
+          {artPreviews.length > 0 && (
             <div className="mt-4 grid grid-cols-2 gap-4">
-              {artImages.map((src, idx) => (
+              {artPreviews.map((src, idx) => (
                 <div key={idx} className="overflow-hidden rounded-md border">
-                  <img src={src} alt={`Art ${idx + 1}`} className="w-full h-32 object-cover" />
+                  <img src={src} alt={`Art preview ${idx + 1}`} className="w-full h-32 object-cover" />
                 </div>
               ))}
             </div>
           )}
         </div>
 
-        {/* Right: Form */}
         <form onSubmit={handleSubmit} className="grid grid-cols-1 gap-6 border border-border-primary px-8 py-6 sm:py-8">
           <div className="grid grid-cols-1 items-center">
             <Label className="mb-2">Profile Photo</Label>
@@ -132,11 +153,12 @@ export const Form4 = (props: Form4Props) => {
                   type="file"
                   accept="image/*"
                   className="hidden"
-                  onChange={(e) => {
+                  onChange={async (e) => {
                     const file = e.target.files?.[0];
                     if (file) {
                       setPhotoInput(file);
-                      setPreviewUrl(URL.createObjectURL(file));
+                      const s3Url = await uploadToS3(file);
+                      setPreviewUrl(s3Url || URL.createObjectURL(file));
                     }
                   }}
                 />
@@ -249,6 +271,7 @@ export const Form4 = (props: Form4Props) => {
                 variant={button.variant}
                 size={button.size}
                 title={button.title}
+                type={button.title.toLowerCase().includes("save") ? "submit" : "button"}
               >
                 {button.title}
               </Button>

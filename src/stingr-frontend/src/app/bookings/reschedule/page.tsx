@@ -2,7 +2,7 @@
 
 import { ApplicationShell5 } from '@/components/appshell';
 import { ClientDatePicker } from '@/components/reschedulecalendar';
-import { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 
 type Booking = {

@@ -103,14 +103,14 @@ export const ApplicationShell5 = (props: ApplicationShell5Props) => {
         </div>
 
         <div className="ml-auto flex flex-row items-center gap-4 lg:order-last">
-          <div className="hidden w-full max-w-md lg:block">
+          {/* <div className="hidden w-full max-w-md lg:block">
             <div className="flex items-center gap-2">
               <BiSearch className="size-5 text-[var(--color-foreground)]" />
               <Input className="w-full" placeholder="Search" />
             </div>
-          </div>
+          </div> */}
           <div className="flex shrink-0 items-center gap-2 md:gap-4">
-            <button
+            {/* <button
               onPointerDown={(e) => e.stopPropagation()}
               onClick={() => {
                 setIsMobileMenuOpen(false);
@@ -140,9 +140,9 @@ export const ApplicationShell5 = (props: ApplicationShell5Props) => {
                   </button>
                 </motion.div>
               )}
-            </AnimatePresence>
+            </AnimatePresence> */}
 
-            <DropdownMenu>
+            {/* <DropdownMenu>
               <DropdownMenuTrigger className="relative btn-unstyled">
                 <div className="absolute ..." />
                 <BiBell className="size-6 text-[var(--color-honeyGold)]" />
@@ -175,9 +175,9 @@ export const ApplicationShell5 = (props: ApplicationShell5Props) => {
                   </Button>
                 </div>
               </DropdownMenuContent>
-            </DropdownMenu>
+            </DropdownMenu> */}
 
-            <DropdownMenu>
+            {/* <DropdownMenu>
               <DropdownMenuTrigger className="flex items-center btn-unstyled">
                 <img
                   src="https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg"
@@ -193,7 +193,7 @@ export const ApplicationShell5 = (props: ApplicationShell5Props) => {
                   <DropdownMenuItem><a href="#">Log Out</a></DropdownMenuItem>
                 </DropdownMenuGroup>
               </DropdownMenuContent>
-            </DropdownMenu>
+            </DropdownMenu> */}
           </div>
         </div>
 
@@ -283,17 +283,17 @@ export const ApplicationShell5Defaults = {
     alt: "Stingr Logo",
   },
   navLinks: [
-    { title: "Browse", url: "/browse" },
-    { title: "Bookings", url: "/bookings" },
-    { title: "Messages", url: "/messages" },
-    {
-      title: "More",
-      url: "#",
-      subMenuLinks: [
-        { title: "FAQ", url: "/faq" },
-        { title: "Support", url: "/support" },
-      ],
-    },
+    { title: "Browse", url: "/browse", subMenuLinks: undefined },
+    { title: "Bookings", url: "/bookings", subMenuLinks: undefined },
+    // { title: "Messages", url: "/messages", subMenuLinks: undefined },
+    // {
+    //   title: "More",
+    //   url: "#",
+    //   subMenuLinks: [
+    //     { title: "FAQ", url: "/faq", subMenuLinks: undefined },
+    //     { title: "Support", url: "/support", subMenuLinks: undefined },
+    //   ],
+    // },
   ],
 };
 

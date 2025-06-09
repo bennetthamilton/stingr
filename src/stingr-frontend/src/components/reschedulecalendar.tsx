@@ -27,6 +27,7 @@ export const ClientDatePicker = ({
 }) => {
   const [value, setValue] = useState<Value>(null);
   const [isClient, setIsClient] = useState(false);
+  const [bookedDates, setBookedDates] = useState<Date[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
@@ -37,7 +38,24 @@ export const ClientDatePicker = ({
 
   useEffect(() => {
     setIsClient(true);
+    fetchBookedDates();
   }, []);
+
+  const fetchBookedDates = async () => {
+    try {
+      const res = await fetch("https://7lymo673b0.execute-api.us-west-2.amazonaws.com/bookings");
+      if (!res.ok) throw new Error("Failed to fetch booked dates");
+
+      const data = await res.json();
+      const parsed = data
+        .map((b: any) => new Date(b.appointment_date))
+        .filter((date: Date) => !isNaN(date.getTime())); // Filter valid dates
+
+      setBookedDates(parsed);
+    } catch (err) {
+      console.error("Error fetching booked dates", err);
+    }
+  };
 
   const handleDateChange = (selectedDate: Value, _event: React.MouseEvent<HTMLButtonElement>) => {
     if (selectedDate instanceof Date) {
@@ -49,15 +67,16 @@ export const ClientDatePicker = ({
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
+  const isSameDay = (a: Date, b: Date) =>
+    a.getFullYear() === b.getFullYear() &&
+    a.getMonth() === b.getMonth() &&
+    a.getDate() === b.getDate();
+
   const isDateUnavailable = (date: Date) => {
     const isBeforeToday = date < today;
-    const isManuallyUnavailable = unavailableDates?.some(
-      (unavailable) =>
-        date.getFullYear() === unavailable.getFullYear() &&
-        date.getMonth() === unavailable.getMonth() &&
-        date.getDate() === unavailable.getDate()
-    );
-    return isBeforeToday || isManuallyUnavailable;
+    const isInUnavailable = unavailableDates?.some((d) => isSameDay(d, date));
+    const isBooked = bookedDates.some((d) => isSameDay(d, date));
+    return isBeforeToday || isInUnavailable || isBooked;
   };
 
   const formattedDate = value instanceof Date ? format(value, "yyyy-MMM-dd") : null;
@@ -73,28 +92,26 @@ export const ClientDatePicker = ({
     setSuccess(false);
 
     try {
-        const res = await fetch(`https://7lymo673b0.execute-api.us-west-2.amazonaws.com/bookings`, {
-            method: "PUT",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              ...booking,
-              appointment_date: formattedDate, // override just the date
-            }),
-        });
-      
+      const res = await fetch(`https://7lymo673b0.execute-api.us-west-2.amazonaws.com/bookings`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...booking,
+          appointment_date: formattedDate,
+        }),
+      });
 
+      if (!res.ok) throw new Error("Failed to update appointment.");
 
-        if (!res.ok) throw new Error("Failed to update appointment.");
-
-        setSuccess(true);
-        setTimeout(() => {
-            router.push("/bookings");
-        }, 1000);
+      setSuccess(true);
+      setTimeout(() => {
+        router.push("/bookings");
+      }, 1000);
     } catch (err) {
-        console.error(err);
-        setError("Failed to update appointment.");
+      console.error(err);
+      setError("Failed to update appointment.");
     } finally {
-        setLoading(false);
+      setLoading(false);
     }
   };
 

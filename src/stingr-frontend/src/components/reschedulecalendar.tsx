@@ -48,6 +48,7 @@ export const ClientDatePicker = ({
 
       const data = await res.json();
       const parsed = data
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .map((b: any) => new Date(b.appointment_date))
         .filter((date: Date) => !isNaN(date.getTime())); // Filter valid dates
 

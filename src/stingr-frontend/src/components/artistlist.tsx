@@ -37,7 +37,7 @@ type Props = {
 export type ArtistListProps = React.ComponentPropsWithoutRef<"section"> & Partial<Props>;
 
 export const ArtistList = (props: ArtistListProps) => {
-  const { tagline, heading, description, artists } = {
+  const { tagline, heading, description } = {
     ...ArtistListDefaults,
     ...props,
   };
@@ -46,9 +46,31 @@ export const ArtistList = (props: ArtistListProps) => {
   const [_select, setCurrent] = useState<number>(0);
   const [selectedArtistId, setSelectedArtistId] = useState<string | null>(null);
   const router = useRouter();
+  const [likedArtists, setLikedArtists] = useState<ArtistCardProps[]>([]);
+
+  // Load liked artists from localStorage
+  useEffect(() => {
+    const stored = localStorage.getItem("likedArtists");
+    if (stored) {
+      const parsed = JSON.parse(stored);
+
+      const mapped: ArtistCardProps[] = parsed.map((artist: any) => ({
+        artistId: artist.name,
+        image: artist.images[0] || {
+          src: "/portfolio/placeholder.jpg",
+          alt: `${artist.name} artwork`,
+        },
+        name: artist.name,
+        bio: artist.bio,
+        style: artist.style,
+      }));
+
+      setLikedArtists(mapped);
+    }
+  }, []);
 
   // Remove duplicate artists based on artistId
-  const uniqueArtists = [...new Map(artists.map((a) => [a.artistId, a])).values()];
+  const uniqueArtists = [...new Map(likedArtists.map((a) => [a.artistId, a])).values()];
 
   useEffect(() => {
     if (!api) return;
@@ -152,17 +174,6 @@ const ArtistCard: React.FC<ArtistCardExtendedProps> = ({
   );
 };
 
-// Dummy data for testing
-const exampleArtist = {
-  artistId: "123",
-  image: {
-    src: "https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg",
-    alt: "Artist profile image",
-  },
-  name: "Jane Ink",
-  bio: "Specializes in floral and linework tattoos. Based in Brooklyn.",
-  style: "Floral / Linework",
-};
 
 export const ArtistListDefaults: Props = {
   tagline: "Matched Artists",
@@ -173,5 +184,5 @@ export const ArtistListDefaults: Props = {
     size: "primary",
     title: "Next",
   },
-  artists: [exampleArtist, exampleArtist], // For testing, replace with unique artists
+  artists: [], // For testing, replace with unique artists
 };

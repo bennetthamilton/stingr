@@ -54,7 +54,9 @@ export const SwipeDeck = () => {
 
   const handleSwipe = (direction: string, artist: Artist) => {
     if (direction === "right") {
+      const newLiked = [...liked, artist];
       setLiked((prev) => [...prev, artist]);
+      localStorage.setItem("likedArtists", JSON.stringify(newLiked));
     }
   };
 

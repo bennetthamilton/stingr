@@ -15,6 +15,7 @@ import {
 } from "@relume_io/relume-ui";
 import type { ButtonProps } from "@relume_io/relume-ui";
 import { BiCalendarAlt } from "react-icons/bi";
+import { useSearchParams } from "next/navigation";
 
 type DateInfo = {
   weekday: string;
@@ -65,12 +66,15 @@ export const EventItemHeader11 = (props: EventItemHeader11Props) => {
     ...props,
   };
 
+  const searchParams = useSearchParams();
+  const artistFromQuery = searchParams.get("artistId") || artist;
+
   const [clientName, setClientName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [phone, setPhone] = useState<string>("");
-  const [artistName, setArtistName] = useState<string>(artist);
+  const [artistName, setArtistName] = useState<string>(artistFromQuery);
   const [appointmentType, setAppointmentType] = useState<string>("");
-  const [appointmentDate, _setAppointmentDate] = useState<string>(""); // Optional: use a date picker
+  const [appointmentDate, _setAppointmentDate] = useState<string>("");
   const [tattooDescription, setTattooDescription] = useState<string>("");
   const [acceptTerms, setAcceptTerms] = useState<boolean | "indeterminate">(false);
   const [errorMessage, _setErrorMessage] = useState<string>("");
@@ -93,7 +97,7 @@ export const EventItemHeader11 = (props: EventItemHeader11Props) => {
       booking_id: bookingId,
       date_booked: dateBooked,
       client: clientName,
-      artist: artist,
+      artist: artistName,
       phone: phone,
       email: email,
       appointment_date: formattedAppointmentDate,
@@ -118,12 +122,8 @@ export const EventItemHeader11 = (props: EventItemHeader11Props) => {
       console.log("Booking response:", responseBody);
       alert("Your appointment has been successfully booked!");
 
-      // Optional callback
       onSubmit?.(payload);
-
-      // Reload the page after successful submission
       window.location.reload();
-
     } catch (error) {
       console.error("Failed to create/update booking:", error);
       alert("There was an error submitting your booking. Please try again.");
@@ -270,4 +270,3 @@ export const EventItemHeader11Defaults: Props = {
     year: "2024",
   },
 };
-

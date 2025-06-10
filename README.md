@@ -19,16 +19,16 @@ This repository is for **internal development** and is intended for Stingr's **e
 
 ## Roadmap
 - [x] Design finalized in Figma
-- [ ] Build initial MLP (Minimum LOVABLE Product)
+- [X] Build initial MLP (Minimum LOVABLE Product)
+- [ ] Implement browse functionality
 - [ ] Implement authentication & artist profiles
-- [ ] Add booking functionality
+- [X] Add booking functionality
 - [ ] Beta testing with early users
 
 ## Development Setup
 ### Prerequisites
 - Node.js & npm installed
 - DynamoDB database setup
-- Firebase/Auth0 credentials (for authentication)
 
 ### Installation
 ```bash
@@ -65,6 +65,7 @@ stingr/
 │   ├── .next/                   # Next.js build output
 │   ├── node_modules/            # Frontend dependencies
 │   ├── public/                  # Static assets (images, etc.)
+│   │   ├── portfolio/           # Profile/portfolio images (placeholder)
 │   ├── src/                     # Frontend source
 │   │   ├── app/                 # App directory (Next.js routing)
 │   │   └── components/          # Reusable UI components

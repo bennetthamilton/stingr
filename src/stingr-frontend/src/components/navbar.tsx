@@ -25,7 +25,7 @@ export const Navbar2 = (props: Navbar2Props) => {
   };
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const buttonLinks = ["/login", "/signup"];
+  const buttonLinks = ["/signup"];
 
   return (
     <section
@@ -129,7 +129,7 @@ export const Navbar2Defaults: Props = {
   ],
   buttons: [
     {
-      title: "Log In",
+      title: "Sign Up",
       variant: "link",
       size: "sm",
     },

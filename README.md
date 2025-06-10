@@ -56,7 +56,7 @@ stingr/
 │   │   ├── __tests__/           # Backend tests
 │   │   ├── api/                 # API route handlers
 │   │   |   ├── index.js         # Backend entry point
-│   │   |   ├── routes           # API Routes
+│   │   |   └── routes           # API Routes
 │   │   ├── AWS-files/           # AWS-related scripts/files
 │   │   ├── .env                 # Backend environment config
 │   │   ├── package.json         # Backend dependencies
@@ -65,7 +65,7 @@ stingr/
 │   ├── .next/                   # Next.js build output
 │   ├── node_modules/            # Frontend dependencies
 │   ├── public/                  # Static assets (images, etc.)
-│   │   ├── portfolio/           # Profile/portfolio images (placeholder)
+│   │   └── portfolio/           # Profile/portfolio images (placeholder)
 │   ├── src/                     # Frontend source
 │   │   ├── app/                 # App directory (Next.js routing)
 │   │   └── components/          # Reusable UI components

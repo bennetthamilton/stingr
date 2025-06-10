@@ -55,8 +55,8 @@ export const ArtistList = (props: ArtistListProps) => {
       const parsed = JSON.parse(stored);
 
       const mapped: ArtistCardProps[] = parsed.map((artist: any) => ({
-        artistId: artist.name,
-        image: artist.images[0] || {
+        artistId: artist.id || artist.name,
+        image: artist.images?.[0] || {
           src: "/portfolio/placeholder.jpg",
           alt: `${artist.name} artwork`,
         },
@@ -174,7 +174,6 @@ const ArtistCard: React.FC<ArtistCardExtendedProps> = ({
   );
 };
 
-
 export const ArtistListDefaults: Props = {
   tagline: "Matched Artists",
   heading: "Choose Your Artist",
@@ -184,5 +183,5 @@ export const ArtistListDefaults: Props = {
     size: "primary",
     title: "Next",
   },
-  artists: [], // For testing, replace with unique artists
+  artists: [],
 };

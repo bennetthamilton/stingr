@@ -6,44 +6,49 @@
 
 ## 🚀 Overview
 
-The `stingr` project is in the early stages of development. We're focused on building out core features to support a full booking experience for tattoo clients and artists. This release captures the current progress and highlights known issues and next steps.
+The `stingr` continues to evolve toward a seamless matchmaking and booking platform for tattoo clients and artists. This release includes critical backend integration, enhanced calendar logic, and improved profile handling.
 
 ---
 
 ## ✅ Features Implemented
 
 - 🌐 Project scaffolded with monorepo structure (frontend + backend)
-- 🎨 Frontend UI with:
-  - Booking form with input fields
-  - Appointment type dropdown
-  - Terms and Conditions agreement checkbox
-- 🔧 Initial backend server and AWS integration setup
+- 🎨 Frontend UI:
+  - Booking management (create, view, reschedule, delete)
+  - Landing page (initial)
+  - Sign up page for artists
+  - Browse artists (swipe-based discovery)
+- 🔧 Backend Integration:
+  - AWS Lambda + DynamoDB for storing/retrieving booking data and artist profile data 
+  - `/profile` and `/booking` API endpoints 
 - 📦 Support for environment variables via `.env`
 
 ---
 
 ## ⚠️ Known Issues & Limitations
 
-- 🔌 **Booking form not yet connected to backend**
+- 🔌 **Sign-up form not fully connected with backend**
+- 📋 **Unable to upload images to S3 bucket**
 - 🔐 **No user authentication/authorization**
 - 🔗 **URLs are not encrypted**
 - 🖼 **Placeholder images missing**
 - 🔘 **Some buttons require being clicked twice**
 - 🧭 **Navigation can be unresponsive on first click**
-- 📋 **Consultation dropdown has poor readability**
 - 🧪 **Testing coverage is minimal**
 
 ---
 
 ## 🛠 Planned Improvements
 
-- Full backend integration for appointment creation and retrieval  
-- User login & registration flows  
-- Implement secure authentication with JWT  
+- Full backend integration for artist/client profiles and image uploading
+- Complete user login & registration flows  
+- Implement secure authentication  
 - Add loading states and form validation feedback  
 - Encrypt sensitive URL parameters  
-- UI polish: improve dropdowns, button behavior, and responsiveness  
+- UI polish: improve dropdowns, button behavior, and responsiveness 
 - Placeholder art and loading animations
+- Begin frontend testing
+- Implement secure messaging platform
 
 ---
 
@@ -63,10 +68,10 @@ Minimal unit tests exist for backend logic. Frontend tests are planned in future
 
 In the next release, we expect to:
 
-- Enable real appointment submission to the backend  
-- Launch artist profiles and image galleries  
-- Complete login/signup with backend authentication  
-- Polish booking calendar selection
+- ✅ Complete backend support profile creation and image uploads  
+- 🧑‍🎨 Launch initial artist profile viewer with swiping interface  
+- 🔐 Roll out basic login/signup with token-based auth  
+- 🗓 Refine page UI/UX flow  
 
 ---
 

@@ -1,4 +1,3 @@
-// src/components/ReschedulePageContent.tsx
 "use client";
 
 import { ApplicationShell5 } from '@/components/appshell';
@@ -67,7 +66,7 @@ export const ReschedulePageContent = () => {
               <p><strong>Phone:</strong> {booking.phone}</p>
               <p><strong>Email:</strong> {booking.email}</p>
               <p><strong>Appointment Type:</strong> {booking.appointment_type}</p>
-              <p><strong>Original Date:</strong> {new Date(booking.appointment_date).toDateString()}</p>
+              <p><strong>Original Date:</strong> { booking.appointment_date }</p>
             </div>
             <ClientDatePicker
               unavailableDates={unavailableDates}
